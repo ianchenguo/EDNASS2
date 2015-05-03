@@ -2,6 +2,9 @@
 
 namespace ENETCare.Business
 {
+	/// <summary>
+	/// DistributionCentre Business Logic Layer
+	/// </summary>
 	public class DistributionCentreBLL
 	{
 		DistributionCentreDAO DistributionCentreDAO { get; set; }

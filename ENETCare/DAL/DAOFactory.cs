@@ -9,7 +9,7 @@ namespace ENETCare.Business
 	{
 		public static DistributionCentreDAO GetDistributionCentreDAO()
 		{
-			return new DistributionCentreDataReaderDAO();
+			return new DistributionCentreEntityFrameworkDAO();
 		}
 
 		public static EmployeeDAO GetEmployeeDAO()

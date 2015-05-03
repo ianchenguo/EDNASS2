@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace ENETCare.Business
 {
+	/// <summary>
+	/// Report Business Logic Layer
+	/// </summary>
 	public class ReportBLL
 	{
 		ReportDAO ReportDAO { get; set; }

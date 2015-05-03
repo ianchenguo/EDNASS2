@@ -37,6 +37,12 @@
     <Reference Include="Aspose.BarCode">
       <HintPath>..\packages\Aspose.BarCode.6.8.0\lib\net4.5\Aspose.BarCode.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -49,8 +55,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\ReportBLL.cs" />
+    <Compile Include="DAL\EntityFrameworkDAO\DatabaseEntities.cs" />
     <Compile Include="DAL\DataReaderDAO\ReportDataReaderDAO.cs" />
     <Compile Include="DAL\DataReaderDAO\DataReaderDAO.cs" />
+    <Compile Include="DAL\EntityFrameworkDAO\DistributionCentreEntityFrameworkDAO.cs" />
     <Compile Include="DAL\Interface\ReportDAO.cs" />
     <Compile Include="Entity\Report.cs" />
     <Compile Include="Helper\BarcodeHelper.cs" />

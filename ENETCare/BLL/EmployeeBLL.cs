@@ -2,6 +2,9 @@
 
 namespace ENETCare.Business
 {
+	/// <summary>
+	/// Employee Business Logic Layer
+	/// </summary>
 	public class EmployeeBLL
 	{
 		EmployeeDAO EmployeeDAO { get; set; }

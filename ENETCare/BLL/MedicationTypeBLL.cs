@@ -2,6 +2,9 @@
 
 namespace ENETCare.Business
 {
+	/// <summary>
+	/// MedicationType Business Logic Layer
+	/// </summary>
 	public class MedicationTypeBLL
 	{
 		MedicationTypeDAO MedicationTypeDAO { get; set; }

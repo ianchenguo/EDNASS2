@@ -4,6 +4,9 @@ using System.Globalization;
 
 namespace ENETCare.Business
 {
+	/// <summary>
+	/// MedicationPackage Business Logic Layer
+	/// </summary>
 	public class MedicationPackageBLL
 	{
 		#region Properties
