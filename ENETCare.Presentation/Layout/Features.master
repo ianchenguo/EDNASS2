@@ -1,0 +1,48 @@
+﻿<%@ Master Language="C#"
+    MasterPageFile="~/Layout/Main.Master"
+    AutoEventWireup="true"
+    CodeBehind="Features.master.cs"
+    Inherits="ENETCare.Presentation.Layout.Features" %>
+
+<asp:Content ID="FeatureLayout" ContentPlaceHolderID="MainContent" runat="server">
+    <!--main-container-start-->
+    <section class="container-fluid feature-content">
+        <!--row-start-->
+        <div class="row row-same-height">
+            <!--side-menu-start-->
+            <aside class="col-xs-12 col-sm-2 ned-side-menu col-sm-height">
+
+                <asp:ContentPlaceHolder ID="FeatureAsideContent" runat="server">
+                </asp:ContentPlaceHolder>
+            </aside>
+            <!--side-menu-end-->
+
+            <!--main-section-start-->
+            <section class="col-xs-12 col-sm-9 col-sm-offset-1 ned-main-section col-sm-height">
+                <!--Site Map Navigation-->
+                <div class="breadcrumb">
+                    <asp:SiteMapPath ID="SiteMapPath1" runat="server"></asp:SiteMapPath>
+                </div>
+
+                <div runat="server"
+                    id="AlertBox"
+                    class="alert alert-dismissible fade in"
+                    role="alert"
+                    visible="false">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 runat="server" id="AlertBoxTitle">alert title placeholder</h4>
+                    <p runat="server" id="AlertBoxContent">alert content placeholder</p>
+                </div>
+
+                <!--Site Map Navigation end-->
+                <asp:ContentPlaceHolder ID="FeatureMainContent" runat="server">
+                </asp:ContentPlaceHolder>
+            </section>
+            <!--main-section-end-->
+        </div>
+        <!--row-end-->
+    </section>
+    <!--main-container-end-->
+
+
+</asp:Content>

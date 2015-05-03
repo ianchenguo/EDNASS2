@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap>
+  <siteMapNode title="Home" description="Home" url="~/Index.aspx">
+
+    <siteMapNode title="Manager Home" description="Manager Role's home page"
+      url="~/ManagerFeatures/ManagerHome">
+      
+      <siteMapNode title="Distribution Centre List" description="Distribution centres"
+        url="~/ManagerFeatures/ManagerDistributionCentreStockCentres">
+
+        <siteMapNode title="Distribution Centre Stock" description="Stock of each distribution centre"
+                     url="~/ManagerFeatures/ManagerDistributionCentreStock"/>
+      </siteMapNode>
+      
+      <siteMapNode title="Global Stock" description="Global stock"
+                     url="~/ManagerFeatures/ManagerGlobalStock"/>
+
+      <siteMapNode title="Distribution Centre Losses" description="Distribution centre losses"
+               url="~/ManagerFeatures/ManagerDistributionCentreLosses"/>
+
+      <siteMapNode title="Value in Transit" description="Value in transit"
+               url="~/ManagerFeatures/ManagerValueInTransit"/>
+
+      <siteMapNode title="Doctor List" description="Doctor list"
+         url="~/ManagerFeatures/ManagerDoctorActivityDoctors">
+
+        <siteMapNode title="Doctor Activity" description="Doctor activity"
+                     url="~/ManagerFeatures/ManagerDoctorActivity"/>
+      </siteMapNode>
+    </siteMapNode>
+
+    <siteMapNode title="Agent and Doctor Home" description="Agent and doctor's home page"
+                 url="~/AgentDoctorFeatures/AgentDoctorHome">
+
+      <siteMapNode title="Receive Package" description="Receive packages"
+             url="~/AgentDoctorFeatures/AgentDoctorReceivePackage"/>
+
+      <siteMapNode title="Register Package" description="Register packages"
+       url="~/AgentDoctorFeatures/AgentDoctorRegisterPackage"/>
+
+      <siteMapNode title="Send Package" description="Send packages"
+       url="~/AgentDoctorFeatures/AgentDoctorSendPackage"/>
+
+      <siteMapNode title="View Report" description="View reports"
+       url="~/AgentDoctorFeatures/AgentDoctorViewReport"/>
+
+      <siteMapNode title="Audit Package" description="Audit Package"
+                   url="~/AgentDoctorFeatures/AgentDoctorAuditPackage"/>
+      
+      <siteMapNode title="Discard Package" description="Discard Package"
+             url="~/AgentDoctorFeatures/AgentDoctorDiscardPackage"/>
+
+      <siteMapNode title="Distribute Package" description="Distribute Package"
+        url="~/DoctorFeatures/DoctorDistribute"/>
+    </siteMapNode>
+  </siteMapNode>
+</siteMap>

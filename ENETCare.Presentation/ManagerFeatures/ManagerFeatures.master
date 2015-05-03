@@ -1,0 +1,27 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Layout/Features.master" AutoEventWireup="true"
+    CodeBehind="ManagerFeatures.master.cs" Inherits="ENETCare.Presentation.ManagerFeatures.ManagerFeatures" %>
+
+<asp:Content ID="ManagerFeatureAsideContent" ContentPlaceHolderID="FeatureAsideContent" runat="server">
+    <!--panel start-->
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Tasks</div>
+
+        <!-- List group -->
+        <div class="list-group">
+            <a class="list-group-item" href="ManagerDistributionCentreStockCentres">Distribution Centre Stock</a>
+            <a class="list-group-item" href="ManagerGlobalStock">Global Stock</a>
+            <a class="list-group-item" href="ManagerDistributionCentreLosses">Distribution Centre Losses</a>
+            <a class="list-group-item" href="ManagerValueInTransit">Value in Transit</a>
+            <a class="list-group-item" href="ManagerDoctorActivityDoctors">Doctor Activity</a>
+        </div>
+    </div>
+    <!--panel end-->
+</asp:Content>
+<asp:Content ID="ManagerFeatureMainContent" ContentPlaceHolderID="FeatureMainContent" runat="server">
+    
+
+
+    <asp:ContentPlaceHolder ID="SpecificManagerFeatureMainContent" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
