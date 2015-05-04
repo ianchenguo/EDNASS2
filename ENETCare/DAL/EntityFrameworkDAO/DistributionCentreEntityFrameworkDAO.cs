@@ -30,8 +30,7 @@ namespace ENETCare.Business
 		{
 			using (DatabaseEntities context = new DatabaseEntities())
 			{
-				var filteredDistributionCentre = context.DistributionCentre.FirstOrDefault(dc => dc.ID == id);
-				return filteredDistributionCentre;
+				return context.DistributionCentre.SingleOrDefault(element => element.ID == id);
 			}
 		}
 	}

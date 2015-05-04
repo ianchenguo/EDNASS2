@@ -19,7 +19,7 @@ namespace ENETCare.Business
 
 		public static MedicationTypeDAO GetMedicationTypeDAO()
 		{
-			return new MedicationTypeDataReaderDAO();
+			return new MedicationTypeEntityFrameworkDAO();
 		}
 
 		public static MedicationPackageDAO GetMedicationPackageDAO()
