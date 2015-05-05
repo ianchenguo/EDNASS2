@@ -15,3 +15,6 @@ Using NuGet without committing packages to source control
 5. Build
 
 按照上面设置并且编译后，NuGet会自动下载缺少的package。如果编译后所需package还是没有自动下载，就先去packages目录删除对应的子目录（moq的目录,nunit的目录,asppose.barcode的目录），然后再编译。
+
+layout
+http://www.asp.net/web-pages/overview/ui,-layouts,-and-themes/3-creating-a-consistent-look
