@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ENETCare.Business
 {
@@ -7,14 +9,23 @@ namespace ENETCare.Business
 	/// </summary>
 	public class Employee
 	{
+		public Employee()
+		{
+			this.EmployeeRole = new HashSet<EmployeeRole>();
+		}
+
 		public string ID { get; set; }
 		public string Username { get; set; }
 		public string Fullname { get; set; }
 		public string Email { get; set; }
-		public Role Role { get; set; }
-		public DistributionCentre DistributionCentre { get; set; }
-	}
+		//public Role Role { get; set; }
+		[Column("DistributionCentre_Id", TypeName = "int")]
+		public int DistributionCentreId { get; set; }
 
+		public virtual ICollection<EmployeeRole> EmployeeRole { get; set; }
+		public virtual DistributionCentre DistributionCentre { get; set; }
+	}
+	
 	public enum Role
 	{
 		Agent = 1,

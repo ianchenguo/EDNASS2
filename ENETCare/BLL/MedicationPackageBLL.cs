@@ -321,7 +321,7 @@ namespace ENETCare.Business
 			if (package == null)
 			{
 				MedicationType medicationType = MedicationTypeDAO.GetMedicationTypeById(medicationTypeId);
-				DateTime expireDate = DateTime.Today.AddDays(medicationType.ShelfLife);
+				DateTime expireDate = medicationType.DefaultExpireDate;
 				RegisterPackage(medicationType, expireDate, barcode);
 				updated = true;
 			}

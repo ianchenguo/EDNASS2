@@ -14,7 +14,7 @@ namespace ENETCare.Business
 
 		public static EmployeeDAO GetEmployeeDAO()
 		{
-			return new EmployeeDataReaderDAO();
+			return new EmployeeEntityFrameworkDAO();
 		}
 
 		public static MedicationTypeDAO GetMedicationTypeDAO()
