@@ -44,6 +44,7 @@
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -58,10 +59,12 @@
     <Compile Include="DAL\EntityFrameworkDAO\DatabaseEntities.cs" />
     <Compile Include="DAL\DataReaderDAO\ReportDataReaderDAO.cs" />
     <Compile Include="DAL\DataReaderDAO\DataReaderDAO.cs" />
+    <Compile Include="DAL\EntityFrameworkDAO\EmployeeEntityFrameworkDAO.cs" />
     <Compile Include="DAL\EntityFrameworkDAO\MedicationTypeEntityFrameworkDAO.cs" />
     <Compile Include="DAL\EntityFrameworkDAO\DistributionCentreEntityFrameworkDAO.cs" />
     <Compile Include="DAL\Interface\ReportDAO.cs" />
     <Compile Include="Entity\Report.cs" />
+    <Compile Include="Entity\EmployeeRole.cs" />
     <Compile Include="Helper\BarcodeHelper.cs" />
     <Compile Include="DAL\DAOFactory.cs" />
     <Compile Include="BLL\EmployeeBLL.cs" />

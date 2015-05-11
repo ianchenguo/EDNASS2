@@ -105,7 +105,7 @@ namespace ENETCare.Business
 			employee.Fullname = reader.GetString(2);
 			employee.Email = reader.GetString(3);
 			employee.DistributionCentre = new DistributionCentreDataReaderDAO().GetDistributionCentreById(reader.GetInt32(4));
-			employee.Role = GetRoleFromRoleName(reader.GetString(5));
+			//employee.Role = GetRoleFromRoleName(reader.GetString(5));
 			return employee;
 		}
 

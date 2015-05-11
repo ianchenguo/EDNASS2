@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="agent-doctor-container" class="container">
+    <div id="agent-doctor-left-button">
+        <div class="panel panel-default">
+            <!-- panel contents -->
+            <div class="panel-heading">Tasks</div>
+
+            <!-- list group -->
+            <div class="list-group">
+                <a class="list-group-item" href="@Url.Action("AgentDoctorRegisterPackages", "AgentDoctorCommonFeatures")">Register Package</a>
+                <a class="list-group-item" href="@Url.Action("AgentDoctorSendPackage", "AgentDoctorCommonFeatures")">Send Package</a>
+                <a class="list-group-item" href="@Url.Action("AgentDoctorReceivePackage", "AgentDoctorCommonFeatures")">Receive Package</a>
+                <a class="list-group-item" href="#" id="DoctorDistributPackageItem">Distribute Package</a>
+                <a class="list-group-item" href="#">Audit Package</a>
+                <a class="list-group-item" href="#">View Report</a>
+                <a class="list-group-item" href="#">Discard Package</a>
+
+            </div>
+
+            <!-- panel ocntents end -->
+        </div>
+    </div>
+    
+    @*Context Div Right*@
+    <div id="agent-doctor-right-context">
+        @RenderBody()
+    </div>
+</div>

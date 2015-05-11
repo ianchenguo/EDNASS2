@@ -15,10 +15,16 @@ namespace ENETCare.Business
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-			//modelBuilder.Entity<DistributionCentre>().ToTable("DistributionCentre");
+			modelBuilder.Entity<Employee>().ToTable("AspNetUsers");
+			modelBuilder.Entity<EmployeeRole>().ToTable("AspNetRoles");
+			modelBuilder.Entity<Employee>()
+				.HasMany(i => i.EmployeeRole)
+				.WithMany(s => s.Employee)
+				.Map(m => m.MapLeftKey("UserId").MapRightKey("RoleId").ToTable("AspNetUserRoles"));
 		}
 
 		public virtual DbSet<DistributionCentre> DistributionCentre { get; set; }
+		public virtual DbSet<Employee> Employee { get; set; }
 		public virtual DbSet<MedicationType> MedicationType { get; set; }
 	}
 }

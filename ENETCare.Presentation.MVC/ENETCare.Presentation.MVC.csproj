@@ -165,7 +165,6 @@
     <Compile Include="Controllers\AgentDoctorCommonFeaturesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -197,7 +196,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Content\style.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -234,17 +232,10 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorRegisterPackages.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorSendPackage.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorReceivePackage.cshtml" />
-    <Content Include="Views\Manager\ManagerHome.cshtml" />
-    <Content Include="Views\Manager\_ManagerLayout.cshtml" />
-    <Content Include="Views\Manager\ManagerDistributionCentreStock.cshtml" />
-    <Content Include="Views\Manager\ManagerDistributionCentreLosses.cshtml" />
-    <Content Include="Views\Manager\ManagerValueInTransit.cshtml" />
-    <Content Include="Views\Manager\ManagerDoctorActivity.cshtml" />
-    <Content Include="Views\Manager\ManagerDoctorActivityDoctors.cshtml" />
-    <Content Include="Views\Manager\ManagerGlobalStock.cshtml" />
+    <Content Include="Views\AgentDoctorCommonFeatures\MasterPage.cshtml" />
+    <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorRegisterPackages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
