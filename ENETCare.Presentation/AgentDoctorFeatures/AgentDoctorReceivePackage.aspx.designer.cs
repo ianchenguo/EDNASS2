@@ -11,5 +11,41 @@ namespace ENETCare.Presentation.AgentDoctorFeatures {
     
     
     public partial class AgentDoctorReceivePackage {
+        
+        /// <summary>
+        /// AgentDoctorReceivePackageAlertWindowDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AgentDoctorReceivePackageAlertWindowDiv;
+        
+        /// <summary>
+        /// AgentDoctorReceivePackageAlertWindowContentLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label AgentDoctorReceivePackageAlertWindowContentLabel;
+        
+        /// <summary>
+        /// AgentDoctorReceivePackagesBarcode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox AgentDoctorReceivePackagesBarcode;
+        
+        /// <summary>
+        /// AgentDoctorReceivePackageButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AgentDoctorReceivePackageButton;
     }
 }
