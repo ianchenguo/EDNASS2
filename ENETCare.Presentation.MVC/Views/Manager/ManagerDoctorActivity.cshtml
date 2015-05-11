@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "ManagerDoctorActivity";
+    Layout = "~/Views/Manager/_ManagerLayout.cshtml";
+}
+<div class="panel-heading">
+    <h3 class="panel-title">Doctor Activity</h3>
+</div>
+
+<div class="panel-body">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Distribution Centre</th>
+                <th>Package</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+                <th>Total Value (AUD)</th>
+                <th>Doctor Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>UTS Centre</td>
+                <td>vaccinations</td>
+                <td>1000</td>
+                <td>polio</td>
+                <td>2,000</td>
+                <td>Allan </td>
+            </tr>
+            <tr>
+                <td>UTS Centre</td>
+                <td>chloroquine pills</td>
+                <td>5,000</td>
+                <td>28 / pack</td>
+                <td>8,023</td>
+                <td>Alex </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p class="text-right"><strong>Grand Total:</strong> $19,000</p>
+
+    <a class="btn btn-default btn-float-right" href="managerDoctorActivityDoctors.html">Back</a>
+
+</div>
+

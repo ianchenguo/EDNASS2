@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "ManagerDoctorActivityDoctors";
+    Layout = "~/Views/Manager/_ManagerLayout.cshtml";
+}
+
+<div class="panel panel-default">
+    <!--panel-heading-start-->
+    <div class="panel-heading">
+        <h3 class="panel-title">Search Doctor</h3>
+    </div>
+    <!--panel-heading-end-->
+    <!--panel-body-start-->
+    <div class="panel-body">
+
+        <form class="form" action="">
+            <div class="form-group">
+                <label for="ned-doctor-search-form-centre">Distribution Centre</label>
+                <input class="form-control" id="ned-doctor-search-form-centre" placeholder="Distribution Centre" />
+            </div>
+
+            <div class="form-group">
+                <label for="ned-doctor-search-form-name">Distribution Centre</label>
+                <input class="form-control" id="ned-doctor-search-form-name" type="text" placeholder="Name" />
+            </div>
+            <button class="btn btn-primary btn-float-right" type="submit">Search</button>
+        </form>
+
+
+
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Distribution Centre</th>
+                    <th>Doctor</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>UTS Centre</td>
+                    <td><a href="managerDoctorActivity.html">Ian Guo</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a class="btn btn-default btn-float-right" href="manager.html">Back</a>
+    </div>
+    <!--panel-body-end-->
+</div>
+

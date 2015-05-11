@@ -155,3 +155,4 @@ $RECYCLE.BIN/
 # Mac desktop service store files
 .DS_Store
 /ENETCare.GUI/AgentFeatures
+/ENETCare.Presentation.MVC/App_Data

@@ -21,6 +21,8 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -163,6 +165,7 @@
     <Compile Include="Controllers\AgentDoctorCommonFeaturesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -194,6 +197,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Content\style.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -233,6 +237,14 @@
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorRegisterPackages.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorSendPackage.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorReceivePackage.cshtml" />
+    <Content Include="Views\Manager\ManagerHome.cshtml" />
+    <Content Include="Views\Manager\_ManagerLayout.cshtml" />
+    <Content Include="Views\Manager\ManagerDistributionCentreStock.cshtml" />
+    <Content Include="Views\Manager\ManagerDistributionCentreLosses.cshtml" />
+    <Content Include="Views\Manager\ManagerValueInTransit.cshtml" />
+    <Content Include="Views\Manager\ManagerDoctorActivity.cshtml" />
+    <Content Include="Views\Manager\ManagerDoctorActivityDoctors.cshtml" />
+    <Content Include="Views\Manager\ManagerGlobalStock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -272,6 +284,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

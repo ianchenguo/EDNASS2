@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/style.css")" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <!--header-start-->
+    <header class="navbar navbar-default">
+        <div class="container-fluid">
+            <!--navbar-header-start-->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#ned-navbar-content">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">ENET Care</a>
+            </div>
+            <!--navbar-header-end-->
+            <!--navbar-content-start-->
+            <div class="collapse navbar-collapse" id="ned-navbar-content">
+
+                <!--<ul class="nav navbar-nav">-->
+                <!--<li><a href="#">Medication Tracking</a></li>-->
+                <!--</ul>-->
+
+                <button class="btn btn-sm btn-default navbar-btn navbar-right btn-margin-left" type="button">
+                    Log out
+                </button>
+                <button class="btn btn-sm btn-default navbar-btn navbar-right btn-margin-left" type="button">
+                    Edit Account
+                </button>
+                <p class="navbar-text navbar-right">Welcome Chen</p>
+            </div>
+            <!--navbar-content-end-->
+        </div>
+    </header>
+    <!--header-end-->
+    <!--main-container-start-->
+    <section class="container-fluid">
+        <!--row-start-->
+        <div class="row row-same-height">
+            <!--side-menu-start-->
+            <aside class="col-xs-12 col-sm-2 ned-side-menu col-sm-height">
+                <!--panel start-->
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Tasks</div>
+
+                    <!-- List group -->
+                    <div class="list-group">
+                        <a class="list-group-item" href="managerDistributionCentreStockCentres.html">Distribution Centre Stock</a>
+                        <a class="list-group-item" href="managerGlobalStock.html">Global Stock</a>
+                        <a class="list-group-item" href="managerDistributionCentreLosses.html">Distribution Centre Losses</a>
+                        <a class="list-group-item" href="managerValueInTransition.html">Value in Transition</a>
+                        <a class="list-group-item" href="managerDoctorActivity.html">Doctor Activity</a>
+                    </div>
+                </div>
+                <!--panel end-->
+
+            </aside>
+            <!--side-menu-end-->
+            <!--main-section-start-->
+            <section class="col-xs-12 col-sm-9 col-sm-offset-1 ned-main-section col-sm-height">
+
+                <!--panel-start-->
+                <div class="panel panel-default">
+                    <!--panel-body-start-->
+                    
+                        @RenderBody()
+                    
+                    <!--panel-body-end-->
+                </div>
+                <!--panel-end-->
+            </section>
+            <!--main-section-end-->
+        </div>
+        <!--row-end-->
+    </section>
+    <!--main-container-end-->
+    <!--&lt;!&ndash;footer-start&ndash;&gt;-->
+    <!--<footer class="container">-->
+    <!--footer goes here-->
+    <!--</footer>-->
+    <!--&lt;!&ndash;footer-end&ndash;&gt;-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

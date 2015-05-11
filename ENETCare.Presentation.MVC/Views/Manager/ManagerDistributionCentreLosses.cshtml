@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "ManagerDistributionCentreLosses";
+    Layout = "~/Views/Manager/_ManagerLayout.cshtml";
+}
+
+<div class="panel-heading">
+    <h3 class="panel-title">Distribution Centre Losses</h3>
+</div>
+
+<div class="panel-body">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Distribution Centre</th>
+                <th>Value of Lost/Discarded Packages(AUD)</th>
+                <th>Loss Ratio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="danger">
+                <td>UTS Centre</td>
+                <td>10,000</td>
+                <td>11%</td>
+            </tr>
+            <tr>
+                <td>UTS Centre</td>
+                <td>500,000</td>
+                <td>8%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-default btn-float-right" href="manager.html">Back</a>
+
+</div>

@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "ManagerGlobalStock";
+    Layout = "~/Views/Manager/_ManagerLayout.cshtml";
+}
+<div class="panel panel-default">
+    <!--panel-heading-start-->
+    <div class="panel-heading">
+        <h3 class="panel-title">Global Stock</h3>
+    </div>
+    <!--panel-heading-end-->
+    <!--panel-body-start-->
+    <div class="panel-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Package</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Total Value (AUD)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>vaccinations</td>
+                    <td>10,000,000</td>
+                    <td>polio</td>
+                    <td>200,000,000</td>
+                </tr>
+                <tr>
+                    <td>chloroquine pills</td>
+                    <td>500,000,000</td>
+                    <td>28 / pack</td>
+                    <td>8,932,023,000</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-right"><strong>Grand Total:</strong> $999,999,999,999</p>
+
+        <a class="btn btn-default btn-float-right" href="managerDistributionCentreStockCentres.html">Back</a>
+
+    </div>
+    <!--panel-body-end-->
+</div>
+
+
