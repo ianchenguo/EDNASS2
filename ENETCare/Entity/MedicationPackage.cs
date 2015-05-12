@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ENETCare.Business
 {
@@ -10,17 +11,26 @@ namespace ENETCare.Business
 	{
 		public int ID { get; set; }
 		public string Barcode { get; set; }
-		public MedicationType Type { get; set; }
+		[Column("Type")]
+		public int TypeId { get; set; }
 		public DateTime ExpireDate { get; set; }
 		public PackageStatus Status { get; set; }
-		public DistributionCentre StockDC { get; set; }
-		public DistributionCentre SourceDC { get; set; }
-		public DistributionCentre DestinationDC { get; set; }
-		public DateTime UpdateTime { get; set; }
+		[Column("StockDC")]
+		public int? StockDCId { get; set; }
+		[Column("SourceDC")]
+		public int? SourceDCId { get; set; }
+		[Column("DestinationDC")]
+		public int? DestinationDCId { get; set; }
 		public string Operator { get; set; }
+		public DateTime UpdateTime { get; set; }
+
+		public virtual MedicationType Type { get; set; }
+		public virtual DistributionCentre StockDC { get; set; }
+		public virtual DistributionCentre SourceDC { get; set; }
+		public virtual DistributionCentre DestinationDC { get; set; }
 	}
 
-	public enum PackageStatus
+	public enum PackageStatus : short
 	{
 		InStock = 0,
 		InTransit = 1,

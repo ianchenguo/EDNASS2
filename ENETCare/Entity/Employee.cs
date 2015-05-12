@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ENETCare.Business
@@ -19,7 +18,7 @@ namespace ENETCare.Business
 		public string Fullname { get; set; }
 		public string Email { get; set; }
 		//public Role Role { get; set; }
-		[Column("DistributionCentre_Id", TypeName = "int")]
+		[Column("DistributionCentre_Id")]
 		public int DistributionCentreId { get; set; }
 
 		public virtual ICollection<EmployeeRole> EmployeeRole { get; set; }

@@ -151,8 +151,8 @@ namespace ENETCare.Business
 		/// <summary>
 		/// Deletes a medication package record from the database corresponding to the package id.
 		/// </summary>
-		/// <param name="packageId">medication package id</param>
-		public void DeletePackage(int packageId)
+		/// <param name="package">medication package</param>
+		public void DeletePackage(MedicationPackage package)
 		{
 			using (SqlConnection conn = new SqlConnection())
 			{
@@ -161,7 +161,7 @@ namespace ENETCare.Business
 				string query = @"delete from MedicationPackage
 								  where ID = @id";
 				SqlCommand command = new SqlCommand(query, conn);
-				command.Parameters.Add(new SqlParameter("id", packageId));
+				command.Parameters.Add(new SqlParameter("id", package.ID));
 				command.ExecuteNonQuery();
 			}
 		}

@@ -30,7 +30,7 @@ namespace ENETCare.Business
 		{
 			using (DatabaseEntities context = new DatabaseEntities())
 			{
-				return context.DistributionCentre.SingleOrDefault(element => element.ID == id);
+				return context.DistributionCentre.SingleOrDefault(x => x.ID == id);
 			}
 		}
 	}

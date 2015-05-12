@@ -60,6 +60,7 @@
     <Compile Include="DAL\DataReaderDAO\ReportDataReaderDAO.cs" />
     <Compile Include="DAL\DataReaderDAO\DataReaderDAO.cs" />
     <Compile Include="DAL\EntityFrameworkDAO\EmployeeEntityFrameworkDAO.cs" />
+    <Compile Include="DAL\EntityFrameworkDAO\MedicationPackageEntityFrameworkDAO.cs" />
     <Compile Include="DAL\EntityFrameworkDAO\MedicationTypeEntityFrameworkDAO.cs" />
     <Compile Include="DAL\EntityFrameworkDAO\DistributionCentreEntityFrameworkDAO.cs" />
     <Compile Include="DAL\Interface\ReportDAO.cs" />

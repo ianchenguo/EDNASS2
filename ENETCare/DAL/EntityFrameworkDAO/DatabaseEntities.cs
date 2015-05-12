@@ -26,5 +26,6 @@ namespace ENETCare.Business
 		public virtual DbSet<DistributionCentre> DistributionCentre { get; set; }
 		public virtual DbSet<Employee> Employee { get; set; }
 		public virtual DbSet<MedicationType> MedicationType { get; set; }
+		public virtual DbSet<MedicationPackage> MedicationPackage { get; set; }
 	}
 }

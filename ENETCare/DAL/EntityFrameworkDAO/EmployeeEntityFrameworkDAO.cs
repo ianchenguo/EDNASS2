@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 namespace ENETCare.Business
@@ -46,7 +45,7 @@ namespace ENETCare.Business
 		{
 			using (DatabaseEntities context = new DatabaseEntities())
 			{
-				return context.Employee.Include(x => x.DistributionCentre).Include(x => x.EmployeeRole).SingleOrDefault(element => element.Username == username);
+				return context.Employee.SingleOrDefault(x => x.Username == username);
 			}
 		}
 	}

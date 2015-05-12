@@ -104,11 +104,9 @@ namespace ENETCare.Business
 				barcode = BarcodeHelper.GenerateBarcode();
 			}
 			package.Barcode = barcode;
-			package.Type = medicationType;
+			package.TypeId = medicationType.ID;
 			package.ExpireDate = expireDate;
-			package.Status = PackageStatus.InStock;
-			package.StockDC = User.DistributionCentre;
-			package.Operator = User.Username;
+			ManipulatePackage(package, PackageStatus.InStock, User.DistributionCentreId, null, null);
 			MedicationPackageDAO.InsertPackage(package);
 			return barcode;
 		}
@@ -140,7 +138,7 @@ namespace ENETCare.Business
 			{
 				throw new ENETCareException(Properties.Resources.MedicationPackageNotFound);
 			}
-			if (User.DistributionCentre.ID == destination.ID)
+			if (User.DistributionCentreId == destination.ID)
 			{
 				throw new ENETCareException(Properties.Resources.AnotherDistributionCentre);
 			}
@@ -150,16 +148,12 @@ namespace ENETCare.Business
 				{
 					throw new ENETCareException(Properties.Resources.IncorrectPackageStatus);
 				}
-				if (package.StockDC == null || package.StockDC.ID != User.DistributionCentre.ID)
+				if (package.StockDCId != User.DistributionCentreId)
 				{
 					throw new ENETCareException(Properties.Resources.IncorrectDistributionCentreStock);
 				}
 			}
-			package.Status = PackageStatus.InTransit;
-			package.StockDC = null;
-			package.SourceDC = User.DistributionCentre;
-			package.DestinationDC = destination;
-			package.Operator = User.Username;
+			ManipulatePackage(package, PackageStatus.InTransit, null, User.DistributionCentreId, destination.ID);
 			MedicationPackageDAO.UpdatePackage(package);
 		}
 
@@ -185,16 +179,12 @@ namespace ENETCare.Business
 				{
 					throw new ENETCareException(Properties.Resources.IncorrectPackageStatus);
 				}
-				if (package.DestinationDC == null || package.DestinationDC.ID != User.DistributionCentre.ID)
+				if (package.DestinationDCId != User.DistributionCentreId)
 				{
 					throw new ENETCareException(Properties.Resources.IncorrectDistributionCentreDestination);
 				}
 			}
-			package.Status = PackageStatus.InStock;
-			package.StockDC = User.DistributionCentre;
-			package.SourceDC = null;
-			package.DestinationDC = null;
-			package.Operator = User.Username;
+			ManipulatePackage(package, PackageStatus.InStock, User.DistributionCentreId, null, null);
 			MedicationPackageDAO.UpdatePackage(package);
 		}
 
@@ -220,16 +210,12 @@ namespace ENETCare.Business
 				{
 					throw new ENETCareException(Properties.Resources.IncorrectPackageStatus);
 				}
-				if (package.StockDC == null || package.StockDC.ID != User.DistributionCentre.ID)
+				if (package.StockDCId != User.DistributionCentreId)
 				{
 					throw new ENETCareException(Properties.Resources.IncorrectDistributionCentreStock);
 				}
 			}
-			package.Status = PackageStatus.Distributed;
-			package.StockDC = User.DistributionCentre;
-			package.SourceDC = null;
-			package.DestinationDC = null;
-			package.Operator = User.Username;
+			ManipulatePackage(package, PackageStatus.Distributed, User.DistributionCentreId, null, null);
 			MedicationPackageDAO.UpdatePackage(package);
 		}
 
@@ -255,16 +241,12 @@ namespace ENETCare.Business
 				{
 					throw new ENETCareException(Properties.Resources.IncorrectPackageStatus);
 				}
-				if (package.StockDC == null || package.StockDC.ID != User.DistributionCentre.ID)
+				if (package.StockDCId != User.DistributionCentreId)
 				{
 					throw new ENETCareException(Properties.Resources.IncorrectDistributionCentreStock);
 				}
 			}
-			package.Status = PackageStatus.Discarded;
-			package.StockDC = User.DistributionCentre;
-			package.SourceDC = null;
-			package.DestinationDC = null;
-			package.Operator = User.Username;
+			ManipulatePackage(package, PackageStatus.Discarded, User.DistributionCentreId, null, null);
 			MedicationPackageDAO.UpdatePackage(package);
 		}
 
@@ -278,7 +260,7 @@ namespace ENETCare.Business
 		/// <returns>a list of package barcode, medication type, expire date and expire status</returns>
 		public List<StocktakingViewData> Stocktake()
 		{
-			List<MedicationPackage> packages = MedicationPackageDAO.FindInStockPackagesInDistributionCentre(User.DistributionCentre.ID);
+			List<MedicationPackage> packages = MedicationPackageDAO.FindInStockPackagesInDistributionCentre(User.DistributionCentreId);
 			List<StocktakingViewData> list = new List<StocktakingViewData>();
 			const int warningDays = 7;
 			foreach (MedicationPackage package in packages)
@@ -325,17 +307,13 @@ namespace ENETCare.Business
 				RegisterPackage(medicationType, expireDate, barcode);
 				updated = true;
 			}
-			else if (package.Type.ID != medicationTypeId)
+			else if (package.TypeId != medicationTypeId)
 			{
 				throw new ENETCareException(Properties.Resources.MedicationTypeNotMatched);
 			}
-			else if (package.Status != PackageStatus.InStock || package.StockDC.ID != User.DistributionCentre.ID)
+			else if (package.Status != PackageStatus.InStock || package.StockDCId != User.DistributionCentreId)
 			{
-				package.Status = PackageStatus.InStock;
-				package.StockDC = User.DistributionCentre;
-				package.SourceDC = null;
-				package.DestinationDC = null;
-				package.Operator = User.Username;
+				ManipulatePackage(package, PackageStatus.InStock, User.DistributionCentreId, null, null);
 				MedicationPackageDAO.UpdatePackage(package);
 				updated = true;
 			}
@@ -356,8 +334,7 @@ namespace ENETCare.Business
 			{
 				if (!scannedList.Contains(package.Barcode))
 				{
-					package.Status = PackageStatus.Lost;
-					package.Operator = User.Username;
+					ManipulatePackage(package, PackageStatus.Lost, User.DistributionCentreId, null, null);
 					lostPackages.Add(package);
 					MedicationPackageDAO.UpdatePackage(package);
 				}
@@ -367,7 +344,29 @@ namespace ENETCare.Business
 
 		public List<MedicationPackage> GetInStockList(int medicationTypeId)
 		{
-			return MedicationPackageDAO.FindInStockPackagesInDistributionCentre(User.DistributionCentre.ID, medicationTypeId);
+			return MedicationPackageDAO.FindInStockPackagesInDistributionCentre(User.DistributionCentreId, medicationTypeId);
+		}
+
+		#endregion
+
+		#region Implementation
+
+		/// <summary>
+		/// Manipulate package updating its status and related distribution centres
+		/// </summary>
+		/// <param name="package">medication package</param>
+		/// <param name="status">package status </param>
+		/// <param name="stockDC">stock distribution centre</param>
+		/// <param name="sourceDC">source distribution centre</param>
+		/// <param name="destinationDC">destination distribution centre</param>
+		void ManipulatePackage(MedicationPackage package, PackageStatus status, int? stockDC, int? sourceDC, int? destinationDC)
+		{
+			package.Status = status;
+			package.StockDCId = stockDC;
+			package.SourceDCId = sourceDC;
+			package.DestinationDCId = destinationDC;
+			package.Operator = User.Username;
+			package.UpdateTime = TimeProvider.Current.Now;
 		}
 
 		#endregion
