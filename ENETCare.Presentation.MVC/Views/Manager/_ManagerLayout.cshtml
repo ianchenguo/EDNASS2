@@ -1,10 +1,12 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+    <title>@ViewBag.Title</title>
 
     <!-- Bootstrap -->
     <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
@@ -66,11 +68,11 @@
 
                     <!-- List group -->
                     <div class="list-group">
-                        <a class="list-group-item" href="managerDistributionCentreStockCentres.html">Distribution Centre Stock</a>
-                        <a class="list-group-item" href="managerGlobalStock.html">Global Stock</a>
-                        <a class="list-group-item" href="managerDistributionCentreLosses.html">Distribution Centre Losses</a>
-                        <a class="list-group-item" href="managerValueInTransition.html">Value in Transition</a>
-                        <a class="list-group-item" href="managerDoctorActivity.html">Doctor Activity</a>
+                        <a class="list-group-item" href="@Url.Action("ManagerDistributionCentreStock","Manager")">Distribution Centre Stock</a>
+                        <a class="list-group-item" href="@Url.Action("ManagerGlobalStock","Manager")">Global Stock</a>
+                        <a class="list-group-item" href="@Url.Action("ManagerDistributionCentreLosses","Manager")">Distribution Centre Losses</a>
+                        <a class="list-group-item" href="@Url.Action("ManagerValueInTransit","Manager")">Value in Transition</a>
+                        <a class="list-group-item" href="@Url.Action("ManagerDoctorActivity","Manager")">Doctor Activity</a>
                     </div>
                 </div>
                 <!--panel end-->
