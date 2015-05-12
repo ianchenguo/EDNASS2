@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace ENETCare.Business
@@ -32,6 +33,7 @@ namespace ENETCare.Business
 			{
 				return context.Employee
 					.Where(e => e.EmployeeRole.Any(r => r.Name == role.ToString()))
+					.Include(x => x.DistributionCentre)
 					.ToList();
 			}
 		}

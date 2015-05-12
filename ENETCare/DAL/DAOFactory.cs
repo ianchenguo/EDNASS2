@@ -29,7 +29,7 @@ namespace ENETCare.Business
 
 		public static ReportDAO GetReportDAO()
 		{
-			return new ReportDataReaderDAO();
+			return new ReportEntityFrameworkDAO();
 		}
 	}
 }
