@@ -36,6 +36,8 @@ namespace ENETCareTest
 			TimeProvider.ResetToDefault();
 		}
 
+		#region Prepare Test Data
+
 		void PrepareTestData()
 		{
 			dc1 = new DistributionCentre();
@@ -55,14 +57,14 @@ namespace ENETCareTest
 			agent.Fullname = "Innkeeper";
 			agent.Email = "hearthstone@blizzard.com";
 			agent.EmployeeRole.Add(new EmployeeRole { Id = "1", Name = Role.Agent.ToString() });
-			agent.DistributionCentre = dc1;
+			agent.DistributionCentreId = dc1.ID;
 
 			doctor = new Employee();
 			doctor.Username = "starcraft";
 			doctor.Fullname = "Jim Raynor";
 			doctor.Email = "starCraft@blizzard.com";
 			doctor.EmployeeRole.Add(new EmployeeRole { Id = "2", Name = Role.Doctor.ToString() });
-			doctor.DistributionCentre = dc2;
+			doctor.DistributionCentreId = dc2.ID;
 
 			type1 = new MedicationType();
 			type1.ID = 1;
@@ -78,6 +80,10 @@ namespace ENETCareTest
 			type2.Value = 3000;
 			type2.IsSensitive = true;
 		}
+
+		#endregion
+
+		#region Register Package
 
 		[TestMethod]
 		public void RegisterPackage_WithValidData_ShouldBeRegistered()
@@ -100,7 +106,7 @@ namespace ENETCareTest
 			bll.RegisterPackage(type1.ID, expireDate, barcode);
 
 			// Assert
-			AssertPackage(barcode, PackageStatus.InStock, dc1, null, null, username, result);
+			AssertPackageMatchesExpected(barcode, PackageStatus.InStock, dc1.ID, null, null, username, result);
 		}
 
 		[TestMethod]
@@ -125,7 +131,7 @@ namespace ENETCareTest
 			bll.RegisterPackage(type1.ID, expireDate, barcode);
 
 			// Assert
-			Assert.Fail();
+			Assert.Fail("Medication type not found");
 		}
 
 		[TestMethod]
@@ -150,8 +156,12 @@ namespace ENETCareTest
 			bll.RegisterPackage(type1.ID, expireDate, barcode);
 
 			// Assert
-			Assert.Fail();
+			Assert.Fail("Invalid date format");
 		}
+
+		#endregion
+
+		#region Send Package
 
 		[TestMethod]
 		public void SendPackage_WithValidData_ShouldBeSent()
@@ -165,7 +175,7 @@ namespace ENETCareTest
 			distributionCentreDAO.Setup(x => x.GetDistributionCentreById(It.IsAny<int>())).Returns(dc2);
 			employeeDAO.Setup(x => x.GetEmployeeByUserName(It.IsAny<string>())).Returns(agent);
 			medicationPackageDAO.Setup(x => x.FindPackageByBarcode(It.IsAny<string>())).Returns(
-				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InStock, StockDC = dc1, SourceDC = null, DestinationDC = null, Operator = username });
+				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InStock, StockDCId = dc1.ID, SourceDCId = null, DestinationDCId = null, Operator = username });
 			medicationPackageDAO.Setup(x => x.UpdatePackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			bll.DistributionCentreDAO = distributionCentreDAO.Object;
 			bll.EmployeeDAO = employeeDAO.Object;
@@ -175,7 +185,7 @@ namespace ENETCareTest
 			bll.SendPackage(barcode, dc2.ID);
 
 			// Assert
-			AssertPackage(barcode, PackageStatus.InTransit, null, dc1, dc2, username, result);
+			AssertPackageMatchesExpected(barcode, PackageStatus.InTransit, null, dc1.ID, dc2.ID, username, result);
 		}
 
 		[TestMethod]
@@ -200,7 +210,7 @@ namespace ENETCareTest
 			bll.SendPackage(barcode, dc2.ID);
 
 			// Assert
-			Assert.Fail();
+			Assert.Fail("Medication package not found");
 		}
 
 		[TestMethod]
@@ -216,7 +226,7 @@ namespace ENETCareTest
 			distributionCentreDAO.Setup(x => x.GetDistributionCentreById(It.IsAny<int>())).Returns(dc1);
 			employeeDAO.Setup(x => x.GetEmployeeByUserName(It.IsAny<string>())).Returns(agent);
 			medicationPackageDAO.Setup(x => x.FindPackageByBarcode(It.IsAny<string>())).Returns(
-				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InStock, StockDC = dc1, SourceDC = null, DestinationDC = null, Operator = username });
+				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InStock, StockDCId = dc1.ID, SourceDCId = null, DestinationDCId = null, Operator = username });
 			medicationPackageDAO.Setup(x => x.UpdatePackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			bll.DistributionCentreDAO = distributionCentreDAO.Object;
 			bll.EmployeeDAO = employeeDAO.Object;
@@ -226,8 +236,12 @@ namespace ENETCareTest
 			bll.SendPackage(barcode, dc1.ID);
 
 			// Assert
-			Assert.Fail();
+			Assert.Fail("Cannot send package to current distribution centre");
 		}
+
+		#endregion
+
+		#region Receive Package
 
 		[TestMethod]
 		public void ReceivePackage_WithValidData_ShouldBeReceived()
@@ -240,7 +254,7 @@ namespace ENETCareTest
 			// Arrange
 			employeeDAO.Setup(x => x.GetEmployeeByUserName(It.IsAny<string>())).Returns(doctor);
 			medicationPackageDAO.Setup(x => x.FindPackageByBarcode(It.IsAny<string>())).Returns(
-				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InTransit, StockDC = null, SourceDC = dc1, DestinationDC = dc2, Operator = agent.Username });
+				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InTransit, StockDCId = null, SourceDCId = dc1.ID, DestinationDCId = dc2.ID, Operator = agent.Username });
 			medicationPackageDAO.Setup(x => x.UpdatePackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			bll.EmployeeDAO = employeeDAO.Object;
 			bll.MedicationPackageDAO = medicationPackageDAO.Object;
@@ -249,7 +263,7 @@ namespace ENETCareTest
 			bll.ReceivePackage(barcode);
 
 			// Assert
-			AssertPackage(barcode, PackageStatus.InStock, dc2, null, null, username, result);
+			AssertPackageMatchesExpected(barcode, PackageStatus.InStock, dc2.ID, null, null, username, result);
 		}
 
 		[TestMethod]
@@ -263,7 +277,7 @@ namespace ENETCareTest
 			// Arrange
 			employeeDAO.Setup(x => x.GetEmployeeByUserName(It.IsAny<string>())).Returns(doctor);
 			medicationPackageDAO.Setup(x => x.FindPackageByBarcode(It.IsAny<string>())).Returns(
-				new MedicationPackage { Barcode = barcode, Status = PackageStatus.Lost, StockDC = null, SourceDC = dc1, DestinationDC = dc2, Operator = agent.Username });
+				new MedicationPackage { Barcode = barcode, Status = PackageStatus.Lost, StockDCId = null, SourceDCId = dc1.ID, DestinationDCId = dc2.ID, Operator = agent.Username });
 			medicationPackageDAO.Setup(x => x.UpdatePackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			bll.EmployeeDAO = employeeDAO.Object;
 			bll.MedicationPackageDAO = medicationPackageDAO.Object;
@@ -272,8 +286,12 @@ namespace ENETCareTest
 			bll.ReceivePackage(barcode);
 
 			// Assert
-			AssertPackage(barcode, PackageStatus.InStock, dc2, null, null, username, result);
+			AssertPackageMatchesExpected(barcode, PackageStatus.InStock, dc2.ID, null, null, username, result);
 		}
+
+		#endregion
+
+		#region Distribute Package
 
 		[TestMethod]
 		public void DistributePackage_WithValidData_ShouldBeDistributed()
@@ -286,7 +304,7 @@ namespace ENETCareTest
 			// Arrange
 			employeeDAO.Setup(x => x.GetEmployeeByUserName(It.IsAny<string>())).Returns(doctor);
 			medicationPackageDAO.Setup(x => x.FindPackageByBarcode(It.IsAny<string>())).Returns(
-				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InStock, StockDC = dc2, SourceDC = null, DestinationDC = null, Operator = agent.Username });
+				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InStock, StockDCId = dc2.ID, SourceDCId = null, DestinationDCId = null, Operator = agent.Username });
 			medicationPackageDAO.Setup(x => x.UpdatePackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			bll.EmployeeDAO = employeeDAO.Object;
 			bll.MedicationPackageDAO = medicationPackageDAO.Object;
@@ -295,7 +313,7 @@ namespace ENETCareTest
 			bll.DistributePackage(barcode);
 
 			// Assert
-			AssertPackage(barcode, PackageStatus.Distributed, dc2, null, null, username, result);
+			AssertPackageMatchesExpected(barcode, PackageStatus.Distributed, dc2.ID, null, null, username, result);
 		}
 
 		[TestMethod]
@@ -309,7 +327,7 @@ namespace ENETCareTest
 			// Arrange
 			employeeDAO.Setup(x => x.GetEmployeeByUserName(It.IsAny<string>())).Returns(doctor);
 			medicationPackageDAO.Setup(x => x.FindPackageByBarcode(It.IsAny<string>())).Returns(
-				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InStock, StockDC = dc1, SourceDC = null, DestinationDC = null, Operator = agent.Username });
+				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InStock, StockDCId = dc1.ID, SourceDCId = null, DestinationDCId = null, Operator = agent.Username });
 			medicationPackageDAO.Setup(x => x.UpdatePackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			bll.EmployeeDAO = employeeDAO.Object;
 			bll.MedicationPackageDAO = medicationPackageDAO.Object;
@@ -318,8 +336,12 @@ namespace ENETCareTest
 			bll.DistributePackage(barcode);
 
 			// Assert
-			AssertPackage(barcode, PackageStatus.Distributed, dc2, null, null, username, result);
+			AssertPackageMatchesExpected(barcode, PackageStatus.Distributed, dc2.ID, null, null, username, result);
 		}
+
+		#endregion
+
+		#region Discard Package
 
 		[TestMethod]
 		public void DiscardPackage_WithValidData_ShouldBeDiscarded()
@@ -332,7 +354,7 @@ namespace ENETCareTest
 			// Arrange
 			employeeDAO.Setup(x => x.GetEmployeeByUserName(It.IsAny<string>())).Returns(doctor);
 			medicationPackageDAO.Setup(x => x.FindPackageByBarcode(It.IsAny<string>())).Returns(
-				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InStock, StockDC = dc2, SourceDC = null, DestinationDC = null, Operator = agent.Username });
+				new MedicationPackage { Barcode = barcode, Status = PackageStatus.InStock, StockDCId = dc2.ID, SourceDCId = null, DestinationDCId = null, Operator = agent.Username });
 			medicationPackageDAO.Setup(x => x.UpdatePackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			bll.EmployeeDAO = employeeDAO.Object;
 			bll.MedicationPackageDAO = medicationPackageDAO.Object;
@@ -341,7 +363,7 @@ namespace ENETCareTest
 			bll.DiscardPackage(barcode);
 
 			// Assert
-			AssertPackage(barcode, PackageStatus.Discarded, dc2, null, null, username, result);
+			AssertPackageMatchesExpected(barcode, PackageStatus.Discarded, dc2.ID, null, null, username, result);
 		}
 
 		[TestMethod]
@@ -355,7 +377,7 @@ namespace ENETCareTest
 			// Arrange
 			employeeDAO.Setup(x => x.GetEmployeeByUserName(It.IsAny<string>())).Returns(doctor);
 			medicationPackageDAO.Setup(x => x.FindPackageByBarcode(It.IsAny<string>())).Returns(
-				new MedicationPackage { Barcode = barcode, Status = PackageStatus.Distributed, StockDC = dc2, SourceDC = null, DestinationDC = null, Operator = agent.Username });
+				new MedicationPackage { Barcode = barcode, Status = PackageStatus.Distributed, StockDCId = dc2.ID, SourceDCId = null, DestinationDCId = null, Operator = agent.Username });
 			medicationPackageDAO.Setup(x => x.UpdatePackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			bll.EmployeeDAO = employeeDAO.Object;
 			bll.MedicationPackageDAO = medicationPackageDAO.Object;
@@ -364,8 +386,12 @@ namespace ENETCareTest
 			bll.DiscardPackage(barcode);
 
 			// Assert
-			AssertPackage(barcode, PackageStatus.Discarded, dc2, null, null, username, result);
+			AssertPackageMatchesExpected(barcode, PackageStatus.Discarded, dc2.ID, null, null, username, result);
 		}
+
+		#endregion
+
+		#region Stocktaking
 
 		[TestMethod]
 		public void Stocktake_WithDifferentExpireStatus_ShouldBeIdentified()
@@ -400,6 +426,10 @@ namespace ENETCareTest
 			Assert.AreEqual(ExpireStatus.NotExpired, list[2].ExpireStatus);
 		}
 
+		#endregion
+
+		#region Audit
+
 		[TestMethod]
 		public void AuditScan_WithNonExistingBarcode_ShouldBeRegistered()
 		{
@@ -423,7 +453,7 @@ namespace ENETCareTest
 			updated = bll.CheckAndUpdatePackage(type1.ID, barcode);
 
 			// Assert
-			AssertPackage(barcode, PackageStatus.InStock, dc2, null, null, username, result);
+			AssertPackageMatchesExpected(barcode, PackageStatus.InStock, dc2.ID, null, null, username, result);
 			Assert.AreEqual(true, updated);
 		}
 
@@ -440,7 +470,7 @@ namespace ENETCareTest
 			employeeDAO.Setup(x => x.GetEmployeeByUserName(It.IsAny<string>())).Returns(doctor);
 			medicationTypeDAO.Setup(x => x.GetMedicationTypeById(It.IsAny<int>())).Returns(type1);
 			medicationPackageDAO.Setup(x => x.FindPackageByBarcode(It.IsAny<string>())).Returns(
-				new MedicationPackage { Barcode = barcode, Type = type1, Status = PackageStatus.Lost, StockDC = dc1, SourceDC = null, DestinationDC = null, Operator = username });
+				new MedicationPackage { Barcode = barcode, TypeId = type1.ID, Status = PackageStatus.Lost, StockDCId = dc1.ID, SourceDCId = null, DestinationDCId = null, Operator = username });
 			medicationPackageDAO.Setup(x => x.InsertPackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			medicationPackageDAO.Setup(x => x.UpdatePackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			bll.EmployeeDAO = employeeDAO.Object;
@@ -452,7 +482,7 @@ namespace ENETCareTest
 
 			// Assert
 			Assert.AreEqual(true, updated);
-			AssertPackage(barcode, PackageStatus.InStock, dc2, null, null, username, result);
+			AssertPackageMatchesExpected(barcode, PackageStatus.InStock, dc2.ID, null, null, username, result);
 		}
 
 		[TestMethod]
@@ -469,7 +499,7 @@ namespace ENETCareTest
 			employeeDAO.Setup(x => x.GetEmployeeByUserName(It.IsAny<string>())).Returns(doctor);
 			medicationTypeDAO.Setup(x => x.GetMedicationTypeById(It.IsAny<int>())).Returns(type1);
 			medicationPackageDAO.Setup(x => x.FindPackageByBarcode(It.IsAny<string>())).Returns(
-				new MedicationPackage { Barcode = barcode, Type = type2, Status = PackageStatus.Lost, StockDC = dc1, SourceDC = null, DestinationDC = null, Operator = username });
+				new MedicationPackage { Barcode = barcode, TypeId = type2.ID, Status = PackageStatus.Lost, StockDCId = dc1.ID, SourceDCId = null, DestinationDCId = null, Operator = username });
 			medicationPackageDAO.Setup(x => x.InsertPackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			medicationPackageDAO.Setup(x => x.UpdatePackage(It.IsAny<MedicationPackage>())).Callback<MedicationPackage>(r => result = r);
 			bll.EmployeeDAO = employeeDAO.Object;
@@ -480,7 +510,7 @@ namespace ENETCareTest
 			updated = bll.CheckAndUpdatePackage(type1.ID, barcode);
 
 			// Assert
-			Assert.Fail();
+			Assert.Fail("Medication type not matched");
 		}
 
 		[TestMethod]
@@ -511,8 +541,8 @@ namespace ENETCareTest
 
 			// Assert
 			Assert.AreEqual(2, lostPackages.Count);
-			AssertPackage("100002", PackageStatus.Lost, dc2, null, null, username, lostPackages[0]);
-			AssertPackage("100004", PackageStatus.Lost, dc2, null, null, username, lostPackages[1]);
+			AssertPackageMatchesExpected("100002", PackageStatus.Lost, dc2.ID, null, null, username, lostPackages[0]);
+			AssertPackageMatchesExpected("100004", PackageStatus.Lost, dc2.ID, null, null, username, lostPackages[1]);
 		}
 
 		[TestMethod]
@@ -545,26 +575,32 @@ namespace ENETCareTest
 			Assert.AreEqual(0, lostPackages.Count);
 		}
 
-		void AssertPackage(string expectedBarcode, PackageStatus expectedStatus, DistributionCentre expectedStockDC, DistributionCentre expectedSourceDC, DistributionCentre expectedDestinationDC, string expectedUsername, MedicationPackage result)
+		#endregion
+
+		#region Implementation
+
+		void AssertPackageMatchesExpected(string expectedBarcode, PackageStatus expectedStatus, int? expectedStockDC, int? expectedSourceDC, int? expectedDestinationDC, string expectedUsername, MedicationPackage result)
 		{
 			Assert.AreEqual(expectedBarcode, result.Barcode);
 			Assert.AreEqual(expectedStatus, result.Status);
-			AssertDistributionCentre(expectedStockDC, result.StockDC);
-			AssertDistributionCentre(expectedSourceDC, result.SourceDC);
-			AssertDistributionCentre(expectedDestinationDC, result.DestinationDC);
+			AssertDistributionCentreEqual(expectedStockDC, result.StockDCId);
+			AssertDistributionCentreEqual(expectedSourceDC, result.SourceDCId);
+			AssertDistributionCentreEqual(expectedDestinationDC, result.DestinationDCId);
 			Assert.AreEqual(expectedUsername, result.Operator);
 		}
 
-		void AssertDistributionCentre(DistributionCentre expected, DistributionCentre result)
+		void AssertDistributionCentreEqual(int? expected, int? result)
 		{
 			if (expected != null)
 			{
-				Assert.AreEqual(expected.ID, result.ID);
+				Assert.AreEqual(expected, result);
 			}
 			else
 			{
 				Assert.IsNull(result);
 			}
 		}
+
+		#endregion
 	}
 }
