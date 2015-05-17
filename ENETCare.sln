@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCare.Business", "ENETCare\ENETCare.Business.csproj", "{9F876451-A2D2-45B1-A517-6107856497F4}"
 EndProject
@@ -19,6 +19,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0C4218
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCare.Presentation.MVC", "ENETCare.Presentation.MVC\ENETCare.Presentation.MVC.csproj", "{29FAC054-FEA6-4A2C-896F-0FF74698CAAD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LocalDB", "LocalDB", "{8807F0CE-5F60-4D0B-8D28-272CC3B688D2}"
+	ProjectSection(SolutionItems) = preProject
+		LocalDB\LocalDB.mdf = LocalDB\LocalDB.mdf
+		LocalDB\LocalDB_log.ldf = LocalDB\LocalDB_log.ldf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
