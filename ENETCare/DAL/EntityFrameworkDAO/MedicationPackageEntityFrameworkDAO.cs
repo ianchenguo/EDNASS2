@@ -92,6 +92,7 @@ namespace ENETCare.Business
 		{
 			using (DatabaseEntities context = new DatabaseEntities())
 			{
+				context.MedicationPackage.Attach(package);
 				context.MedicationPackage.Remove(package);
 				context.SaveChanges();
 			}

@@ -9,7 +9,7 @@ namespace ENETCare.Business
 	/// </summary>
 	public class MedicationPackageDataReaderDAO : DataReaderDAO, MedicationPackageDAO
 	{
-		string selectStatement = "select ID, Barcode, Type, ExpireDate, Status, ISNULL(StockDC, ''), ISNULL(SourceDC, ''), ISNULL(DestinationDC, ''), Operator";
+		string selectStatement = "select ID, Barcode, Type, ExpireDate, Status, StockDC, SourceDC, DestinationDC, Operator";
 		string fromClause = "from MedicationPackage";
 
 		/// <summary>
@@ -180,12 +180,36 @@ namespace ENETCare.Business
 			package.Type = GetMedicationTypeByID(reader.GetInt32(2));
 			package.ExpireDate = reader.GetDateTime(3);
 			package.Status = (PackageStatus)reader.GetInt16(4);
-			package.StockDCId = reader.GetInt32(5);
-			package.StockDC = GetDistributionCentreByID(reader.GetInt32(5));
-			package.SourceDCId = reader.GetInt32(6);
-			package.SourceDC = GetDistributionCentreByID(reader.GetInt32(6));
-			package.DestinationDCId = reader.GetInt32(7);
-			package.DestinationDC = GetDistributionCentreByID(reader.GetInt32(7));
+			if (reader.IsDBNull(5))
+			{
+				package.StockDCId = null;
+				package.StockDC = null;
+			}
+			else
+			{
+				package.StockDCId = reader.GetInt32(5);
+				package.StockDC = GetDistributionCentreByID(reader.GetInt32(5));
+			}
+			if (reader.IsDBNull(6))
+			{
+				package.SourceDCId = null;
+				package.SourceDC = null;
+			}
+			else
+			{
+				package.SourceDCId = reader.GetInt32(6);
+				package.SourceDC = GetDistributionCentreByID(reader.GetInt32(6));
+			}
+			if (reader.IsDBNull(7))
+			{
+				package.DestinationDCId = null;
+				package.DestinationDC = null;
+			}
+			else
+			{
+				package.DestinationDCId = reader.GetInt32(7);
+				package.DestinationDC = GetDistributionCentreByID(reader.GetInt32(7));
+			}
 			package.Operator = reader.GetString(8);
 			return package;
 		}

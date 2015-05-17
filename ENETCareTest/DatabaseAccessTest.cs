@@ -12,7 +12,7 @@ namespace ENETCareTest
 	public class DatabaseAccessTest
 	{
 		//TransactionScope _trans;
-		MedicationPackageDataReaderDAO dao;
+		MedicationPackageDAO dao;
 		string connectionString;
 		string barcode;
 		DistributionCentre dc;
@@ -29,7 +29,7 @@ namespace ENETCareTest
 		{
 			// MSDTC is not availabe on LocalDB, therefore transaction handling is commented
 			//_trans = new TransactionScope();
-			dao = new MedicationPackageDataReaderDAO();
+			dao = new MedicationPackageEntityFrameworkDAO();
 			connectionString = ConfigurationManager.ConnectionStrings["LocalDb"].ConnectionString;
 			PrepareTestData();
 		}
@@ -128,13 +128,14 @@ namespace ENETCareTest
 			// Insert package
 			package = new MedicationPackage();
 			package.Barcode = barcode;
-			package.Type = type;
+			package.TypeId = type.ID;
 			package.Status = PackageStatus.InStock;
 			package.ExpireDate = new DateTime(2015, 12, 31);
-			package.StockDC = dc;
-			package.SourceDC = null;
-			package.DestinationDC = null;
+			package.StockDCId = dc.ID;
+			package.SourceDCId = null;
+			package.DestinationDCId = null;
 			package.Operator = "blizzard";
+			package.UpdateTime = TimeProvider.Current.Now;
 			dao.InsertPackage(package);
 
 			// Find package after insert
@@ -155,7 +156,7 @@ namespace ENETCareTest
 			Assert.AreEqual("popcap", package.Operator);
 
 			// Delete package
-			dao.DeletePackage(package.ID);
+			dao.DeletePackage(package);
 
 			// Find package after delete
 			package = dao.FindPackageByBarcode(barcode);

@@ -54,14 +54,14 @@ namespace ENETCareTest
 			agent.Username = "hearthstone";
 			agent.Fullname = "Innkeeper";
 			agent.Email = "hearthstone@blizzard.com";
-			agent.Role = Role.Agent;
+			agent.EmployeeRole.Add(new EmployeeRole { Id = "1", Name = Role.Agent.ToString() });
 			agent.DistributionCentre = dc1;
 
 			doctor = new Employee();
 			doctor.Username = "starcraft";
 			doctor.Fullname = "Jim Raynor";
 			doctor.Email = "starCraft@blizzard.com";
-			doctor.Role = Role.Doctor;
+			doctor.EmployeeRole.Add(new EmployeeRole { Id = "2", Name = Role.Doctor.ToString() });
 			doctor.DistributionCentre = dc2;
 
 			type1 = new MedicationType();
