@@ -16,13 +16,13 @@ namespace ENETCare.Presentation
         void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup
+            string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\LocalDB\"));
+            AppDomain.CurrentDomain.SetData("DataDirectory", path);
+
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             RoleActions roleHelper = new RoleActions();
             roleHelper.AddRoles();
-
-            string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\LocalDB\"));
-            AppDomain.CurrentDomain.SetData("DataDirectory", path);
         }
     }
 }

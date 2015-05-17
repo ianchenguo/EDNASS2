@@ -34,7 +34,7 @@ namespace ENETCare.Presentation.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("LocalDB", throwIfV1Schema: false)
         {
         }
 
