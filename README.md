@@ -18,3 +18,16 @@ Using NuGet without committing packages to source control
 
 layout
 http://www.asp.net/web-pages/overview/ui,-layouts,-and-themes/3-creating-a-consistent-look
+
+DKK 18-May-2015:
+
+新建数据库LocalDB，已有用户名：
+agent1@enetcare.com -- Head Office
+agent2@enetcare.com -- Liverpool
+doctor1@enetcare.com -- Liverpool
+doctor2@enetcare.com -- Glebe
+doctor3@enetcare.com -- Ultimo
+doctor4@enetcare.com -- Bondi
+manager1@enetcare.com -- Head Office
+
+密码：!Qq123
