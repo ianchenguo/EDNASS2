@@ -93,6 +93,34 @@ namespace ENETCare.Business
 		}
 
 		/// <summary>
+		/// Retrieves an employee role by looking up its role name.
+		/// </summary>
+		/// <param name="roleName">role name</param>
+		/// <returns>an employee role corresponding to the role name, or null if no matching employee role was found</returns>
+		public EmployeeRole GetEmployeeRoleByRoleName(string roleName)
+		{
+			using (SqlConnection conn = new SqlConnection())
+			{
+				conn.ConnectionString = ConnectionString;
+				conn.Open();
+				string query = "select * from AspNetRoles where Name = @rolename";
+				SqlCommand command = new SqlCommand(query, conn);
+				command.Parameters.Add(new SqlParameter("rolename", roleName));
+				using (SqlDataReader reader = command.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						EmployeeRole role = new EmployeeRole();
+						role.Id = reader.GetString(0);
+						role.Name = reader.GetString(1);
+						return role;
+					}
+				}
+			}
+			return null;
+		}
+
+		/// <summary>
 		/// Helper-method to create an employee for a row of the database.
 		/// </summary>
 		/// <param name="reader"></param>
@@ -104,8 +132,9 @@ namespace ENETCare.Business
 			employee.Username = reader.GetString(1);
 			employee.Fullname = reader.GetString(2);
 			employee.Email = reader.GetString(3);
+			employee.DistributionCentreId = reader.GetInt32(4);
 			employee.DistributionCentre = new DistributionCentreDataReaderDAO().GetDistributionCentreById(reader.GetInt32(4));
-			//employee.Role = GetRoleFromRoleName(reader.GetString(5));
+			employee.EmployeeRole.Add(GetEmployeeRoleByRoleName(reader.GetString(5)));
 			return employee;
 		}
 

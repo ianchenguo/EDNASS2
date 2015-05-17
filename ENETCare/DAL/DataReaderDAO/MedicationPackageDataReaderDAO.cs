@@ -115,10 +115,10 @@ namespace ENETCare.Business
 								 values (@barcode, @type, @expiredate, @status, @stockdc, @operator, getdate())";
 				SqlCommand command = new SqlCommand(query, conn);
 				command.Parameters.Add(new SqlParameter("barcode", package.Barcode));
-				command.Parameters.Add(new SqlParameter("type", package.Type.ID));
+				command.Parameters.Add(new SqlParameter("type", package.Type != null ? package.Type.ID : package.TypeId));
 				command.Parameters.Add(new SqlParameter("expiredate", package.ExpireDate));
 				command.Parameters.Add(new SqlParameter("status", package.Status));
-				command.Parameters.Add(new SqlParameter("stockdc", package.StockDC.ID));
+				command.Parameters.Add(new SqlParameter("stockdc", package.StockDCId ?? package.StockDC.ID));
 				command.Parameters.Add(new SqlParameter("operator", package.Operator));
 				command.ExecuteNonQuery();
 			}
@@ -140,9 +140,9 @@ namespace ENETCare.Business
 				SqlCommand command = new SqlCommand(query, conn);
 				command.Parameters.Add(new SqlParameter("id", package.ID));
 				command.Parameters.Add(new SqlParameter("status", package.Status));
-				command.Parameters.Add(new SqlParameter("stockdc", package.StockDC != null ? (object)package.StockDC.ID : DBNull.Value));
-				command.Parameters.Add(new SqlParameter("sourcedc", package.SourceDC != null ? (object)package.SourceDC.ID : DBNull.Value));
-				command.Parameters.Add(new SqlParameter("destinationdc", package.DestinationDC != null ? (object)package.DestinationDC.ID : DBNull.Value));
+				command.Parameters.Add(new SqlParameter("stockdc", package.StockDCId ?? (package.StockDC != null ? (object)package.StockDC.ID : DBNull.Value)));
+				command.Parameters.Add(new SqlParameter("sourcedc", package.SourceDCId ?? (package.SourceDC != null ? (object)package.SourceDC.ID : DBNull.Value)));
+				command.Parameters.Add(new SqlParameter("destinationdc", package.DestinationDCId ?? (package.DestinationDC != null ? (object)package.DestinationDC.ID : DBNull.Value)));
 				command.Parameters.Add(new SqlParameter("operator", package.Operator));
 				command.ExecuteNonQuery();
 			}
@@ -176,11 +176,15 @@ namespace ENETCare.Business
 			MedicationPackage package = new MedicationPackage();
 			package.ID = reader.GetInt32(0);
 			package.Barcode = reader.GetString(1);
+			package.TypeId = reader.GetInt32(2);
 			package.Type = GetMedicationTypeByID(reader.GetInt32(2));
 			package.ExpireDate = reader.GetDateTime(3);
 			package.Status = (PackageStatus)reader.GetInt16(4);
+			package.StockDCId = reader.GetInt32(5);
 			package.StockDC = GetDistributionCentreByID(reader.GetInt32(5));
+			package.SourceDCId = reader.GetInt32(6);
 			package.SourceDC = GetDistributionCentreByID(reader.GetInt32(6));
+			package.DestinationDCId = reader.GetInt32(7);
 			package.DestinationDC = GetDistributionCentreByID(reader.GetInt32(7));
 			package.Operator = reader.GetString(8);
 			return package;
