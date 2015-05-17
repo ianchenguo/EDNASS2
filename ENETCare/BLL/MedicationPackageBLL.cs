@@ -44,20 +44,6 @@ namespace ENETCare.Business
 
 		#endregion
 
-		#region Employee
-
-		Employee GetEmployeeByUserName(string username)
-		{
-			Employee employee = EmployeeDAO.GetEmployeeByUserName(username);
-			if (employee == null)
-			{
-				throw new ENETCareException(string.Format("{0}: {1}", Properties.Resources.InvalidUser, username));
-			}
-			return employee;
-		}
-
-		#endregion
-
 		#region Scan
 
 		/// <summary>
@@ -89,10 +75,7 @@ namespace ENETCare.Business
 				throw new ENETCareException(Properties.Resources.InvalidDateFormat);
 			}
 			MedicationType medicationType = MedicationTypeDAO.GetMedicationTypeById(medicationTypeId);
-			if (medicationType == null)
-			{
-				throw new ENETCareException(Properties.Resources.MedicationTypeNotFound);
-			}
+			CheckMedicationTypeIsValid(medicationType);
 			return RegisterPackage(medicationType, parsedExpireDate, barcode);
 		}
 
@@ -124,36 +107,19 @@ namespace ENETCare.Business
 		public void SendPackage(string barcode, int distributionCentreId, bool isTrusted = true)
 		{
 			DistributionCentre distributionCentre = DistributionCentreDAO.GetDistributionCentreById(distributionCentreId);
-			if (distributionCentre == null)
-			{
-				throw new ENETCareException(Properties.Resources.DistributionCentreNotFound);
-			}
-			SendPackage(barcode, distributionCentre, isTrusted);
-		}
-
-		void SendPackage(string barcode, DistributionCentre destination, bool isTrusted)
-		{
+			CheckDistributionCentreIsValid(distributionCentre);
 			MedicationPackage package = ScanPackage(barcode);
-			if (package == null)
-			{
-				throw new ENETCareException(Properties.Resources.MedicationPackageNotFound);
-			}
-			if (User.DistributionCentreId == destination.ID)
+			CheckMedicationPackageIsValid(package);
+			if (User.DistributionCentreId == distributionCentreId)
 			{
 				throw new ENETCareException(Properties.Resources.AnotherDistributionCentre);
 			}
 			if (!isTrusted)
 			{
-				if (package.Status != PackageStatus.InStock)
-				{
-					throw new ENETCareException(Properties.Resources.IncorrectPackageStatus);
-				}
-				if (package.StockDCId != User.DistributionCentreId)
-				{
-					throw new ENETCareException(Properties.Resources.IncorrectDistributionCentreStock);
-				}
+				CheckMedicationPackageStatus(package, PackageStatus.InStock);
+				CheckStockDistributionCentre(package);
 			}
-			ManipulatePackage(package, PackageStatus.InTransit, null, User.DistributionCentreId, destination.ID);
+			ManipulatePackage(package, PackageStatus.InTransit, null, User.DistributionCentreId, distributionCentreId);
 			MedicationPackageDAO.UpdatePackage(package);
 		}
 
@@ -169,20 +135,11 @@ namespace ENETCare.Business
 		public void ReceivePackage(string barcode, bool isTrusted = true)
 		{
 			MedicationPackage package = ScanPackage(barcode);
-			if (package == null)
-			{
-				throw new ENETCareException(Properties.Resources.MedicationPackageNotFound);
-			}
+			CheckMedicationPackageIsValid(package);
 			if (!isTrusted)
 			{
-				if (package.Status != PackageStatus.InTransit)
-				{
-					throw new ENETCareException(Properties.Resources.IncorrectPackageStatus);
-				}
-				if (package.DestinationDCId != User.DistributionCentreId)
-				{
-					throw new ENETCareException(Properties.Resources.IncorrectDistributionCentreDestination);
-				}
+				CheckMedicationPackageStatus(package, PackageStatus.InTransit);
+				CheckDestinationDistributionCentre(package);
 			}
 			ManipulatePackage(package, PackageStatus.InStock, User.DistributionCentreId, null, null);
 			MedicationPackageDAO.UpdatePackage(package);
@@ -200,20 +157,11 @@ namespace ENETCare.Business
 		public void DistributePackage(string barcode, bool isTrusted = true)
 		{
 			MedicationPackage package = ScanPackage(barcode);
-			if (package == null)
-			{
-				throw new ENETCareException(Properties.Resources.MedicationPackageNotFound);
-			}
+			CheckMedicationPackageIsValid(package);
 			if (!isTrusted)
 			{
-				if (package.Status != PackageStatus.InStock)
-				{
-					throw new ENETCareException(Properties.Resources.IncorrectPackageStatus);
-				}
-				if (package.StockDCId != User.DistributionCentreId)
-				{
-					throw new ENETCareException(Properties.Resources.IncorrectDistributionCentreStock);
-				}
+				CheckMedicationPackageStatus(package, PackageStatus.InStock);
+				CheckStockDistributionCentre(package);
 			}
 			ManipulatePackage(package, PackageStatus.Distributed, User.DistributionCentreId, null, null);
 			MedicationPackageDAO.UpdatePackage(package);
@@ -231,20 +179,11 @@ namespace ENETCare.Business
 		public void DiscardPackage(string barcode, bool isTrusted = true)
 		{
 			MedicationPackage package = ScanPackage(barcode);
-			if (package == null)
-			{
-				throw new ENETCareException(Properties.Resources.MedicationPackageNotFound);
-			}
+			CheckMedicationPackageIsValid(package);
 			if (!isTrusted)
 			{
-				if (package.Status != PackageStatus.InStock)
-				{
-					throw new ENETCareException(Properties.Resources.IncorrectPackageStatus);
-				}
-				if (package.StockDCId != User.DistributionCentreId)
-				{
-					throw new ENETCareException(Properties.Resources.IncorrectDistributionCentreStock);
-				}
+				CheckMedicationPackageStatus(package, PackageStatus.InStock);
+				CheckStockDistributionCentre(package);
 			}
 			ManipulatePackage(package, PackageStatus.Discarded, User.DistributionCentreId, null, null);
 			MedicationPackageDAO.UpdatePackage(package);
@@ -352,7 +291,22 @@ namespace ENETCare.Business
 		#region Implementation
 
 		/// <summary>
-		/// Manipulate package updating its status and related distribution centres
+		/// Retrieves an employee by the user name.
+		/// </summary>
+		/// <param name="username">employee user name</param>
+		/// <returns>an employee corresponding to the username</returns>
+		Employee GetEmployeeByUserName(string username)
+		{
+			Employee employee = EmployeeDAO.GetEmployeeByUserName(username);
+			if (employee == null)
+			{
+				throw new ENETCareException(string.Format("{0}: {1}", Properties.Resources.InvalidUser, username));
+			}
+			return employee;
+		}
+
+		/// <summary>
+		/// Manipulate package updating its status and related distribution centres.
 		/// </summary>
 		/// <param name="package">medication package</param>
 		/// <param name="status">package status </param>
@@ -368,6 +322,58 @@ namespace ENETCare.Business
 			package.Operator = User.Username;
 			package.UpdateTime = TimeProvider.Current.Now;
 		}
+
+		#region Validity Check
+
+		void CheckMedicationTypeIsValid(MedicationType type)
+		{
+			if (type == null)
+			{
+				throw new ENETCareException(Properties.Resources.MedicationTypeNotFound);
+			}
+		}
+
+		void CheckMedicationPackageIsValid(MedicationPackage package)
+		{
+			if (package == null)
+			{
+				throw new ENETCareException(Properties.Resources.MedicationPackageNotFound);
+			}
+		}
+
+		void CheckMedicationPackageStatus(MedicationPackage package, PackageStatus status)
+		{
+			if (package.Status != status)
+			{
+				throw new ENETCareException(Properties.Resources.IncorrectPackageStatus);
+			}
+		}
+
+		void CheckDistributionCentreIsValid(DistributionCentre distributionCentre)
+		{
+			if (distributionCentre == null)
+			{
+				throw new ENETCareException(Properties.Resources.DistributionCentreNotFound);
+			}
+		}
+
+		void CheckStockDistributionCentre(MedicationPackage package)
+		{
+			if (package.StockDCId != User.DistributionCentreId)
+			{
+				throw new ENETCareException(Properties.Resources.IncorrectDistributionCentreStock);
+			}
+		}
+
+		void CheckDestinationDistributionCentre(MedicationPackage package)
+		{
+			if (package.DestinationDCId != User.DistributionCentreId)
+			{
+				throw new ENETCareException(Properties.Resources.IncorrectDistributionCentreDestination);
+			}
+		}
+
+		#endregion
 
 		#endregion
 	}

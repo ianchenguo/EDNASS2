@@ -29,6 +29,7 @@ namespace ENETCare.Business
 								Quantity = g.Count(),
 								Value = g.Sum(i => i.Value)
 							};
+
 				return query.ToList();
 			}
 		}
@@ -100,15 +101,15 @@ namespace ENETCare.Business
 								   Value = g.Sum(i => i.Value)
 							   };
 
-				var query = from q in subQuery
-							join d1 in context.DistributionCentre on q.SourceDCId equals d1.ID
-							join d2 in context.DistributionCentre on q.DestinationDCId equals d2.ID
+				var query = from sq in subQuery
+							join d1 in context.DistributionCentre on sq.SourceDCId equals d1.ID
+							join d2 in context.DistributionCentre on sq.DestinationDCId equals d2.ID
 							select new ValueInTransitViewData
 							{
 								FromDistributionCentre = d1.Name,
 								ToDistributionCentre = d2.Name,
-								Packages = q.Packages,
-								Value = q.Value
+								Packages = sq.Packages,
+								Value = sq.Value
 							};
 
 				return query.ToList();
