@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Security.Cryptography;
 using Aspose.BarCode;
 
 namespace ENETCare.Business
@@ -15,7 +16,16 @@ namespace ENETCare.Business
 		/// <returns>barcode number</returns>
 		public static string GenerateBarcode()
 		{
-			return DateTime.Now.Ticks.ToString();
+			return Get8Digits();
+		}
+
+		public static string Get8Digits()
+		{
+			var bytes = new byte[4];
+			var generator = RandomNumberGenerator.Create();
+			generator.GetBytes(bytes);
+			uint random = BitConverter.ToUInt32(bytes, 0) % 100000000;
+			return String.Format("{0:D8}", random);
 		}
 
 		/// <summary>
