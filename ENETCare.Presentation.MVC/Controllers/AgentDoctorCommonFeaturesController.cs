@@ -13,6 +13,11 @@ namespace ENETCare.Presentation.MVC.Controllers
         {
             return View();
         }
+        // GET: AgentDoctorHmePackage
+        public ActionResult AgentDoctorHomePackages()
+        {
+            return View();
+        }
         // GET: AgentDoctorRegisterPackage
         public ActionResult AgentDoctorRegisterPackages()
         {
