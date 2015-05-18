@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ENETCare.Business
 {
@@ -23,6 +24,7 @@ namespace ENETCare.Business
 
 		public virtual ICollection<MedicationPackage> MedicationPackage { get; set; }
 
+		[NotMapped]
 		public DateTime DefaultExpireDate
 		{
 			get

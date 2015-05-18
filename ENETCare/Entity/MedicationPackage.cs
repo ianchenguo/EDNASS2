@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ENETCare.Business
@@ -10,6 +11,7 @@ namespace ENETCare.Business
 	public class MedicationPackage
 	{
 		public int ID { get; set; }
+		[RegularExpression(@"^\d{8}$", ErrorMessage = "Invalid barcode format")]
 		public string Barcode { get; set; }
 		[Column("Type")]
 		public int TypeId { get; set; }

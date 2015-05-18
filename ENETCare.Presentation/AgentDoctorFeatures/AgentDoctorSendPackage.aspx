@@ -39,7 +39,7 @@
 
                         <asp:RegularExpressionValidator
                             runat="server"
-                            ValidationExpression="\d{18}$"
+                            ValidationExpression="\d{8}$"
                             ControlToValidate="AgentDoctorSendPackageTypebarcode"
                             CssClass="text-danger"
                             ErrorMessage="<div>The Barcode is invalid.</div>"
