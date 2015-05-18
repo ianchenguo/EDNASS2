@@ -8,7 +8,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// MedicationPackage EntityFramework implementation
 	/// </summary>
-	public class MedicationPackageEntityFrameworkDAO : MedicationPackageDAO
+	public class MedicationPackageEntityFrameworkDAO : EntityFrameworkDAO, MedicationPackageDAO
 	{
 		/// <summary>
 		/// Retrieves all medication packages in the database.
@@ -16,10 +16,7 @@ namespace ENETCare.Business
 		/// <returns>a list of all the medication packages</returns>
 		public List<MedicationPackage> FindAllPackages()
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
-			{
-				return context.MedicationPackage.ToList();
-			}
+			return context.MedicationPackage.ToList();
 		}
 		
 		/// <summary>
@@ -30,15 +27,12 @@ namespace ENETCare.Business
 		/// <returns>a list of the medication packages</returns>
 		public List<MedicationPackage> FindInStockPackagesInDistributionCentre(int distributionCentreId, int? medicationTypeId = null)
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
+			var packages = context.MedicationPackage.Where(x => x.Status == PackageStatus.InStock && x.StockDCId == distributionCentreId);
+			if (medicationTypeId != null)
 			{
-				var packages = context.MedicationPackage.Where(x => x.Status == PackageStatus.InStock && x.StockDCId == distributionCentreId);
-				if (medicationTypeId != null)
-				{
-					packages = packages.Where(x => x.TypeId == medicationTypeId);
-				}
-				return packages.Include(x => x.Type).ToList();
+				packages = packages.Where(x => x.TypeId == medicationTypeId);
 			}
+			return packages.Include(x => x.Type).ToList();
 		}
 		
 		/// <summary>
@@ -48,10 +42,7 @@ namespace ENETCare.Business
 		/// <returns>a medication package corresponding to the barcode, or null if no matching medication package was found</returns>
 		public MedicationPackage FindPackageByBarcode(string barcode)
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
-			{
-				return context.MedicationPackage.SingleOrDefault(x => x.Barcode == barcode);
-			}
+			return context.MedicationPackage.SingleOrDefault(x => x.Barcode == barcode);
 		}
 
 		/// <summary>
@@ -60,11 +51,8 @@ namespace ENETCare.Business
 		/// <param name="package">medication package</param>
 		public void InsertPackage(MedicationPackage package)
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
-			{
-				context.MedicationPackage.Add(package);
-				context.SaveChanges();
-			}
+			context.MedicationPackage.Add(package);
+			context.SaveChanges();
 		}
 
 		/// <summary>
@@ -73,14 +61,11 @@ namespace ENETCare.Business
 		/// <param name="package">medication package</param>
 		public void UpdatePackage(MedicationPackage package)
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
+			var currentPackage = context.MedicationPackage.SingleOrDefault(x => x.ID == package.ID);
+			if (currentPackage != null)
 			{
-				var currentPackage = context.MedicationPackage.SingleOrDefault(x => x.ID == package.ID);
-				if (currentPackage != null)
-				{
-					context.Entry(currentPackage).CurrentValues.SetValues(package);
-					context.SaveChanges();
-				}
+				context.Entry(currentPackage).CurrentValues.SetValues(package);
+				context.SaveChanges();
 			}
 		}
 
@@ -90,12 +75,9 @@ namespace ENETCare.Business
 		/// <param name="package">medication package</param>
 		public void DeletePackage(MedicationPackage package)
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
-			{
-				context.MedicationPackage.Attach(package);
-				context.MedicationPackage.Remove(package);
-				context.SaveChanges();
-			}
+			context.MedicationPackage.Attach(package);
+			context.MedicationPackage.Remove(package);
+			context.SaveChanges();
 		}
 	}
 }

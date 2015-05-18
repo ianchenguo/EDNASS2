@@ -7,7 +7,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// DistributionCentre EntityFramework implementation
 	/// </summary>
-	public class DistributionCentreEntityFrameworkDAO : DistributionCentreDAO
+	public class DistributionCentreEntityFrameworkDAO : EntityFrameworkDAO, DistributionCentreDAO
 	{
 		/// <summary>
 		/// Retrieves all distribution centres in the database.
@@ -15,10 +15,7 @@ namespace ENETCare.Business
 		/// <returns>a list of all the distribution centres</returns>
 		public List<DistributionCentre> FindAllDistributionCentres()
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
-			{
-				return context.DistributionCentre.ToList();
-			}
+			return context.DistributionCentre.OrderBy(x => x.ID).ToList();
 		}
 
 		/// <summary>
@@ -28,10 +25,7 @@ namespace ENETCare.Business
 		/// <returns>a distribution centre corresponding to the id, or null if no matching distribution centre was found</returns>
 		public DistributionCentre GetDistributionCentreById(int id)
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
-			{
-				return context.DistributionCentre.SingleOrDefault(x => x.ID == id);
-			}
+			return context.DistributionCentre.SingleOrDefault(x => x.ID == id);
 		}
 	}
 }

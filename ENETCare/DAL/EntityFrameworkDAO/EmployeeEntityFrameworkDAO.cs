@@ -8,7 +8,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// Employee EntityFramework implementation
 	/// </summary>
-	public class EmployeeEntityFrameworkDAO : EmployeeDAO
+	public class EmployeeEntityFrameworkDAO : EntityFrameworkDAO, EmployeeDAO
 	{
 		/// <summary>
 		/// Retrieves all employees in the database.
@@ -16,10 +16,7 @@ namespace ENETCare.Business
 		/// <returns>a list of all the employees</returns>
 		public List<Employee> FindAllEmployees()
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
-			{
-				return context.Employee.ToList();
-			}
+			return context.Employee.OrderBy(x => x.Username).ToList();
 		}
 
 		/// <summary>
@@ -29,13 +26,11 @@ namespace ENETCare.Business
 		/// <returns>a list of the employees corresponding to the role</returns>
 		public List<Employee> FindEmployeesByRole(Role role)
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
-			{
-				return context.Employee
-					.Where(e => e.EmployeeRole.Any(r => r.Name == role.ToString()))
-					.Include(x => x.DistributionCentre)
-					.ToList();
-			}
+			return context.Employee
+				.Where(e => e.EmployeeRole.Any(r => r.Name == role.ToString()))
+				.Include(x => x.DistributionCentre)
+				.OrderBy(x => x.Fullname)
+				.ToList();
 		}
 
 		/// <summary>
@@ -45,10 +40,7 @@ namespace ENETCare.Business
 		/// <returns>an employee corresponding to the username, or null if no matching employee was found</returns>
 		public Employee GetEmployeeByUserName(string username)
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
-			{
-				return context.Employee.SingleOrDefault(x => x.Username == username);
-			}
+			return context.Employee.SingleOrDefault(x => x.Username == username);
 		}
 	}
 }

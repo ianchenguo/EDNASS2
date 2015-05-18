@@ -72,7 +72,7 @@ namespace ENETCare.Business
 				report.Add(new DistributionCentreLossViewData { DistributionCentre = distributionCentre.Name, LossRatio = lossRatio, LossValue = lostTotal, RiskLevel = riskLevel });
 			}
 
-			return report;
+			return report.OrderByDescending(x => x.LossRatio).ToList();
 		}
 
 		/// <summary>

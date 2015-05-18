@@ -7,7 +7,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// MedicationType EntityFramework implementation
 	/// </summary>
-	public class MedicationTypeEntityFrameworkDAO : MedicationTypeDAO
+	public class MedicationTypeEntityFrameworkDAO : EntityFrameworkDAO, MedicationTypeDAO
 	{
 		/// <summary>
 		/// Retrieves all medication types in the database.
@@ -15,10 +15,7 @@ namespace ENETCare.Business
 		/// <returns>a list of all the medication types</returns>
 		public List<MedicationType> FindAllMedicationTypes()
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
-			{
-				return context.MedicationType.ToList();
-			}
+			return context.MedicationType.OrderBy(x => x.ID).ToList();
 		}
 
 		/// <summary>
@@ -28,10 +25,7 @@ namespace ENETCare.Business
 		/// <returns>a medication type corresponding to the id, or null if no matching medication type was found</returns>
 		public MedicationType GetMedicationTypeById(int id)
 		{
-			using (DatabaseEntities context = new DatabaseEntities())
-			{
-				return context.MedicationType.SingleOrDefault(x => x.ID == id);
-			}
+			return context.MedicationType.SingleOrDefault(x => x.ID == id);
 		}
 	}
 }
