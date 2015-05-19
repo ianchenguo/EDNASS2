@@ -2,7 +2,7 @@
 
 namespace ENETCare.Business
 {
-	public interface ReportDAO
+	public interface IReportDAO
 	{
 		List<MedicationTypeViewData> FindDistributionCentreStockByStatus(int distributionCentreId, params PackageStatus[] statuses);
 		List<MedicationTypeViewData> FindGlobalStock();

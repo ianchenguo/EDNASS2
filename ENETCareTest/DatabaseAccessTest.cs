@@ -12,7 +12,7 @@ namespace ENETCareTest
 	public class DatabaseAccessTest
 	{
 		//TransactionScope _trans;
-		MedicationPackageDAO dao;
+		IMedicationPackageDAO dao;
 		string connectionString;
 		string barcode;
 		DistributionCentre dc;

@@ -2,7 +2,7 @@
 
 namespace ENETCare.Business
 {
-	public interface DistributionCentreDAO
+	public interface IDistributionCentreDAO
 	{
 		List<DistributionCentre> FindAllDistributionCentres();
 		DistributionCentre GetDistributionCentreById(int id);

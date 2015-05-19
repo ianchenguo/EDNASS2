@@ -7,7 +7,7 @@ namespace ENETCare.Business
 	/// </summary>
 	public class EmployeeBLL
 	{
-		EmployeeDAO EmployeeDAO { get; set; }
+		IEmployeeDAO EmployeeDAO { get; set; }
 
 		public EmployeeBLL()
 		{

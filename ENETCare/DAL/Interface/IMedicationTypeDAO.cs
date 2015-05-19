@@ -2,7 +2,7 @@
 
 namespace ENETCare.Business
 {
-	public interface MedicationTypeDAO
+	public interface IMedicationTypeDAO
 	{
 		List<MedicationType> FindAllMedicationTypes();
 		MedicationType GetMedicationTypeById(int id);

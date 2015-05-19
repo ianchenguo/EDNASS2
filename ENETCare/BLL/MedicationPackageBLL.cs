@@ -24,10 +24,10 @@ namespace ENETCare.Business
 				return user;
 			}
 		}
-		public MedicationPackageDAO MedicationPackageDAO { get; set; }
-		public MedicationTypeDAO MedicationTypeDAO { get; set; }
-		public DistributionCentreDAO DistributionCentreDAO { get; set; }
-		public EmployeeDAO EmployeeDAO { get; set; }
+		public IMedicationPackageDAO MedicationPackageDAO { get; set; }
+		public IMedicationTypeDAO MedicationTypeDAO { get; set; }
+		public IDistributionCentreDAO DistributionCentreDAO { get; set; }
+		public IEmployeeDAO EmployeeDAO { get; set; }
 
 		#endregion
 

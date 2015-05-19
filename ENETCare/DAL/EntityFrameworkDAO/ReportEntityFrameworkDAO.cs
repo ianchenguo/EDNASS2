@@ -7,7 +7,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// Report EntityFramework implementation
 	/// </summary>
-	public class ReportEntityFrameworkDAO : EntityFrameworkDAO, ReportDAO
+	public class ReportEntityFrameworkDAO : EntityFrameworkDAO, IReportDAO
 	{
 		/// <summary>
 		/// Retrieves the quantity and total value for each product type of given statuses at a given distribution centre.

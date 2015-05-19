@@ -7,7 +7,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// Report DataReader implementation
 	/// </summary>
-	public class ReportDataReaderDAO : DataReaderDAO, ReportDAO
+	public class ReportDataReaderDAO : DataReaderDAO, IReportDAO
 	{
 		/// <summary>
 		/// Retrieves the quantity and total value for each product type of given statuses at a given distribution centre.

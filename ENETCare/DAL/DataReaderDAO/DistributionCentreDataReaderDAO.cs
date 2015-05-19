@@ -6,7 +6,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// DistributionCentre DataReader implementation
 	/// </summary>
-	public class DistributionCentreDataReaderDAO : DataReaderDAO, DistributionCentreDAO
+	public class DistributionCentreDataReaderDAO : DataReaderDAO, IDistributionCentreDAO
 	{
 		/// <summary>
 		/// Retrieves all distribution centres in the database.

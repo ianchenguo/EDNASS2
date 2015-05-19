@@ -6,7 +6,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// MedicationType DataReader implementation
 	/// </summary>
-	public class MedicationTypeDataReaderDAO : DataReaderDAO, MedicationTypeDAO
+	public class MedicationTypeDataReaderDAO : DataReaderDAO, IMedicationTypeDAO
 	{
 		/// <summary>
 		/// Retrieves all medication types in the database.

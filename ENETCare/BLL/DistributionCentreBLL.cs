@@ -7,7 +7,7 @@ namespace ENETCare.Business
 	/// </summary>
 	public class DistributionCentreBLL
 	{
-		DistributionCentreDAO DistributionCentreDAO { get; set; }
+		IDistributionCentreDAO DistributionCentreDAO { get; set; }
 
 		public DistributionCentreBLL()
 		{

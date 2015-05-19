@@ -8,7 +8,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// Employee EntityFramework implementation
 	/// </summary>
-	public class EmployeeEntityFrameworkDAO : EntityFrameworkDAO, EmployeeDAO
+	public class EmployeeEntityFrameworkDAO : EntityFrameworkDAO, IEmployeeDAO
 	{
 		/// <summary>
 		/// Retrieves all employees in the database.

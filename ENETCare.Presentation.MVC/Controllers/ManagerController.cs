@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ENETCare.Business;
 
 namespace ENETCare.Presentation.MVC.Controllers
 {
@@ -21,7 +22,8 @@ namespace ENETCare.Presentation.MVC.Controllers
 
         public ActionResult ManagerGlobalStock()
         {
-            return View();
+            List<MedicationTypeViewData> list = new ReportBLL().GlobalStock();
+            return View(list);
         }
 
         public ActionResult ManagerDistributionCentreLosses()

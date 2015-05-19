@@ -6,7 +6,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// Employee DataReader implementation
 	/// </summary>
-	public class EmployeeDataReaderDAO : DataReaderDAO, EmployeeDAO
+	public class EmployeeDataReaderDAO : DataReaderDAO, IEmployeeDAO
 	{
 		string selectStatement = "select a.Id, a.UserName, a.Fullname, a.Email, a.DistributionCentre_ID, c.Name";
 		string fromClause = "from AspNetUsers a";

@@ -7,7 +7,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// DistributionCentre EntityFramework implementation
 	/// </summary>
-	public class DistributionCentreEntityFrameworkDAO : EntityFrameworkDAO, DistributionCentreDAO
+	public class DistributionCentreEntityFrameworkDAO : EntityFrameworkDAO, IDistributionCentreDAO
 	{
 		/// <summary>
 		/// Retrieves all distribution centres in the database.

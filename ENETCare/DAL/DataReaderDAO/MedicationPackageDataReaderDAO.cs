@@ -7,7 +7,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// MedicationPackage DataReader implementation
 	/// </summary>
-	public class MedicationPackageDataReaderDAO : DataReaderDAO, MedicationPackageDAO
+	public class MedicationPackageDataReaderDAO : DataReaderDAO, IMedicationPackageDAO
 	{
 		string selectStatement = "select ID, Barcode, Type, ExpireDate, Status, StockDC, SourceDC, DestinationDC, Operator";
 		string fromClause = "from MedicationPackage";

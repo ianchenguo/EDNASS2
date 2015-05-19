@@ -7,7 +7,7 @@ namespace ENETCare.Business
 	/// <summary>
 	/// MedicationType EntityFramework implementation
 	/// </summary>
-	public class MedicationTypeEntityFrameworkDAO : EntityFrameworkDAO, MedicationTypeDAO
+	public class MedicationTypeEntityFrameworkDAO : EntityFrameworkDAO, IMedicationTypeDAO
 	{
 		/// <summary>
 		/// Retrieves all medication types in the database.

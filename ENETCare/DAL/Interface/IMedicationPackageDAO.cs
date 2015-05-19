@@ -2,7 +2,7 @@
 
 namespace ENETCare.Business
 {
-	public interface MedicationPackageDAO
+	public interface IMedicationPackageDAO
 	{
 		List<MedicationPackage> FindAllPackages();
 		List<MedicationPackage> FindInStockPackagesInDistributionCentre(int distributionCentreId, int? medicationTypeId = null);

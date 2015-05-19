@@ -9,9 +9,9 @@ namespace ENETCare.Business
 	/// </summary>
 	public class ReportBLL
 	{
-		ReportDAO ReportDAO { get; set; }
-		MedicationTypeDAO MedicationTypeDAO { get; set; }
-		DistributionCentreDAO DistributionCentreDAO { get; set; }
+		IReportDAO ReportDAO { get; set; }
+		IMedicationTypeDAO MedicationTypeDAO { get; set; }
+		IDistributionCentreDAO DistributionCentreDAO { get; set; }
 
 		public ReportBLL()
 		{

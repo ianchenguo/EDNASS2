@@ -15,19 +15,19 @@ namespace ENETCareTest
 		Employee doctor;
 		MedicationType type1;
 		MedicationType type2;
-		Mock<DistributionCentreDAO> distributionCentreDAO;
-		Mock<EmployeeDAO> employeeDAO;
-		Mock<MedicationTypeDAO> medicationTypeDAO;
-		Mock<MedicationPackageDAO> medicationPackageDAO;
+		Mock<IDistributionCentreDAO> distributionCentreDAO;
+		Mock<IEmployeeDAO> employeeDAO;
+		Mock<IMedicationTypeDAO> medicationTypeDAO;
+		Mock<IMedicationPackageDAO> medicationPackageDAO;
 
 		[TestInitialize]
 		public void Setup()
 		{
 			PrepareTestData();
-			distributionCentreDAO = new Mock<DistributionCentreDAO>();
-			employeeDAO = new Mock<EmployeeDAO>();
-			medicationTypeDAO = new Mock<MedicationTypeDAO>();
-			medicationPackageDAO = new Mock<MedicationPackageDAO>();
+			distributionCentreDAO = new Mock<IDistributionCentreDAO>();
+			employeeDAO = new Mock<IEmployeeDAO>();
+			medicationTypeDAO = new Mock<IMedicationTypeDAO>();
+			medicationPackageDAO = new Mock<IMedicationPackageDAO>();
 		}
 
 		[TestCleanup]

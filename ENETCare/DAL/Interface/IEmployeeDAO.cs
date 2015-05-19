@@ -2,7 +2,7 @@
 
 namespace ENETCare.Business
 {
-	public interface EmployeeDAO
+	public interface IEmployeeDAO
 	{
 		List<Employee> FindAllEmployees();
 		List<Employee> FindEmployeesByRole(Role role);

@@ -7,7 +7,7 @@ namespace ENETCare.Business
 	/// </summary>
 	public class MedicationTypeBLL
 	{
-		MedicationTypeDAO MedicationTypeDAO { get; set; }
+		IMedicationTypeDAO MedicationTypeDAO { get; set; }
 
 		public MedicationTypeBLL()
 		{

@@ -7,27 +7,27 @@ namespace ENETCare.Business
 	/// </summary>
 	public class DAOFactory
 	{
-		public static DistributionCentreDAO GetDistributionCentreDAO()
+		public static IDistributionCentreDAO GetDistributionCentreDAO()
 		{
 			return new DistributionCentreEntityFrameworkDAO();
 		}
 
-		public static EmployeeDAO GetEmployeeDAO()
+		public static IEmployeeDAO GetEmployeeDAO()
 		{
 			return new EmployeeEntityFrameworkDAO();
 		}
 
-		public static MedicationTypeDAO GetMedicationTypeDAO()
+		public static IMedicationTypeDAO GetMedicationTypeDAO()
 		{
 			return new MedicationTypeEntityFrameworkDAO();
 		}
 
-		public static MedicationPackageDAO GetMedicationPackageDAO()
+		public static IMedicationPackageDAO GetMedicationPackageDAO()
 		{
 			return new MedicationPackageEntityFrameworkDAO();
 		}
 
-		public static ReportDAO GetReportDAO()
+		public static IReportDAO GetReportDAO()
 		{
 			return new ReportEntityFrameworkDAO();
 		}
