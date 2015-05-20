@@ -71,9 +71,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BarcodeHelperTest.cs" />
+    <Compile Include="DatabaseAccessLayerTest\ReportDALTest.cs" />
+    <Compile Include="DatabaseAccessLayerTest\EmployeeDALTest.cs" />
+    <Compile Include="DatabaseAccessLayerTest\MedicationTypeDALTest.cs" />
+    <Compile Include="DatabaseAccessLayerTest\DistributionCentreDALTest.cs" />
+    <Compile Include="DatabaseAccessLayerTest\DatabaseAccessLayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MedicationPackageBLLTest.cs" />
-    <Compile Include="DatabaseAccessTest.cs" />
+    <Compile Include="DatabaseAccessLayerTest\MedicationPackageDALTest.cs" />
     <Compile Include="WebformHelpersTest\ReportHelperTest.cs" />
     <Compile Include="WebformHelpersTest\RoutingHelperTest.cs" />
   </ItemGroup>

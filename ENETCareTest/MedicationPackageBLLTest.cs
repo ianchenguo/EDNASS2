@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Moq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ENETCare.Business;
-using System.Collections.Generic;
 
 namespace ENETCareTest
 {

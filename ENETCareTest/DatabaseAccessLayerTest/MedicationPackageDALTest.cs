@@ -1,46 +1,68 @@
 ﻿using System;
-using System.Configuration;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.IO;
-using System.Transactions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ENETCare.Business;
 
 namespace ENETCareTest
 {
 	[TestClass]
-	public class DatabaseAccessTest
+	public class MedicationPackageDALTest : DatabaseAccessLayerTest
 	{
-		//TransactionScope _trans;
 		IMedicationPackageDAO dao;
-		string connectionString;
-		string barcode;
-		DistributionCentre dc;
-		MedicationType type;
-
-		[AssemblyInitialize]
-		public static void SetupDataDirectory(TestContext context)
-		{
-			AppDomain.CurrentDomain.SetData("DataDirectory", Path.GetFullPath(@"..\..\..\LocalDB\"));
-		}
 
 		[TestInitialize]
 		public void Setup()
 		{
-			// MSDTC is not availabe on LocalDB, therefore transaction handling is commented
-			//_trans = new TransactionScope();
 			dao = new MedicationPackageEntityFrameworkDAO();
-			connectionString = ConfigurationManager.ConnectionStrings["LocalDb"].ConnectionString;
-			PrepareTestData();
 		}
 
-		[TestCleanup()]
-		public void Cleanup()
+		#region PrepareTestData
+
+		protected override void PrepareTestData()
 		{
-			//_trans.Dispose();
 		}
 
-		void PrepareTestData()
+		#endregion
+
+		[TestMethod()]
+		public void MedicationPackageDAO_FindAllPackages_ReturnsAllPackages()
+		{
+			Assert.Fail("Should be removed after implementing this unit test");
+		}
+
+		[TestMethod()]
+		public void MedicationPackageDAO_FindInStockPackagesInDistributionCentre_ReturnsCorrectList()
+		{
+			Assert.Fail("Should be removed after implementing this unit test");
+		}
+
+		[TestMethod()]
+		public void MedicationPackageDAO_FindPackageByBarcode_ReturnsCorrespondingPackage()
+		{
+			Assert.Fail("Should be removed after implementing this unit test");
+		}
+
+		[TestMethod()]
+		public void MedicationPackageDAO_InsertPackage_Succeeds()
+		{
+			Assert.Fail("Should be removed after implementing this unit test");
+		}
+
+		[TestMethod()]
+		public void MedicationPackageDAO_UpdatePackage_Succeeds()
+		{
+			Assert.Fail("Should be removed after implementing this unit test");
+		}
+
+		[TestMethod()]
+		public void MedicationPackageDAO_DeletePackage_Succeeds()
+		{
+			Assert.Fail("Should be removed after implementing this unit test");
+		}
+
+		/*
+		protected override void PrepareTestData()
 		{
 			barcode = "123456";
 			dc = FetchTestDistributionCentre();
@@ -50,7 +72,7 @@ namespace ENETCareTest
 
 		DistributionCentre FetchTestDistributionCentre()
 		{
-			DistributionCentre dc = new DistributionCentre(); ;
+			DistributionCentre dc = new DistributionCentre();
 			using (SqlConnection conn = new SqlConnection())
 			{
 				conn.ConnectionString = connectionString;
@@ -73,7 +95,7 @@ namespace ENETCareTest
 
 		MedicationType FetchTestMedicationType()
 		{
-			MedicationType type = new MedicationType(); ;
+			MedicationType type = new MedicationType();
 			using (SqlConnection conn = new SqlConnection())
 			{
 				conn.ConnectionString = connectionString;
@@ -162,5 +184,6 @@ namespace ENETCareTest
 			package = dao.FindPackageByBarcode(barcode);
 			Assert.IsNull(package);
 		}
+		*/
 	}
 }
