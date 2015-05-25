@@ -83,19 +83,49 @@ namespace ENETCare.Presentation.MVC.Controllers
             return View(list);
         }
         // GET: AgentDoctorSendPackage
+        [HttpGet]
         public ActionResult AgentDoctorSendPackage()
         {
-            return View();
+            List<DistributionCentre> list = new DistributionCentreBLL().GetDistributionCentreList();
+            return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult AgentDoctorSendPackage(int sendToCenterId, string AgentDoctorSendPackageTypebarcodeInput)
+        {
+            List<DistributionCentre> list = new DistributionCentreBLL().GetDistributionCentreList();
+            //DistributionCentre destinationCenter = new DistributionCentreBLL().GetDistributionCentreById(sendToCenterId);
+            new MedicationPackageBLL("agent1@enetcare.com").SendPackage(AgentDoctorSendPackageTypebarcodeInput, sendToCenterId, true);
+
+            return View(list);
         }
         // GET: AgentDoctorReceivePackage
+        [HttpGet]
         public ActionResult AgentDoctorReceivePackage()
         {
-            return View();
+            List<MedicationType> list = new MedicationTypeBLL().GetMedicationTypeList();
+            return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult AgentDoctorReceivePackage(string AgentDoctorReceivePackagesBarcodeInput)
+        {
+            List<MedicationType> list = new MedicationTypeBLL().GetMedicationTypeList();
+            new MedicationPackageBLL("agent1@enetcare.com").ReceivePackage(AgentDoctorReceivePackagesBarcodeInput, true);
+
+            return View(list);
         }
 
         [HttpGet]
         public ActionResult DoctorDistributePackage()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DoctorDistributePackage(string DoctorDistributePackageTypebarcode)
+        {
+            new MedicationPackageBLL("agent1@enetcare.com").DistributePackage(DoctorDistributePackageTypebarcode, true);
             return View();
         }
 

@@ -1,5 +1,5 @@
-﻿@*@using ENETCare.Business;
-@model ICollection<MedicationType>*@
+﻿@using ENETCare.Business;
+@*@model ICollection<MedicationType>*@
 
 
 @{
@@ -15,6 +15,7 @@
     </div>
     <!--panel-heading-end-->
     <!--panel-body-start-->
+@using (Html.BeginForm()){
     <div class="panel-body">
         <div class="form-horizontal col-sm-10 col-sm-offset-1">
 
@@ -26,7 +27,7 @@
                 <div id="DoctorDistributePackageTypebarcode" cssclass="col-xs-3">Barcode: </div>
 
                 <div class="col-xs-9">
-                    @Html.TextBox("DoctorDistributePackageTypebarcode", null, new { @class = "form-control", @Type = "text" })
+                    @Html.TextBox("DoctorDistributePackageTypebarcode", null, new { @class = "form-control", @type = "text" })
                 </div>
             </div>
 
@@ -34,6 +35,7 @@
             <a href="#" class="btn btn-success btn-float-right" id="DoctorDistributeButton">Distribute</a>
         </div>
     </div>
+}
     <!--panel-body-end-->
 </div>
 <!--panel-end-->
