@@ -68,7 +68,7 @@ namespace ENETCare.Presentation.MVC.Controllers
             Debug.WriteLine("Name: -- " + selectedMedi.Name + "\n Default Expired Date: " + selectedMedi.DefaultExpireDate + "\n Value---: " + 
                 selectedMedi.Value + "\n ID is: " + selectedMedi.ID + "\n ShelfLife ---: " + selectedMedi.ShelfLife);
 
-            string expireDate = "2015-12-31";
+            string expireDate = AgentDoctorRegisterFormExpireDateInput;
             new MedicationPackageBLL("agent1@enetcare.com").RegisterPackage(MediTypeId, expireDate);
 
             if (AgentDoctorRegisterFormExpireDateInput != null && AgentDoctorRegisterFormExpireDateInput != "")
@@ -89,6 +89,17 @@ namespace ENETCare.Presentation.MVC.Controllers
         }
         // GET: AgentDoctorReceivePackage
         public ActionResult AgentDoctorReceivePackage()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult DoctorDistributePackage()
+        {
+            return View();
+        }
+
+        public ActionResult AgentDoctorViewReport()
         {
             return View();
         }

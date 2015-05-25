@@ -14,9 +14,9 @@
                 <a class="list-group-item" href="@Url.Action("AgentDoctorRegisterPackages", "AgentDoctorCommonFeatures")">Register Package</a>
                 <a class="list-group-item" href="@Url.Action("AgentDoctorSendPackage", "AgentDoctorCommonFeatures")">Send Package</a>
                 <a class="list-group-item" href="@Url.Action("AgentDoctorReceivePackage", "AgentDoctorCommonFeatures")">Receive Package</a>
-                <a class="list-group-item" href="#" id="DoctorDistributPackageItem">Distribute Package</a>
+                <a class="list-group-item" href="@Url.Action("DoctorDistributePackage", "AgentDoctorCommonFeatures")" id="DoctorDistributPackageItem">Distribute Package</a>
                 <a class="list-group-item" href="#">Audit Package</a>
-                <a class="list-group-item" href="#">View Report</a>
+                <a class="list-group-item" href="@Url.Action("AgentDoctorViewReport", "AgentDoctorCommonFeatures")">View Report</a>
                 <a class="list-group-item" href="#">Discard Package</a>
 
             </div>
