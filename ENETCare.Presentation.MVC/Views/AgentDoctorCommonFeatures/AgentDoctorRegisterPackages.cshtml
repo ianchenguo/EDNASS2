@@ -20,18 +20,24 @@
             @*<div id="AgentDoctorRegisterPackageAlertWindowDiv" visible="false" class="alert alert-success" data-dismiss="alert">
                     <label id="AgentDoctorRegisterPackageAlertWindowContentLabel"></label>
                 </div>*@
+            @*<div class="agent-doctor-sample-selected-value">
+            </div>*@
 
             <div class="form-group">
                 <label id="AgentDoctorPackageRegisterPackageTypeDropDwonListLabel" class="col-xs-3">Medication Type: </label>
 
                 <div class="col-xs-9">
-                    <select id="AgentDoctorPackageRegisterPackageTypeDropDwonList" name="MediTypeId">
+                    <select id="AgentDoctorPackageRegisterPackageTypeDropDwonList" name="MediTypeId" class="wocaoselected">
                         <option value="" disabled selected>Please select</option>
                         @foreach (var item in Model)
                         {
-
                             <option value="@item.ID">
                                 @item.Name
+                                <option class="Expire-date-option-second" value="@item.DefaultExpireDate"></option>
+
+
+                                @*@item.DefaultExpireDate;*@
+                                @*@Html.Hidden("sthHere", item.DefaultExpireDate)*@
                             </option>
                         }
                     </select>
@@ -44,7 +50,17 @@
 
                 <label id="AgentDoctorRegisterFormExpireDateLabel" class="col-xs-3">Expiration Date: </label>
                 <div class="col-xs-9">
-                    <input id="AgentDoctorRegisterFormExpireDateInput" class="form-control" type="date" />
+                    @*<input id="AgentDoctorRegisterFormExpireDateInput" class="form-control" type="date" />*@
+                    @*t5_input is id and name*@            
+                    @*<input id="t1" class="form-control" type="text" value="@ViewBag.inputValue" />
+                    <input id="t2" class="form-control" type="text" value="@ViewBag.dayD" />
+                    <input id="t3" class="form-control" type="text" value="@ViewData["dayDay"]" />*@
+                    @*<input id="t4" name="inputname" class="form-control" type="text" value="t4input" />*@
+                    @*@Html.TextBox("t5_input", "2015-05-12", new { @class = "form-control", @Type="date" })*@
+
+                    @Html.TextBox("AgentDoctorRegisterFormExpireDateInput", null, new { @class = "form-control", @Type = "date" })
+
+
                 </div>
             </div>
             <p>

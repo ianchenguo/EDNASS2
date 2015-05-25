@@ -47,3 +47,7 @@ div#agent-doctor-right-context{
     /*border:2px dashed navy;*/
     float:left;
 }
+
+input.hide-input {
+    display:none;
+}
