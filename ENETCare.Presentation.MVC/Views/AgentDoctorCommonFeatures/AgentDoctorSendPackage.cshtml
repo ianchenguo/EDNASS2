@@ -1,4 +1,5 @@
-﻿
+﻿@using ENETCare.Business
+@model ICollection<DistributionCentre>
 @{
     ViewBag.Title = "AgentDoctorSendPackage";
     Layout = "~/Views/AgentDoctorCommonFeatures/MasterPage.cshtml";
@@ -12,6 +13,8 @@
     </div>
     <!--panel-heading-end-->
     <!--panel-body-start-->
+@using (Html.BeginForm())
+{
     <div class="panel-body">
         <div class="form-horizontal col-sm-10 col-sm-offset-1">
 
@@ -23,11 +26,14 @@
 
                 <label id="AgentDoctorSendingDropDownListLabel" class="col-xs-3">Destination: </label>
                 <div class="col-xs-9">
-                    <select id="AgentDoctorSendingDropDownList" class="form-control">
+                    <select id="AgentDoctorSendingDropDownList" class="form-control" name="sendToCenterId">
                         <option value="" disabled selected>Please select</option>
-                        <option>Liverpool Office</option>
-                        <option>Gelbe Office</option>
-                        <option>Ultimo Office</option>
+                        @foreach (var item in Model)
+                        {
+                            <option value="@item.ID">
+                                @item.Name
+                            </option>
+                        }
                     </select>
                 </div>
             </div>
@@ -35,7 +41,7 @@
             <div class="form-group">
                 <label id="AgentDoctorSendPackageTypebarcodeLabel" class="col-xs-3">Barcode: </label>
                 <div class="col-xs-9">
-                    <input id="AgentDoctorSendPackageTypebarcodeInput" class="form-control" />
+                    @Html.TextBox("AgentDoctorSendPackageTypebarcodeInput", null, new { @class = "form-control", @type = "text" })
                 </div>
             </div>
 
@@ -45,5 +51,6 @@
         </div>
     </div>
     <!--panel-body-end-->
+}
 </div>
 <!--panel-end-->

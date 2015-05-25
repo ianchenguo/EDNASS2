@@ -68,7 +68,7 @@ namespace ENETCare.Presentation.MVC.Controllers
             Debug.WriteLine("Name: -- " + selectedMedi.Name + "\n Default Expired Date: " + selectedMedi.DefaultExpireDate + "\n Value---: " + 
                 selectedMedi.Value + "\n ID is: " + selectedMedi.ID + "\n ShelfLife ---: " + selectedMedi.ShelfLife);
 
-            string expireDate = "2015-12-31";
+            string expireDate = AgentDoctorRegisterFormExpireDateInput;
             new MedicationPackageBLL("agent1@enetcare.com").RegisterPackage(MediTypeId, expireDate);
 
             if (AgentDoctorRegisterFormExpireDateInput != null && AgentDoctorRegisterFormExpireDateInput != "")
@@ -83,12 +83,59 @@ namespace ENETCare.Presentation.MVC.Controllers
             return View(list);
         }
         // GET: AgentDoctorSendPackage
+        [HttpGet]
         public ActionResult AgentDoctorSendPackage()
+        {
+            List<DistributionCentre> list = new DistributionCentreBLL().GetDistributionCentreList();
+            return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult AgentDoctorSendPackage(int sendToCenterId, string AgentDoctorSendPackageTypebarcodeInput)
+        {
+            List<DistributionCentre> list = new DistributionCentreBLL().GetDistributionCentreList();
+            //DistributionCentre destinationCenter = new DistributionCentreBLL().GetDistributionCentreById(sendToCenterId);
+            new MedicationPackageBLL("agent1@enetcare.com").SendPackage(AgentDoctorSendPackageTypebarcodeInput, sendToCenterId, true);
+
+            return View(list);
+        }
+        // GET: AgentDoctorReceivePackage
+        [HttpGet]
+        public ActionResult AgentDoctorReceivePackage()
+        {
+            List<MedicationType> list = new MedicationTypeBLL().GetMedicationTypeList();
+            return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult AgentDoctorReceivePackage(string AgentDoctorReceivePackagesBarcodeInput)
+        {
+            List<MedicationType> list = new MedicationTypeBLL().GetMedicationTypeList();
+            new MedicationPackageBLL("agent1@enetcare.com").ReceivePackage(AgentDoctorReceivePackagesBarcodeInput, true);
+
+            return View(list);
+        }
+
+        [HttpGet]
+        public ActionResult DoctorDistributePackage()
         {
             return View();
         }
-        // GET: AgentDoctorReceivePackage
-        public ActionResult AgentDoctorReceivePackage()
+
+        [HttpPost]
+        public ActionResult DoctorDistributePackage(string DoctorDistributePackageTypebarcode)
+        {
+            new MedicationPackageBLL("agent1@enetcare.com").DistributePackage(DoctorDistributePackageTypebarcode, true);
+            return View();
+        }
+
+        public ActionResult AgentDoctorViewReport()
+        {
+            List<MedicationTypeViewData> list = new ReportBLL().GlobalStock();
+            return View(list);
+        }
+
+        public ActionResult SampleReport()
         {
             return View();
         }

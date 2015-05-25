@@ -27,7 +27,7 @@
                 <label id="AgentDoctorPackageRegisterPackageTypeDropDwonListLabel" class="col-xs-3">Medication Type: </label>
 
                 <div class="col-xs-9">
-                    <select id="AgentDoctorPackageRegisterPackageTypeDropDwonList" name="MediTypeId" class="wocaoselected">
+                    <select id="AgentDoctorPackageRegisterPackageTypeDropDwonList" name="MediTypeId">
                         <option value="" disabled selected>Please select</option>
                         @foreach (var item in Model)
                         {
@@ -48,7 +48,7 @@
 
             <div class="form-group">
 
-                <label id="AgentDoctorRegisterFormExpireDateLabel" class="col-xs-3">Expiration Date: </label>
+                <div id="AgentDoctorRegisterFormExpireDateLabel" class="col-xs-3">Expiration Date: </div>
                 <div class="col-xs-9">
                     @*<input id="AgentDoctorRegisterFormExpireDateInput" class="form-control" type="date" />*@
                     @*t5_input is id and name*@            
@@ -58,18 +58,18 @@
                     @*<input id="t4" name="inputname" class="form-control" type="text" value="t4input" />*@
                     @*@Html.TextBox("t5_input", "2015-05-12", new { @class = "form-control", @Type="date" })*@
 
-                    @Html.TextBox("AgentDoctorRegisterFormExpireDateInput", null, new { @class = "form-control", @Type = "date" })
+                    @Html.TextBox("AgentDoctorRegisterFormExpireDateInput", null, new { @class = "form-control", @type = "date" })
 
 
                 </div>
             </div>
-            <p>
+            @*<p>
                 &nbsp;
             </p>
             <p>
                 <label id="AgentDoctorRegisterMessage">Title: </label>
                 <img src="" alt="waiting img...">
-            </p>
+            </p>*@
             <a class="btn btn-danger btn-float-right btn-margin-left" type="a" href="@Url.Action("AgentDoctorHomePackages", "AgentDoctorCommonFeatures")">Cancel</a>
             <a href="#" class="btn btn-success btn-float-right" id="AgentDoctorRegisterButton">Register</a>
         </div>
