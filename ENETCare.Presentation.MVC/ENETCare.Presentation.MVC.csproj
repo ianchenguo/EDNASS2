@@ -248,6 +248,7 @@
     <Content Include="Views\Manager\_ManagerLayout.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorHomePackages.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\DoctorDistributePackage.cshtml" />
+    <Content Include="Views\AgentDoctorCommonFeatures\SampleReport.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorViewReport.cshtml" />
   </ItemGroup>
   <ItemGroup>

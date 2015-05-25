@@ -131,6 +131,12 @@ namespace ENETCare.Presentation.MVC.Controllers
 
         public ActionResult AgentDoctorViewReport()
         {
+            List<MedicationTypeViewData> list = new ReportBLL().GlobalStock();
+            return View(list);
+        }
+
+        public ActionResult SampleReport()
+        {
             return View();
         }
     }
