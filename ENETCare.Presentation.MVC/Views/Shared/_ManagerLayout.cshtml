@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+
+<!--main-container-start-->
+<section class="container-fluid feature-content">
+    <!--row-start-->
+    <div class="row row-same-height">
+        <!--side-menu-start-->
+        <aside class="col-xs-12 col-sm-2 ned-side-menu col-sm-height">
+
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Tasks</div>
+
+                <!-- List group -->
+                <div class="list-group">
+                    <a class="list-group-item" href="ManagerDistributionCentreStockCentres">Distribution Centre Stock</a>
+                    <a class="list-group-item" href="ManagerGlobalStock">Global Stock</a>
+                    <a class="list-group-item" href="ManagerDistributionCentreLosses">Distribution Centre Losses</a>
+                    <a class="list-group-item" href="ManagerValueInTransit">Value in Transit</a>
+                    <a class="list-group-item" href="ManagerDoctorActivityDoctors">Doctor Activity</a>
+                </div>
+            </div>
+
+
+        </aside>
+        <!--side-menu-end-->
+        <!--main-section-start-->
+        <section class="col-xs-12 col-sm-9 col-sm-offset-1 ned-main-section col-sm-height">
+            @RenderBody()
+        </section>
+        <!--main-section-end-->
+    </div>
+    <!--row-end-->
+</section>
+<!--main-container-end-->
