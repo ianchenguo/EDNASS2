@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+
+@model ICollection<ENETCare.Business.ValueInTransitViewData>
+
+<!--panel-start-->
+<div class="panel panel-default">
+
+    <!--panel-heading-start-->
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Value in Transit
+        </h3>
+    </div>
+    <!--panel-heading-end-->
+    <!--panel-body-start-->
+    <div class="panel-body">
+        @if (Model.Count > 0)
+        {
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <td>FromDistributionCentre</td>
+                        <td>ToDistributionCentre</td>
+                        <td>Packages</td>
+                        <td>Value ($)</td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var freight in Model)
+                    {
+                        <tr>
+                            <td>
+                                @freight.FromDistributionCentre
+                            </td>
+                            <td>
+                                @freight.ToDistributionCentre
+                            </td>
+                            <td>
+                                @freight.Packages
+                            </td>
+                            <td>
+                                @freight.Value
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <b>There are no packages</b>
+        }
+
+        <p class="text-right">
+            <strong>Grand Total:</strong> $ @ViewBag.Sum
+
+        </p>
+
+
+        <a class="btn btn-default btn-float-right" href='@Url.Action("index","Manager")'>
+            Back to Home
+        </a>
+
+    </div>
+    <!--panel-body-end-->
+</div>
+<!--panel-end-->

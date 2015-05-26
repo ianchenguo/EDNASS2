@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+
+@model ICollection<ENETCare.Business.MedicationTypeViewData>
+
+<!--panel-start-->
+<div class="panel panel-default">
+
+    <!--panel-heading-start-->
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Global Stock
+        </h3>
+    </div>
+    <!--panel-heading-end-->
+    <!--panel-body-start-->
+    <div class="panel-body">
+        @if (Model.Count > 0)
+        {
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <td>Type</td>
+                        <td>Quantity</td>
+                        <td>Value ($)</td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var centre in Model)
+                    {
+                        <tr>
+                            <td>
+                                @centre.Type
+                            </td>
+                            <td>
+                                @centre.Quantity
+                            </td>
+                            <td>
+                                @centre.Value
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <b>There are no packages</b>
+        }
+
+        <p class="text-right">
+            <strong>Grand Total:</strong> $ @ViewBag.Sum
+
+        </p>
+
+
+        <a class="btn btn-default btn-float-right" href='@Url.Action("index","Manager")'>
+            Back to Home
+        </a>
+
+    </div>
+    <!--panel-body-end-->
+</div>
+<!--panel-end-->

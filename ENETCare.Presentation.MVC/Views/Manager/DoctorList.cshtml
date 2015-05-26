@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+
+
+@model ICollection<ENETCare.Business.Employee>
+
+<!--panel-start-->
+<div class="panel panel-default">
+
+    <!--panel-heading-start-->
+    <div class="panel-heading">
+        <h3 class="panel-title">Doctor List</h3>
+    </div>
+    <!--panel-heading-end-->
+    <!--panel-body-start-->
+    <div class="panel-body">
+
+        <table class="table table-striped table-hover table-bordered">
+            <thead><tr><td>Doctors</td></tr></thead>
+            <tbody>
+                @foreach (var doctor in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(doctor.Fullname, "DoctorActivity", new { name = doctor.Fullname })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <a class="btn btn-default btn-float-right" href='@Url.Action("index","Manager")'>
+            Back to Home
+        </a>
+
+    </div>
+</div>
+<!--panel-end-->

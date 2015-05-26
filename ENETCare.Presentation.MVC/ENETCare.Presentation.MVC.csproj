@@ -246,15 +246,15 @@
     <Content Include="Views\AgentDoctorCommonFeatures\DoctorDistributePackage.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\SampleReport.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorViewReport.cshtml" />
-    <Content Include="Views\Manager\CentreList.cshtml" />
-    <Content Include="Views\Manager\index.cshtml" />
     <Content Include="Views\Shared\_ManagerLayout.cshtml" />
-    <Content Include="Views\Manager\DistributionCentreStock.cshtml" />
-    <Content Include="Views\Manager\GlobalStock.cshtml" />
+    <Content Include="Views\Manager\CentreList.cshtml" />
     <Content Include="Views\Manager\DistributionCentreLosses.cshtml" />
-    <Content Include="Views\Manager\ValueInTransit.cshtml" />
-    <Content Include="Views\Manager\DoctorList.cshtml" />
+    <Content Include="Views\Manager\DistributionCentreStock.cshtml" />
     <Content Include="Views\Manager\DoctorActivity.cshtml" />
+    <Content Include="Views\Manager\DoctorList.cshtml" />
+    <Content Include="Views\Manager\GlobalStock.cshtml" />
+    <Content Include="Views\Manager\index.cshtml" />
+    <Content Include="Views\Manager\ValueInTransit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
