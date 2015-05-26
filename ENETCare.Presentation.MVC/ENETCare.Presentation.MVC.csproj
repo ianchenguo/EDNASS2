@@ -166,8 +166,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
-    <Compile Include="Controllers\ManagerControllers\ManagerDistributionCentreReportController.cs" />
-    <Compile Include="Controllers\ManagerControllers\ManagerHomeController.cs" />
+    <Compile Include="Controllers\obselete\ManagerControllerOld.cs" />
+    <Compile Include="Controllers\obselete\ManagerControllers\ManagerDistributionCentreLossesController.cs" />
+    <Compile Include="Controllers\obselete\ManagerControllers\ManagerDistributionCentreReportController.cs" />
+    <Compile Include="Controllers\obselete\ManagerControllers\ManagerGlobalStockReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -240,24 +242,23 @@
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorReceivePackage.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\MasterPage.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorRegisterPackages.cshtml" />
-    <Content Include="Views\Manager\ManagerDistributionCentreLosses.cshtml" />
-    <Content Include="Views\Manager\ManagerDistributionCentreStock.cshtml" />
-    <Content Include="Views\Manager\ManagerDoctorActivity.cshtml" />
-    <Content Include="Views\Manager\ManagerDoctorActivityDoctors.cshtml" />
-    <Content Include="Views\Manager\ManagerGlobalStock.cshtml" />
-    <Content Include="Views\Manager\ManagerHome.cshtml" />
-    <Content Include="Views\Manager\ManagerValueInTransit.cshtml" />
-    <Content Include="Views\Manager\_ManagerLayout.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorHomePackages.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\DoctorDistributePackage.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\SampleReport.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorViewReport.cshtml" />
-    <Content Include="Views\ManagerDistributionCentreReport\Index.cshtml" />
-    <Content Include="Views\ManagerHome\index.cshtml" />
+    <Content Include="Views\Manager\CentreList.cshtml" />
+    <Content Include="Views\Manager\index.cshtml" />
     <Content Include="Views\Shared\_ManagerLayout.cshtml" />
+    <Content Include="Views\Manager\DistributionCentreStock.cshtml" />
+    <Content Include="Views\Manager\GlobalStock.cshtml" />
+    <Content Include="Views\Manager\DistributionCentreLosses.cshtml" />
+    <Content Include="Views\Manager\ValueInTransit.cshtml" />
+    <Content Include="Views\Manager\DoctorList.cshtml" />
+    <Content Include="Views\Manager\DoctorActivity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -2,8 +2,6 @@
     Layout = "~/Views/Shared/_layout.cshtml";
 }
 
-
-
 <!--main-container-start-->
 <section class="container-fluid feature-content">
     <!--row-start-->
@@ -17,14 +15,13 @@
 
                 <!-- List group -->
                 <div class="list-group">
-                    <a class="list-group-item" href="ManagerDistributionCentreStockCentres">Distribution Centre Stock</a>
-                    <a class="list-group-item" href="ManagerGlobalStock">Global Stock</a>
-                    <a class="list-group-item" href="ManagerDistributionCentreLosses">Distribution Centre Losses</a>
-                    <a class="list-group-item" href="ManagerValueInTransit">Value in Transit</a>
-                    <a class="list-group-item" href="ManagerDoctorActivityDoctors">Doctor Activity</a>
+                    <a class="list-group-item" href='@Url.Action("CentreList", "Manager")'>Distribution Centre Stock</a>
+                    <a class="list-group-item" href='@Url.Action("GlobalStock", "Manager")'>Global Stock</a>
+                    <a class="list-group-item" href='@Url.Action("DistributionCentreLosses", "Manager")'>Distribution Centre Losses</a>
+                    <a class="list-group-item" href='@Url.Action("ValueInTransit", "Manager")'>Value in Transit</a>
+                    <a class="list-group-item" href='@Url.Action("DoctorList", "Manager")'>Doctor Activity</a>
                 </div>
             </div>
-
 
         </aside>
         <!--side-menu-end-->
