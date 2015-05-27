@@ -3,62 +3,193 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ENETCare.Business;
+using System.Data.Common;
 
 namespace ENETCareTest
 {
 	[TestClass]
-	public class MedicationPackageDALTest : DatabaseAccessLayerTest
+    public class MedicationPackageDALTest : DatabaseAccessLayerTest
 	{
-		IMedicationPackageDAO dao;
+        IMedicationPackageDAO dao;
+        //private DatabaseEntities currentcontext; 
 
 		[TestInitialize]
 		public void Setup()
 		{
-			dao = new MedicationPackageEntityFrameworkDAO();
+            dao = new MedicationPackageEntityFrameworkDAO();
+
+            //Effort process
+            //DbConnection connection = Effort.DbConnectionFactory.CreateTransient();
+            //using (var context = new DatabaseEntities(connection))
+            //{
+            //    context.MedicationPackage.Add(new MedicationPackage() { ID = 1, Barcode = "11111", TypeId = 1, ExpireDate = new DateTime(2015, 12, 31), Status = PackageStatus.InStock, StockDCId = 1, SourceDCId = null, DestinationDC = null, Operator = "Doctor", UpdateTime = TimeProvider.Current.Now });
+            //}
+
+            //currentcontext = new DatabaseEntities(connection);
+
+            //SQL CE
+
 		}
 
-		#region PrepareTestData
+        #region PrepareTestData
 
-		protected override void PrepareTestData()
-		{
-		}
+        protected override void PrepareTestData()
+        {
+            DeleteExistingData();
+            ReseedTable("MedicationPackage");
+            ReseedTable("MedicationType");
+            ReseedTable("DistributionCentre");
+            InsertTestDistributionCentres();
+            InsertTestMedicationTypes();
+            InsertTestMedicationPackages();
+        }
 
-		#endregion
+        void InsertTestMedicationTypes()
+        {
+            InsertMedicationType("TEST MT1", 365, 2000, true);
+            InsertMedicationType("TEST MT2", 730, 1000, false);
+        }
+        void InsertTestMedicationPackages()
+        {
+            InsertMedicationPackage("1111111", 1, new DateTime(2015, 12, 31), (int)PackageStatus.InStock, 1, TimeProvider.Current.Now, "doctor");
+            //InsertMedicationPackage("2222222");
+            //InsertMedicationPackage("3333333");
+        }
+
+        void InsertTestDistributionCentres()
+        {
+            InsertDistributionCentre("TEST DC1", "TEST DC1 Address", "");
+            InsertDistributionCentre("TEST DC2", "TEST DC2 Address", "");
+            InsertDistributionCentre("TEST DC3", "TEST DC3 Address", "");
+            
+        }
+
+        void InsertMedicationType(string name, short shelfLife, decimal value, bool isSensitive)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                conn.Open();
+                string query = "insert into MedicationType (Name, ShelfLife, Value, IsSensitive) values (@name, @shelfLife, @value, @isSensitive)";
+                SqlCommand command = new SqlCommand(query, conn);
+                command.Parameters.Add(new SqlParameter("name", name));
+                command.Parameters.Add(new SqlParameter("shelfLife", shelfLife));
+                command.Parameters.Add(new SqlParameter("value", value));
+                command.Parameters.Add(new SqlParameter("isSensitive", isSensitive));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        void InsertDistributionCentre(string name, string address, string phone)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                conn.Open();
+                string query = "insert into DistributionCentre (Name, Address, Phone) values (@name, @address, @phone)";
+                SqlCommand command = new SqlCommand(query, conn);
+                command.Parameters.Add(new SqlParameter("name", name));
+                command.Parameters.Add(new SqlParameter("address", address));
+                command.Parameters.Add(new SqlParameter("phone", phone));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        void InsertMedicationPackage(string barcode, int type, DateTime expiredate, int status, int stockdc, DateTime updatetime, string Operator)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                conn.Open();
+                string query = @"insert into MedicationPackage (Barcode, Type, ExpireDate, Status, StockDC, UpdateTime, Operator)
+								 values (@barcode, @type, @expiredate, @status, @stockdc, @updatetime, @operator)";
+                SqlCommand command = new SqlCommand(query, conn);
+                command.Parameters.Add(new SqlParameter("barcode", barcode));
+                command.Parameters.Add(new SqlParameter("type", type));
+                command.Parameters.Add(new SqlParameter("expiredate", expiredate));
+                command.Parameters.Add(new SqlParameter("status", status));
+                command.Parameters.Add(new SqlParameter("stockdc", stockdc));
+                command.Parameters.Add(new SqlParameter("updatetime", updatetime));
+                command.Parameters.Add(new SqlParameter("operator", Operator));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        #endregion
 
 		[TestMethod()]
 		public void MedicationPackageDAO_FindAllPackages_ReturnsAllPackages()
 		{
-			Assert.Fail("Should be removed after implementing this unit test");
+            List<MedicationPackage> medicationpackages = dao.FindAllPackages();
+            Assert.AreEqual(1, medicationpackages.Count);
+            //var Package = new MedicationPackageEntityFrameworkDAO(currentcontext);
+            //List<MedicationPackage> medicationpackages = Package.FindAllPackages();
+            //Assert.AreEqual(0, medicationpackages.Count);
 		}
 
 		[TestMethod()]
 		public void MedicationPackageDAO_FindInStockPackagesInDistributionCentre_ReturnsCorrectList()
 		{
-			Assert.Fail("Should be removed after implementing this unit test");
+            List<MedicationPackage> medicationpackages = dao.FindInStockPackagesInDistributionCentre(1);
+            Assert.AreEqual(1, medicationpackages.Count);
+            Assert.AreEqual("doctor", medicationpackages[0].Operator);
 		}
 
 		[TestMethod()]
 		public void MedicationPackageDAO_FindPackageByBarcode_ReturnsCorrespondingPackage()
 		{
-			Assert.Fail("Should be removed after implementing this unit test");
+             MedicationPackage medicationpackage = dao.FindPackageByBarcode("1111111");
+             Assert.AreEqual("doctor", medicationpackage.Operator);
 		}
 
 		[TestMethod()]
 		public void MedicationPackageDAO_InsertPackage_Succeeds()
 		{
-			Assert.Fail("Should be removed after implementing this unit test");
+            string barcode = "22222222";
+            // Insert package
+            MedicationPackage package = new MedicationPackage();
+            package.Barcode = barcode;
+            package.TypeId = (int)2;
+            package.Status = PackageStatus.InStock;
+            package.ExpireDate = new DateTime(2015, 12, 31);
+            package.StockDCId = 1;
+            package.Operator = "blizzard";
+            package.UpdateTime = TimeProvider.Current.Now;
+            dao.InsertPackage(package);
+
+            // Find package after insert
+            MedicationPackage actualpc = dao.FindPackageByBarcode("22222222");
+            Assert.IsNotNull(actualpc);
+            Assert.AreEqual("blizzard", package.Operator);
 		}
 
 		[TestMethod()]
 		public void MedicationPackageDAO_UpdatePackage_Succeeds()
 		{
-			Assert.Fail("Should be removed after implementing this unit test");
+			// Update package
+            MedicationPackage package = new MedicationPackage();
+			package.Status = PackageStatus.Distributed;
+			package.Operator = "popcap";
+			dao.UpdatePackage(package);
+
+			// Find package after update
+            MedicationPackage after_update = dao.FindPackageByBarcode("1111111");
+            Assert.IsNotNull(after_update);
+			Assert.AreEqual(PackageStatus.Distributed, package.Status);
+			Assert.AreEqual("popcap", package.Operator);
 		}
 
 		[TestMethod()]
 		public void MedicationPackageDAO_DeletePackage_Succeeds()
 		{
-			Assert.Fail("Should be removed after implementing this unit test");
+            // Delete package
+            MedicationPackage package = dao.FindPackageByBarcode("1111111");
+            Assert.IsNotNull(package);
+            dao.DeletePackage(package);
+
+            // Find package after delete
+            MedicationPackage after_insert_package = dao.FindPackageByBarcode("1111111");
+            Assert.IsNull(after_insert_package);
 		}
 
 		/*
