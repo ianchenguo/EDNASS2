@@ -17,11 +17,21 @@
     <div class="panel-body">
 
         <table class="table table-striped table-hover table-bordered">
-            <thead><tr><td>Doctors</td></tr></thead>
+            <thead>
+                <tr>
+                    <td>Distribution Centre</td>
+                    <td>Doctor</td>
+                </tr>
+            </thead>
+
             <tbody>
                 @foreach (var doctor in Model)
                 {
                     <tr>
+                        <td>
+                            @doctor.DistributionCentre.Name
+                        </td>
+
                         <td>
                             @Html.ActionLink(doctor.Fullname, "DoctorActivity", new { name = doctor.Fullname })
                         </td>
