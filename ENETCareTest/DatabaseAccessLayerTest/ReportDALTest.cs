@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ENETCare.Business;
 
@@ -10,165 +9,133 @@ namespace ENETCareTest
 	public class ReportDALTest : DatabaseAccessLayerTest
 	{
 		IReportDAO dao;
-        IMedicationPackageDAO PackageDao;
-        IMedicationTypeDAO TypeDao;
 
 		[TestInitialize]
 		public void Setup()
 		{
 			dao = new ReportEntityFrameworkDAO();
-            PackageDao = new MedicationPackageEntityFrameworkDAO();
-            TypeDao = new MedicationTypeEntityFrameworkDAO();
-
 		}
 
 		#region PrepareTestData
 
 		protected override void PrepareTestData()
 		{
-            DeleteExistingData();
-            ReseedTable("MedicationPackage");
-            ReseedTable("MedicationType");
-            ReseedTable("DistributionCentre");
-            InsertTestDistributionCentres();
-            InsertTestMedicationTypes();
-            InsertTestMedicationPackages();
+			DeleteExistingData();
+			CreateTestDistributionCentres();
+			CreateTestMedicationTypes();
+			CreateTestMedicationPackages();
 		}
 
-        void InsertTestMedicationTypes()
-        {
-            InsertMedicationType("TEST MT1", 365, 2000, true);
-            InsertMedicationType("TEST MT2", 730, 1000, false);
-            InsertMedicationType("TEST MT3", 1000, 300, false);
-        }
-        void InsertTestMedicationPackages()
-        {
-            DateTime minDateTime = DateTime.MaxValue;
-            DateTime maxDateTime = DateTime.MinValue;
+		protected override void CreateTestMedicationPackages()
+		{
+			int dc1 = 1;
+			int dc2 = 2;
+			int type1 = 1;
+			int type2 = 2;
+			int type3 = 3;
+			DateTime expireDate = new DateTime(2015, 12, 31);
+			DateTime updateTime = TimeProvider.Current.Now;
 
-            minDateTime = new DateTime(1753, 1, 1); //Minimum SQL Date
-            maxDateTime = new DateTime(9999, 12, 31, 23, 59, 59, 997); //Maximum SQL Date
+			// DC1 Packages
+			InsertMedicationPackage("10001000", type1, expireDate, PackageStatus.InStock, dc1, null, null, "doctor1", updateTime);
+			InsertMedicationPackage("10001001", type1, expireDate, PackageStatus.InStock, dc1, null, null, "doctor1", updateTime);
+			InsertMedicationPackage("20001000", type2, expireDate, PackageStatus.InStock, dc1, null, null, "doctor1", updateTime);
+			InsertMedicationPackage("30001000", type3, expireDate, PackageStatus.InStock, dc1, null, null, "doctor1", updateTime);
+			InsertMedicationPackage("10001002", type1, expireDate, PackageStatus.Distributed, dc1, null, null, "doctor1", updateTime);
+			InsertMedicationPackage("10001003", type1, expireDate, PackageStatus.Discarded, dc1, null, null, "doctor1", updateTime);
+			InsertMedicationPackage("10001004", type1, expireDate, PackageStatus.Lost, dc1, null, null, "doctor1", updateTime);
 
-            InsertMedicationPackage("1111111", 1, minDateTime, PackageStatus.InStock, 1, 1, 2, maxDateTime, "doctor");
-            InsertMedicationPackage("2222222", 2, minDateTime, PackageStatus.InTransit, 1, 1, 2, maxDateTime, "agent");
-            InsertMedicationPackage("3333333", 3, minDateTime, PackageStatus.InTransit, 1, 2, 3, maxDateTime, "manager");
-            InsertMedicationPackage("4444444", 1, minDateTime, PackageStatus.Distributed, 1, 1, 2, maxDateTime, "doctor");
-        }
+			// DC2 Packages
+			InsertMedicationPackage("20001001", type2, expireDate, PackageStatus.InStock, dc2, null, null, "doctor2", updateTime);
+			InsertMedicationPackage("30001001", type3, expireDate, PackageStatus.InStock, dc2, null, null, "doctor2", updateTime);
 
-        void InsertTestDistributionCentres()
-        {
-            InsertDistributionCentre("TEST DC1", "TEST DC1 Address", "");
-            InsertDistributionCentre("TEST DC2", "TEST DC2 Address", "");
-            InsertDistributionCentre("TEST DC3", "TEST DC3 Address", "");
-            
-        }
+			// In Transit Packages
+			InsertMedicationPackage("10001005", type1, expireDate, PackageStatus.InTransit, null, dc1, dc2, "doctor1", updateTime);
+			InsertMedicationPackage("20001002", type2, expireDate, PackageStatus.InTransit, null, dc1, dc2, "doctor1", updateTime);
+			InsertMedicationPackage("10001006", type1, expireDate, PackageStatus.InTransit, null, dc2, dc1, "doctor2", updateTime);
+		}
 
-        void InsertMedicationType(string name, short shelfLife, decimal value, bool isSensitive)
-        {
-            using (SqlConnection conn = new SqlConnection())
-            {
-                conn.ConnectionString = connectionString;
-                conn.Open();
-                string query = "insert into MedicationType (Name, ShelfLife, Value, IsSensitive) values (@name, @shelfLife, @value, @isSensitive)";
-                SqlCommand command = new SqlCommand(query, conn);
-                command.Parameters.Add(new SqlParameter("name", name));
-                command.Parameters.Add(new SqlParameter("shelfLife", shelfLife));
-                command.Parameters.Add(new SqlParameter("value", value));
-                command.Parameters.Add(new SqlParameter("isSensitive", isSensitive));
-                command.ExecuteNonQuery();
-            }
-        }
-
-        void InsertDistributionCentre(string name, string address, string phone)
-        {
-            using (SqlConnection conn = new SqlConnection())
-            {
-                conn.ConnectionString = connectionString;
-                conn.Open();
-                string query = "insert into DistributionCentre (Name, Address, Phone) values (@name, @address, @phone)";
-                SqlCommand command = new SqlCommand(query, conn);
-                command.Parameters.Add(new SqlParameter("name", name));
-                command.Parameters.Add(new SqlParameter("address", address));
-                command.Parameters.Add(new SqlParameter("phone", phone));
-                command.ExecuteNonQuery();
-            }
-        }
-
-        void InsertMedicationPackage(string barcode, int type, DateTime expiredate, PackageStatus status, int stockdc, int sourcedc, int  destinationdc, DateTime updatetime, string Operator)
-        {
-            using (SqlConnection conn = new SqlConnection())
-            {
-                conn.ConnectionString = connectionString;
-                conn.Open();
-                string query = @"insert into MedicationPackage (Barcode, Type, ExpireDate, Status, StockDC, SourceDC, DestinationDC, UpdateTime, Operator)
-								 values (@barcode, @type, @expiredate, @status, @stockdc, @sourcedc, @destinationdc, @updatetime, @operator)";
-                SqlCommand command = new SqlCommand(query, conn);
-                command.Parameters.Add(new SqlParameter("barcode", barcode));
-                command.Parameters.Add(new SqlParameter("type", type));
-                command.Parameters.Add(new SqlParameter("expiredate", expiredate));
-                command.Parameters.Add(new SqlParameter("status", status));
-                command.Parameters.Add(new SqlParameter("stockdc", stockdc));
-                command.Parameters.Add(new SqlParameter("sourcedc", sourcedc));
-                command.Parameters.Add(new SqlParameter("destinationdc", destinationdc));
-                command.Parameters.Add(new SqlParameter("updatetime", updatetime));
-                command.Parameters.Add(new SqlParameter("operator", Operator));
-                command.ExecuteNonQuery();
-            }
-        }
-
-        #endregion
-
+		#endregion
 
 		[TestMethod()]
 		public void ReportDAO_FindDistributionCentreStockByStatus_ReturnsCorrectList()
 		{
-            List<MedicationTypeViewData> distributioncentre_stock_bystatus = dao.FindDistributionCentreStockByStatus(1, PackageStatus.InTransit);
-            Assert.AreEqual(2, distributioncentre_stock_bystatus.Count);
+			// InStock Packages
+			List<MedicationTypeViewData> list1 = dao.FindDistributionCentreStockByStatus(1, PackageStatus.InStock);
 
-            //test a instock one
-            List<MedicationTypeViewData> distributioncentre_stock_bystatus1 = dao.FindDistributionCentreStockByStatus(1, PackageStatus.InStock);
-            Assert.AreEqual(1, distributioncentre_stock_bystatus1.Count);
+			Assert.AreEqual(3, list1.Count);
+
+			Assert.AreEqual("TEST MT1", list1[0].Type);
+			Assert.AreEqual(2, list1[0].Quantity);
+			Assert.AreEqual(4000, list1[0].Value);
+
+			Assert.AreEqual("TEST MT2", list1[1].Type);
+			Assert.AreEqual(1, list1[1].Quantity);
+			Assert.AreEqual(1000, list1[1].Value);
+
+			Assert.AreEqual("TEST MT3", list1[2].Type);
+			Assert.AreEqual(1, list1[2].Quantity);
+			Assert.AreEqual(300, list1[2].Value);
+
+			// Discarded and Lost Packages
+			List<MedicationTypeViewData> list2 = dao.FindDistributionCentreStockByStatus(1, PackageStatus.Discarded, PackageStatus.Lost);
+
+			Assert.AreEqual(1, list2.Count);
+
+			Assert.AreEqual("TEST MT1", list2[0].Type);
+			Assert.AreEqual(2, list2[0].Quantity);
+			Assert.AreEqual(4000, list2[0].Value);
 		}
 
 		[TestMethod()]
 		public void ReportDAO_FindGlobalStock_ReturnsCorrectList()
 		{
-            //MedicationType type = TypeDao.GetMedicationTypeById(1);
-            //Assert.IsNotNull(type);
-            //Assert.AreEqual(1, type.ID);
-            //
-            List<MedicationPackage> medicationpackages = PackageDao.FindAllPackages();
-            Assert.AreEqual(4, medicationpackages.Count);
+			List<MedicationTypeViewData> list = dao.FindGlobalStock();
 
-            //test if there is a row in the database
-            List<MedicationTypeViewData> globalreturn = dao.FindGlobalStock();
-            Assert.AreEqual(1, globalreturn.Count);
+			Assert.AreEqual(3, list.Count);
 
-            
+			Assert.AreEqual("TEST MT1", list[0].Type);
+			Assert.AreEqual(2, list[0].Quantity);
+			Assert.AreEqual(4000, list[0].Value);
+
+			Assert.AreEqual("TEST MT2", list[1].Type);
+			Assert.AreEqual(2, list[1].Quantity);
+			Assert.AreEqual(2000, list[1].Value);
+
+			Assert.AreEqual("TEST MT3", list[2].Type);
+			Assert.AreEqual(2, list[2].Quantity);
+			Assert.AreEqual(600, list[2].Value);
 		}
 
 		[TestMethod()]
 		public void ReportDAO_FindDoctorActivityByUserName_ReturnsCorrectList()
-		{   //check a non-exist operator name
-            List<MedicationTypeViewData> doctorname_result = dao.FindDoctorActivityByUserName("12345678");
-            Assert.IsNotNull(doctorname_result);
-            Assert.AreEqual(0, doctorname_result.Count);
+		{
+			List<MedicationTypeViewData> list1 = dao.FindDoctorActivityByUserName("doctor1");
+			Assert.AreEqual(1, list1.Count);
+			Assert.AreEqual("TEST MT1", list1[0].Type);
+			Assert.AreEqual(1, list1[0].Quantity);
+			Assert.AreEqual(2000, list1[0].Value);
 
-            MedicationPackage package = new MedicationPackage();
-            package.Operator = "doctor";
-            List<MedicationTypeViewData> username_result = dao.FindDoctorActivityByUserName("doctor");
-            Assert.IsNotNull(username_result);
-            Assert.AreEqual(1, username_result.Count);
+			List<MedicationTypeViewData> list2 = dao.FindDoctorActivityByUserName("doctor2");
+			Assert.AreEqual(0, list2.Count);
 		}
 
 		[TestMethod()]
 		public void ReportDAO_FindAllValueInTransit_ReturnsCorrectList()
 		{
-            // should be 2 results (stockdc2 - destinationdc3) and (stockdc1-destinationdc2) as test data
-            List<ValueInTransitViewData> alltransitvalue = dao.FindAllValueInTransit();
+			List<ValueInTransitViewData> list = dao.FindAllValueInTransit();
 
-            Assert.AreEqual(2, alltransitvalue.Count);
+			Assert.AreEqual(2, list.Count);
 
+			Assert.AreEqual("TEST DC1", list[0].FromDistributionCentre);
+			Assert.AreEqual("TEST DC2", list[0].ToDistributionCentre);
+			Assert.AreEqual(2, list[0].Packages);
+			Assert.AreEqual(3000, list[0].Value);
+
+			Assert.AreEqual("TEST DC2", list[1].FromDistributionCentre);
+			Assert.AreEqual("TEST DC1", list[1].ToDistributionCentre);
+			Assert.AreEqual(1, list[1].Packages);
+			Assert.AreEqual(2000, list[1].Value);
 		}
 	}
 }
