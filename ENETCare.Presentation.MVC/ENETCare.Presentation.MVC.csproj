@@ -246,7 +246,6 @@
     <Content Include="Views\AgentDoctorCommonFeatures\MasterPage.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorRegisterPackages.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorHomePackages.cshtml" />
-    <Content Include="Views\AgentDoctorCommonFeatures\DoctorDistributePackage.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorViewReport.cshtml" />
     <Content Include="Views\Shared\_ManagerLayout.cshtml" />
     <Content Include="Views\Manager\CentreList.cshtml" />
