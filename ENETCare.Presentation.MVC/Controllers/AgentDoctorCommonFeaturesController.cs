@@ -74,6 +74,7 @@ namespace ENETCare.Presentation.MVC.Controllers
             //DistributionCentre destinationCenter = new DistributionCentreBLL().GetDistributionCentreById(sendToCenterId);
             new MedicationPackageBLL(User.Identity.Name).SendPackage(AgentDoctorSendPackageTypebarcodeInput, sendToCenterId);
 
+            ModelState.Clear();
             return View(list);
         }
         // GET: AgentDoctorReceivePackage
@@ -90,13 +91,14 @@ namespace ENETCare.Presentation.MVC.Controllers
             List<MedicationType> list = new MedicationTypeBLL().GetMedicationTypeList();
             new MedicationPackageBLL(User.Identity.Name).ReceivePackage(AgentDoctorReceivePackagesBarcodeInput, true);
 
+            ModelState.Clear();
             return View(list);
         }
 
         [HttpGet]
         public ActionResult DoctorDistributePackage()
         {
-        
+
             return View();
         }
 
@@ -104,6 +106,7 @@ namespace ENETCare.Presentation.MVC.Controllers
         public ActionResult DoctorDistributePackage(string DoctorDistributePackageTypebarcode)
         {
             new MedicationPackageBLL(User.Identity.Name).DistributePackage(DoctorDistributePackageTypebarcode, true);
+            ModelState.Clear();
             return View();
         }
 
