@@ -163,6 +163,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgentDoctorCommonFeaturesController.cs" />
+    <Compile Include="Controllers\DoctorDistributeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
@@ -256,6 +257,8 @@
     <Content Include="Views\Manager\GlobalStock.cshtml" />
     <Content Include="Views\Manager\index.cshtml" />
     <Content Include="Views\Manager\ValueInTransit.cshtml" />
+    <Content Include="Views\DoctorDistribute\DoctorMasterPage.cshtml" />
+    <Content Include="Views\DoctorDistribute\DoctorDistributePackage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
