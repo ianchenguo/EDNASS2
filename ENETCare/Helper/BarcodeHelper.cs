@@ -19,6 +19,10 @@ namespace ENETCare.Business
 			return Get8Digits();
 		}
 
+		/// <summary>
+		/// Generates a eight digits random number
+		/// </summary>
+		/// <returns>a eight digits number</returns>
 		public static string Get8Digits()
 		{
 			var bytes = new byte[4];

@@ -26,5 +26,5 @@ namespace ENETCare.Business
 	{
 		Low = 0,
 		High = 1
-	};
+	}
 }

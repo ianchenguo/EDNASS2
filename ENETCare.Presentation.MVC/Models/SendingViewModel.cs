@@ -5,7 +5,7 @@ namespace ENETCare.Presentation.MVC.Models
 {
 	public class SendingViewModel
 	{
-		public ICollection<DistributionCentre> DistributionCentreList
+		public ICollection<DistributionCentre> DistributionCentres
 		{
 			get;
 			set;

@@ -26,7 +26,7 @@
                 <label id="AgentDoctorSendingDropDownListLabel" class="col-xs-3">Destination: </label>
                 <div class="col-xs-9">
                     <select id="AgentDoctorSendingDropDownList" class="form-control" name="distributionCenterId">
-                        @foreach (var item in Model.DistributionCentreList)
+                        @foreach (var item in Model.DistributionCentres)
                         {
                             <option value="@item.ID">
                                 @item.Name

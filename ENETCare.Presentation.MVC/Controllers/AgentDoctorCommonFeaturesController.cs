@@ -73,14 +73,14 @@ namespace ENETCare.Presentation.MVC.Controllers
 		[HttpGet]
 		public ActionResult AgentDoctorRegisterPackages()
 		{
-			RegisteringViewModel model = GetRegisteringViewModel();
+			var model = GetRegisteringViewModel();
 			return View(model);
 		}
 
 		[HttpPost]
 		public ActionResult AgentDoctorRegisterPackages(int medicationTypeId, string expireDate, string submit)
 		{
-			RegisteringViewModel model = GetRegisteringViewModel();
+			var model = GetRegisteringViewModel();
 			if (submit == "Refresh")
 			{
 				model.SelectedMedicationType = MedicationTypeBLL.GetMedicationTypeById(medicationTypeId);
@@ -131,14 +131,14 @@ namespace ENETCare.Presentation.MVC.Controllers
 		[HttpGet]
 		public ActionResult AgentDoctorSendPackage()
 		{
-			SendingViewModel model = GetSendingViewModel();
+			var model = GetSendingViewModel();
 			return View(model);
 		}
 
 		[HttpPost]
 		public ActionResult AgentDoctorSendPackage(int distributionCenterId, string barcode)
 		{
-			SendingViewModel model = GetSendingViewModel();
+			var model = GetSendingViewModel();
 			try
 			{
 				MedicationPackageBLL.SendPackage(barcode, distributionCenterId);
@@ -156,7 +156,7 @@ namespace ENETCare.Presentation.MVC.Controllers
 		{
 			SendingViewModel model = new SendingViewModel();
 			List<DistributionCentre> list = DistributionCentreBLL.GetDistributionCentreList();
-			model.DistributionCentreList = list;
+			model.DistributionCentres = list;
 			return model;
 		}
 
@@ -173,7 +173,7 @@ namespace ENETCare.Presentation.MVC.Controllers
 		[HttpPost]
 		public ActionResult AgentDoctorReceivePackage(string barcode)
 		{
-			ReceivingViewModel model = new ReceivingViewModel();
+			var model = new ReceivingViewModel();
 			try
 			{
 				MedicationPackageBLL.ReceivePackage(barcode);
@@ -200,7 +200,7 @@ namespace ENETCare.Presentation.MVC.Controllers
 		[HttpPost]
 		public ActionResult AgentDoctorDiscardPackage(string barcode)
 		{
-			DiscardingViewModel model = new DiscardingViewModel();
+			var model = new DiscardingViewModel();
 			try
 			{
 				MedicationPackageBLL.DiscardPackage(barcode);

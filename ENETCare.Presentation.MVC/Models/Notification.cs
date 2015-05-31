@@ -16,14 +16,6 @@ namespace ENETCare.Presentation.MVC.Models
 			set;
 		}
 
-		public string AlertVisible
-		{
-			get
-			{
-				return "false";
-			}
-		}
-
 		public string AlertStyle
 		{
 			get
