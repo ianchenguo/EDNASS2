@@ -130,7 +130,13 @@ namespace ENETCare.Presentation.MVC.Controllers
             return View(list);
         }
 
-
+        [HttpPost]
+        public ActionResult AgentDoctorDiscardPackage(string AgentDoctorDiscardPackagesBarcode)
+        {
+            new MedicationPackageBLL(User.Identity.Name).DiscardPackage(AgentDoctorDiscardPackagesBarcode);
+            ModelState.Clear();
+            return View();
+        }
 
         public ActionResult SampleReport()
         {

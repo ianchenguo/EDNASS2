@@ -75,7 +75,7 @@ function alertInputText () {
         var inputElem = $('input#AgentDoctorRegisterFormExpireDateInput');
         var inputText = inputElem.val();
         if (inputText !== null && inputText !== '') {
-            alert('line 75 button says '+inputText);
+            alert('Expired Date is --- '+inputText);
             // inputText = inputElem.val('');
             // selectedForTitle.text('');
         } else{
