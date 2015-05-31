@@ -9,240 +9,241 @@ using ENETCare.Presentation.MVC.Models;
 
 namespace ENETCare.Presentation.MVC.Controllers
 {
-	public class AgentDoctorCommonFeaturesController : Controller
-	{
-		#region Properties
+    [Authorize(Roles = "Agent, Doctor")]
 
-		MedicationPackageBLL medicationPackageBLL;
-		MedicationPackageBLL MedicationPackageBLL
-		{
-			get
-			{
-				if (medicationPackageBLL == null)
-				{
-					medicationPackageBLL = new MedicationPackageBLL(User.Identity.Name);
-				}
-				return medicationPackageBLL;
-			}
-		}
+    public class AgentDoctorCommonFeaturesController : Controller
+    {
+        #region Properties
 
-		MedicationTypeBLL medicationTypeBLL;
-		MedicationTypeBLL MedicationTypeBLL
-		{
-			get
-			{
-				if (medicationTypeBLL == null)
-				{
-					medicationTypeBLL = new MedicationTypeBLL();
-				}
-				return medicationTypeBLL;
-			}
-		}
+        MedicationPackageBLL medicationPackageBLL;
+        MedicationPackageBLL MedicationPackageBLL
+        {
+            get
+            {
+                if (medicationPackageBLL == null)
+                {
+                    medicationPackageBLL = new MedicationPackageBLL(User.Identity.Name);
+                }
+                return medicationPackageBLL;
+            }
+        }
 
-		DistributionCentreBLL distributionCentreBLL;
-		DistributionCentreBLL DistributionCentreBLL
-		{
-			get
-			{
-				if (distributionCentreBLL == null)
-				{
-					distributionCentreBLL = new DistributionCentreBLL();
-				}
-				return distributionCentreBLL;
-			}
-		}
+        MedicationTypeBLL medicationTypeBLL;
+        MedicationTypeBLL MedicationTypeBLL
+        {
+            get
+            {
+                if (medicationTypeBLL == null)
+                {
+                    medicationTypeBLL = new MedicationTypeBLL();
+                }
+                return medicationTypeBLL;
+            }
+        }
 
-		#endregion
+        DistributionCentreBLL distributionCentreBLL;
+        DistributionCentreBLL DistributionCentreBLL
+        {
+            get
+            {
+                if (distributionCentreBLL == null)
+                {
+                    distributionCentreBLL = new DistributionCentreBLL();
+                }
+                return distributionCentreBLL;
+            }
+        }
 
-		#region Home Page
+        #endregion
 
-		public ActionResult MasterPage()
-		{
-			return View();
-		}
-		
-		public ActionResult AgentDoctorHomePackages()
-		{
-			return View();
-		}
+        #region Home Page
 
-		#endregion
+        public ActionResult MasterPage()
+        {
+            return View();
+        }
 
-		#region Register Package
+        public ActionResult AgentDoctorHomePackages()
+        {
+            return View();
+        }
 
-		[HttpGet]
-		public ActionResult AgentDoctorRegisterPackages()
-		{
-			var model = GetRegisteringViewModel();
-			return View(model);
-		}
+        #endregion
 
-		[HttpPost]
-		public ActionResult AgentDoctorRegisterPackages(int medicationTypeId, string expireDate, string submit)
-		{
-			var model = GetRegisteringViewModel();
-			if (submit == "Refresh")
-			{
-				model.SelectedMedicationType = MedicationTypeBLL.GetMedicationTypeById(medicationTypeId);
-			}
-			else
-			{
-				try
-				{
-					string barcode = MedicationPackageBLL.RegisterPackage(medicationTypeId, expireDate);
-					model.Barcode = barcode;
-					model.Result = new Notification { Level = NotificationLevel.Info, Message = "Register package succeeded" };
-				}
-				catch (ENETCareException ex)
-				{
-					model.Result = new Notification { Level = NotificationLevel.Error, Message = ex.Message };
-				}
-			}
-			ModelState.Clear();
-			return View(model);
-		}
+        #region Register Package
 
-		[HttpGet]
-		public ActionResult BarcodeImage(string barcode)
-		{
-			FileContentResult result;
-			using (var memStream = new MemoryStream())
-			{
-				Bitmap image = BarcodeHelper.GenerateBarcodeImage(barcode);
-				image.Save(memStream, ImageFormat.Jpeg);
-				result = File(memStream.GetBuffer(), "image/jpeg");
-			}
-			return result;
-		}
+        [HttpGet]
+        public ActionResult AgentDoctorRegisterPackages()
+        {
+            var model = GetRegisteringViewModel();
+            return View(model);
+        }
 
-		RegisteringViewModel GetRegisteringViewModel()
-		{
-			RegisteringViewModel model = new RegisteringViewModel();
-			List<MedicationType> list = MedicationTypeBLL.GetMedicationTypeList();
-			model.MedicationTypes = list;
-			model.SelectedMedicationType = list.FirstOrDefault();
-			return model;
-		}
+        [HttpPost]
+        public ActionResult AgentDoctorRegisterPackages(int medicationTypeId, string expireDate, string submit)
+        {
+            var model = GetRegisteringViewModel();
+            if (submit == "Refresh")
+            {
+                model.SelectedMedicationType = MedicationTypeBLL.GetMedicationTypeById(medicationTypeId);
+            }
+            else
+            {
+                try
+                {
+                    string barcode = MedicationPackageBLL.RegisterPackage(medicationTypeId, expireDate);
+                    model.Barcode = barcode;
+                    model.Result = new Notification { Level = NotificationLevel.Info, Message = "Register package succeeded" };
+                }
+                catch (ENETCareException ex)
+                {
+                    model.Result = new Notification { Level = NotificationLevel.Error, Message = ex.Message };
+                }
+            }
+            ModelState.Clear();
+            return View(model);
+        }
 
-		#endregion
+        [HttpGet]
+        public ActionResult BarcodeImage(string barcode)
+        {
+            FileContentResult result;
+            using (var memStream = new MemoryStream())
+            {
+                Bitmap image = BarcodeHelper.GenerateBarcodeImage(barcode);
+                image.Save(memStream, ImageFormat.Jpeg);
+                result = File(memStream.GetBuffer(), "image/jpeg");
+            }
+            return result;
+        }
 
-		#region Send Package
+        RegisteringViewModel GetRegisteringViewModel()
+        {
+            RegisteringViewModel model = new RegisteringViewModel();
+            List<MedicationType> list = MedicationTypeBLL.GetMedicationTypeList();
+            model.MedicationTypes = list;
+            model.SelectedMedicationType = list.FirstOrDefault();
+            return model;
+        }
 
-		[HttpGet]
-		public ActionResult AgentDoctorSendPackage()
-		{
-			var model = GetSendingViewModel();
-			return View(model);
-		}
+        #endregion
 
-		[HttpPost]
-		public ActionResult AgentDoctorSendPackage(int distributionCenterId, string barcode)
-		{
-			var model = GetSendingViewModel();
-			try
-			{
-				MedicationPackageBLL.SendPackage(barcode, distributionCenterId);
-				model.Result = new Notification { Level = NotificationLevel.Info, Message = "Send package succeeded" };
-			}
-			catch (ENETCareException ex)
-			{
-				model.Result = new Notification { Level = NotificationLevel.Error, Message = ex.Message };
-			}
-			ModelState.Clear();
-			return View(model);
-		}
+        #region Send Package
 
-		SendingViewModel GetSendingViewModel()
-		{
-			SendingViewModel model = new SendingViewModel();
-			List<DistributionCentre> list = DistributionCentreBLL.GetDistributionCentreList();
-			model.DistributionCentres = list;
-			return model;
-		}
+        [HttpGet]
+        public ActionResult AgentDoctorSendPackage()
+        {
+            var model = GetSendingViewModel();
+            return View(model);
+        }
 
-		#endregion
+        [HttpPost]
+        public ActionResult AgentDoctorSendPackage(int distributionCenterId, string barcode)
+        {
+            var model = GetSendingViewModel();
+            try
+            {
+                MedicationPackageBLL.SendPackage(barcode, distributionCenterId);
+                model.Result = new Notification { Level = NotificationLevel.Info, Message = "Send package succeeded" };
+            }
+            catch (ENETCareException ex)
+            {
+                model.Result = new Notification { Level = NotificationLevel.Error, Message = ex.Message };
+            }
+            ModelState.Clear();
+            return View(model);
+        }
 
-		#region Receive Package
+        SendingViewModel GetSendingViewModel()
+        {
+            SendingViewModel model = new SendingViewModel();
+            List<DistributionCentre> list = DistributionCentreBLL.GetDistributionCentreList();
+            model.DistributionCentres = list;
+            return model;
+        }
 
-		[HttpGet]
-		public ActionResult AgentDoctorReceivePackage()
-		{
-			return View();
-		}
+        #endregion
 
-		[HttpPost]
-		public ActionResult AgentDoctorReceivePackage(string barcode)
-		{
-			var model = new ReceivingViewModel();
-			try
-			{
-				MedicationPackageBLL.ReceivePackage(barcode);
-				model.Result = new Notification { Level = NotificationLevel.Info, Message = "Receive package succeeded" };
-			}
-			catch (ENETCareException ex)
-			{
-				model.Result = new Notification { Level = NotificationLevel.Error, Message = ex.Message };
-			}
-			ModelState.Clear();
-			return View(model);
-		}
+        #region Receive Package
 
-		#endregion
+        [HttpGet]
+        public ActionResult AgentDoctorReceivePackage()
+        {
+            return View();
+        }
 
-		#region Discard Package
+        [HttpPost]
+        public ActionResult AgentDoctorReceivePackage(string barcode)
+        {
+            var model = new ReceivingViewModel();
+            try
+            {
+                MedicationPackageBLL.ReceivePackage(barcode);
+                model.Result = new Notification { Level = NotificationLevel.Info, Message = "Receive package succeeded" };
+            }
+            catch (ENETCareException ex)
+            {
+                model.Result = new Notification { Level = NotificationLevel.Error, Message = ex.Message };
+            }
+            ModelState.Clear();
+            return View(model);
+        }
 
-		[HttpGet]
-		public ActionResult AgentDoctorDiscardPackage()
-		{
-			return View();
-		}
+        #endregion
 
-		[HttpPost]
-		public ActionResult AgentDoctorDiscardPackage(string barcode)
-		{
-			var model = new DiscardingViewModel();
-			try
-			{
-				MedicationPackageBLL.DiscardPackage(barcode);
-				model.Result = new Notification { Level = NotificationLevel.Info, Message = "Discard package succeeded" };
-			}
-			catch (ENETCareException ex)
-			{
-				model.Result = new Notification { Level = NotificationLevel.Error, Message = ex.Message };
-			}
-			ModelState.Clear();
-			return View(model);
-		}
+        #region Discard Package
 
-		#endregion
+        [HttpGet]
+        public ActionResult AgentDoctorDiscardPackage()
+        {
+            return View();
+        }
 
-		#region To-Do: Distribute Package should be moved to doctor only feature
+        [HttpPost]
+        public ActionResult AgentDoctorDiscardPackage(string barcode)
+        {
+            var model = new DiscardingViewModel();
+            try
+            {
+                MedicationPackageBLL.DiscardPackage(barcode);
+                model.Result = new Notification { Level = NotificationLevel.Info, Message = "Discard package succeeded" };
+            }
+            catch (ENETCareException ex)
+            {
+                model.Result = new Notification { Level = NotificationLevel.Error, Message = ex.Message };
+            }
+            ModelState.Clear();
+            return View(model);
+        }
 
-		[HttpGet]
-		public ActionResult DoctorDistributePackage()
-		{
-		
-			return View();
-		}
+        #endregion
 
-		[HttpPost]
-		public ActionResult DoctorDistributePackage(string DoctorDistributePackageTypebarcode)
-		{
-			new MedicationPackageBLL(User.Identity.Name).DistributePackage(DoctorDistributePackageTypebarcode, true);
-			return View();
-		}
+        #region To-Do: Distribute Package should be moved to doctor only feature
+        [HttpGet]
+        public ActionResult DoctorDistributePackage()
+        {
 
-		#endregion
+            return View();
+        }
 
-		#region Stocktaking
+        [HttpPost]
+        public ActionResult DoctorDistributePackage(string DoctorDistributePackageTypebarcode)
+        {
+            new MedicationPackageBLL(User.Identity.Name).DistributePackage(DoctorDistributePackageTypebarcode, true);
+            return View();
+        }
 
-		[HttpGet]
-		public ActionResult AgentDoctorViewReport()
-		{
-			List<StocktakingViewData> list = MedicationPackageBLL.Stocktake();
-			return View(list);
-		}
+        #endregion
 
-		#endregion
-	}
+        #region Stocktaking
+
+        [HttpGet]
+        public ActionResult AgentDoctorViewReport()
+        {
+            List<StocktakingViewData> list = MedicationPackageBLL.Stocktake();
+            return View(list);
+        }
+
+        #endregion
+    }
 }

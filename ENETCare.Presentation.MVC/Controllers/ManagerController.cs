@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ENETCare.Presentation.MVC.Controllers
 {
+    [Authorize(Roles="Manager")]
     public class ManagerController : Controller
     {
         private DistributionCentreBLL distributionCentresBLL;
