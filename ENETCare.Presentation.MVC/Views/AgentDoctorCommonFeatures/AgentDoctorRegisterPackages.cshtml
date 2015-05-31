@@ -24,20 +24,7 @@
             <div class="form-group">
                 <label id="AgentDoctorPackageRegisterPackageTypeDropDwonListLabel" class="col-xs-3">Medication Type: </label>
                 <div class="col-xs-9">
-                    <select id="AgentDoctorPackageRegisterPackageTypeDropDwonList" name="MediTypeId">
-                        <option value="" disabled selected>Please select</option>
-                        @foreach (var item in Model)
-                        {
-                            <option value="@item.ID">
-                                @item.Name
-                                <option class="Expire-date-option-second" value="@item.DefaultExpireDate"></option>
-
-
-                                @*@item.DefaultExpireDate;*@
-                                @*@Html.Hidden("sthHere", item.DefaultExpireDate)*@
-                            </option>
-                        }
-                    </select>
+                    @Html.DropDownListFor(x => x.SelectedMedicationType.ID, Model.MedicationTypeSelectList, new { Name = "medicationTypeId", @onchange = "document.getElementById('refresh').click();" })
                 </div>
             </div>
 
