@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using ENETCare.Business;
-using System.Data.Entity;
-using System.Diagnostics;
-using System.Reflection;
-using ENETCare.Presentation.MVC.Models;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
+using System.Web.Mvc;
+using ENETCare.Business;
+using ENETCare.Presentation.MVC.Models;
 
 namespace ENETCare.Presentation.MVC.Controllers
 {
