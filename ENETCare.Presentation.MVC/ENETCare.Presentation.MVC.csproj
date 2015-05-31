@@ -176,6 +176,11 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\DiscardingViewModel.cs" />
+    <Compile Include="Models\ReceivingViewModel.cs" />
+    <Compile Include="Models\RegisteringViewModel.cs" />
+    <Compile Include="Models\SendingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -244,7 +249,6 @@
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorRegisterPackages.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorHomePackages.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\DoctorDistributePackage.cshtml" />
-    <Content Include="Views\AgentDoctorCommonFeatures\SampleReport.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorViewReport.cshtml" />
     <Content Include="Views\Shared\_ManagerLayout.cshtml" />
     <Content Include="Views\Manager\CentreList.cshtml" />
@@ -255,6 +259,7 @@
     <Content Include="Views\Manager\GlobalStock.cshtml" />
     <Content Include="Views\Manager\index.cshtml" />
     <Content Include="Views\Manager\ValueInTransit.cshtml" />
+    <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorDiscardPackage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

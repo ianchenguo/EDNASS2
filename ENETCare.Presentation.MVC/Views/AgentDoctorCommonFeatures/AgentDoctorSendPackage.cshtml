@@ -1,7 +1,6 @@
-﻿@using ENETCare.Business
-@model ICollection<DistributionCentre>
+﻿@using ENETCare.Presentation.MVC.Models
+@model SendingViewModel
 @{
-    ViewBag.Title = "AgentDoctorSendPackage";
     Layout = "~/Views/AgentDoctorCommonFeatures/MasterPage.cshtml";
 }
 
@@ -17,18 +16,17 @@
 {
     <div class="panel-body">
         <div class="form-horizontal col-sm-10 col-sm-offset-1">
-
-            <!-- <div id="AgentDoctorSendPackageAlertWindowDiv" visible="false" class="alert alert-success" data-dismiss="alert">
-                <label id="AgentDoctorSendPackageAlertWindowContentLabel"></label>
-            </div> -->
-
+            @if (Model != null && Model.Result != null)
+            {
+                <div id="AgentDoctorSendPackageAlertWindowDiv" class="alert @Model.Result.AlertStyle" data-dismiss="alert">
+                    <label id="AgentDoctorSendPackageAlertWindowContentLabel">@Model.Result.Message</label>
+                </div>
+            }
             <div class="form-group">
-
                 <label id="AgentDoctorSendingDropDownListLabel" class="col-xs-3">Destination: </label>
                 <div class="col-xs-9">
-                    <select id="AgentDoctorSendingDropDownList" class="form-control" name="sendToCenterId">
-                        <option value="" disabled selected>Please select</option>
-                        @foreach (var item in Model)
+                    <select id="AgentDoctorSendingDropDownList" class="form-control" name="distributionCenterId">
+                        @foreach (var item in Model.DistributionCentreList)
                         {
                             <option value="@item.ID">
                                 @item.Name
@@ -41,17 +39,15 @@
             <div class="form-group">
                 <label id="AgentDoctorSendPackageTypebarcodeLabel" class="col-xs-3">Barcode: </label>
                 <div class="col-xs-9">
-                    @Html.TextBox("AgentDoctorSendPackageTypebarcodeInput", null, new { @class = "form-control", @type = "text" })
+                    @Html.TextBox("barcode", null, new { @class = "form-control", @type = "text" })
                 </div>
             </div>
 
-            <!-- the following link should be optimised -->
             <a class="btn btn-danger btn-float-right btn-margin-left" type="a" href="@Url.Action("AgentDoctorHomePackages", "AgentDoctorCommonFeatures")">Cancel</a>
-            <a href="#" class="btn btn-success btn-float-right" id="AgentDoctorSendPackageTypeButton">Send</a>
+            <input type="submit" class="btn btn-success btn-float-right" value="Send" />
         </div>
     </div>
     <!--panel-body-end-->
-    <input type="submit" value="Send" />
 }
 </div>
 <!--panel-end-->

@@ -1,7 +1,6 @@
-﻿@using ENETCare.Business
-@model ICollection<MedicationType>
+﻿@using ENETCare.Presentation.MVC.Models
+@model RegisteringViewModel
 @{
-    ViewBag.Title = "AgentDoctorRegisterPackages";
     Layout = "~/Views/AgentDoctorCommonFeatures/MasterPage.cshtml";
 }
 
@@ -16,68 +15,38 @@
     <!--panel-body-start-->
     <div class="panel-body">
         <div class="form-horizontal col-sm-10 col-sm-offset-1">
-
-            @*<div id="AgentDoctorRegisterPackageAlertWindowDiv" visible="false" class="alert alert-success" data-dismiss="alert">
-                    <label id="AgentDoctorRegisterPackageAlertWindowContentLabel"></label>
-                </div>*@
-            @*<div class="agent-doctor-sample-selected-value">
-            </div>*@
-
+            @if (Model != null && Model.Result != null)
+            {
+                <div id="AgentDoctorRegisterPackageAlertWindowDiv" class="alert @Model.Result.AlertStyle" data-dismiss="alert">
+                    <label id="AgentDoctorRegisterPackageAlertWindowContentLabel">@Model.Result.Message</label>
+                </div>
+            }
             <div class="form-group">
                 <label id="AgentDoctorPackageRegisterPackageTypeDropDwonListLabel" class="col-xs-3">Medication Type: </label>
-
                 <div class="col-xs-9">
-                    <select id="AgentDoctorPackageRegisterPackageTypeDropDwonList" name="MediTypeId">
-                        <option value="" disabled selected>Please select</option>
-                        @foreach (var item in Model)
-                        {
-                            <option value="@item.ID">
-                                @item.Name
-                                <option class="Expire-date-option-second" value="@item.DefaultExpireDate"></option>
-
-
-                                @*@item.DefaultExpireDate;*@
-                                @*@Html.Hidden("sthHere", item.DefaultExpireDate)*@
-                            </option>
-                        }
-                    </select>
+                    @Html.DropDownListFor(x => x.SelectedMedicationType.ID, Model.MedicationTypeSelectList, new { Name = "medicationTypeId", @onchange = "document.getElementById('refresh').click();" })
                 </div>
             </div>
 
             <br />
 
             <div class="form-group">
-
                 <div id="AgentDoctorRegisterFormExpireDateLabel" class="col-xs-3">Expiration Date: </div>
                 <div class="col-xs-9">
-                    @*<input id="AgentDoctorRegisterFormExpireDateInput" class="form-control" type="date" />*@
-                    @*t5_input is id and name*@            
-                    @*<input id="t1" class="form-control" type="text" value="@ViewBag.inputValue" />
-                    <input id="t2" class="form-control" type="text" value="@ViewBag.dayD" />
-                    <input id="t3" class="form-control" type="text" value="@ViewData["dayDay"]" />*@
-                    @*<input id="t4" name="inputname" class="form-control" type="text" value="t4input" />*@
-                    @*@Html.TextBox("t5_input", "2015-05-12", new { @class = "form-control", @Type="date" })*@
-
-                    @Html.TextBox("AgentDoctorRegisterFormExpireDateInput", null, new { @class = "form-control", @type = "date" })
-
-
+                    @Html.TextBox("expireDate", @Model.SelectedMedicationType.DefaultExpireDate.ToString("yyyy-MM-dd"), new { @class = "form-control", @type = "date" })
                 </div>
             </div>
-            @*<p>
+            <p>
                 &nbsp;
             </p>
             <p>
-                <label id="AgentDoctorRegisterMessage">Title: </label>
-                <img src="" alt="waiting img...">
-            </p>*@
+                <img src="@Url.Action("BarcodeImage", "AgentDoctorCommonFeatures", new { barcode = @Model.Barcode })" alt="" />
+            </p>
             <a class="btn btn-danger btn-float-right btn-margin-left" type="a" href="@Url.Action("AgentDoctorHomePackages", "AgentDoctorCommonFeatures")">Cancel</a>
-            <a href="#" class="btn btn-success btn-float-right" id="AgentDoctorRegisterButton">Register</a>
+            <input id="register" type="submit" name="submit" class="btn btn-success btn-float-right" value="Register" />
+            <input id="refresh" type="submit" name="submit" value="Refresh" style="display:none" />
         </div>
     </div>
     <!--panel-body-end-->
-    <input type="submit" value="Register Test"/>
 }
 </div>
-
-@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
-<script src="@Url.Content("~/Scripts/myJS/ad_Register.js")" type="text/javascript"></script>

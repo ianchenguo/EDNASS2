@@ -1,5 +1,5 @@
 ﻿@using ENETCare.Presentation.MVC.Models
-@model ReceivingViewModel
+@model DiscardingViewModel
 @{
     Layout = "~/Views/AgentDoctorCommonFeatures/MasterPage.cshtml";
 }
@@ -8,7 +8,7 @@
 <div class="panel panel-default">
     <!--panel-heading-start-->
     <div class="panel-heading">
-        <h3 class="panel-title">Receive Medication Package</h3>
+        <h3 class="panel-title">Discard Medication Package</h3>
     </div>
     <!--panel-heading-end-->
     <!--panel-body-start-->
@@ -18,19 +18,19 @@
         <div class="form-horizontal col-sm-10 col-sm-offset-1">
             @if (Model !=null && Model.Result != null)
             {
-                <div id="AgentDoctorReceivePackageAlertWindowDiv" class="alert @Model.Result.AlertStyle" data-dismiss="alert">
-                    <label id="AgentDoctorReceivePackageAlertWindowContentLabel">@Model.Result.Message</label>
+                <div id="AgentDoctorDiscardPackageAlertWindowDiv" class="alert @Model.Result.AlertStyle" data-dismiss="alert">
+                    <label id="AgentDoctorDiscardPackageAlertWindowContentLabel">@Model.Result.Message</label>
                 </div>
             }
             <div class="form-group">
-                <div id="AgentDoctorReceivePackagesBarcodeLabel" class="col-xs-3">Barcode: </div>
+                <div id="AgentDoctorDiscardPackagesBarcodeLabel" class="col-xs-3">Barcode: </div>
                 <div class="col-xs-9">
                     @Html.TextBox("barcode", null, new { @class = "form-control", @type = "text" })
                 </div>
             </div>
             
             <a class="btn btn-danger btn-float-right btn-margin-left" type="a" href="@Url.Action("AgentDoctorHomePackages", "AgentDoctorCommonFeatures")">Cancel</a>
-            <input type="submit" class="btn btn-success btn-float-right" value="Receive" />
+            <input type="submit" class="btn btn-success btn-float-right" value="Discard" />
         </div>
     </div>
 }
