@@ -39,12 +39,12 @@ namespace ENETCare.Business
 		Distributed = 2,
 		Discarded = 3,
 		Lost = 4
-	};
+	}
 
 	public enum ExpireStatus
 	{
 		Expired = 0,
 		NotExpired = 1,
 		AboutToExpired = 2
-	};
+	}
 }

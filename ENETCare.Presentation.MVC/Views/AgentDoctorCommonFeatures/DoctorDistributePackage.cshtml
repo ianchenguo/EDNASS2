@@ -25,14 +25,13 @@
 
             <div class="form-group">
                 <div id="DoctorDistributePackageTypebarcode" cssclass="col-xs-3">Barcode: </div>
-
                 <div class="col-xs-9">
                     @Html.TextBox("DoctorDistributePackageTypebarcode", null, new { @class = "form-control", @type = "text" })
                 </div>
             </div>
 
             <a class="btn btn-danger btn-float-right btn-margin-left" type="a" href="@Url.Action("AgentDoctorHomePackages", "AgentDoctorCommonFeatures")">Cancel</a>
-            <a href="#" class="btn btn-success btn-float-right" id="DoctorDistributeButton">Distribute</a>
+            <input type="submit" value="Distribute" class="btn btn-success btn-float-right" id="DoctorDistributeButton" />
         </div>
     </div>
 }

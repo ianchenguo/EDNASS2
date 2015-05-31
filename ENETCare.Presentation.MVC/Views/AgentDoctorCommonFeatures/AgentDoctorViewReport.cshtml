@@ -1,9 +1,19 @@
 ﻿@using ENETCare.Business
-@model ICollection<MedicationTypeViewData>
+@model ICollection<StocktakingViewData>
 @{
     ViewBag.Title = "AgentDoctorViewReport";
     Layout = "~/Views/AgentDoctorCommonFeatures/MasterPage.cshtml";
 }
+
+<style>
+tr.Expired > td {
+    background-color: #FEA8A8 !important;
+}
+
+tr.AboutToExpired > td {
+    background-color: #ffd800 !important;
+}
+</style>
 
 <div class="panel panel-default">
     <!--panel-heading-start-->
@@ -16,27 +26,22 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Package</th>
-                    <th>Quantity</th>
-                    <th>Total Value (AUD)</th>
+                    <th>Barcode</th>
+                    <th>Type</th>
+                    <th>Expire Date</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var t in Model)
                 {
-                    <tr>
+                    <tr class="@t.ExpireStatus">
+                        <td>@t.Barcode</td>
                         <td>@t.Type</td>
-                        <td>@t.Quantity</td>
-                        <td>@t.Value</td>
-                        <td>
-                            @Html.ActionLink("Delete", "Delete", new { id = t.Type })
-                        </td>
+                        <td>@t.ExpireDate</td>
                     </tr>
                 }
             </tbody>
         </table>
-
-        <p class="text-right"><strong>Grand Total:</strong> @Model.Sum(type => type.Value)</p>
 
         <a class="btn btn-default btn-float-right" href="managerDistributionCentreStockCentres.html">Back</a>
 

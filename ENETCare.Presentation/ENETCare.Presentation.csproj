@@ -166,10 +166,6 @@
     <Content Include="AgentDoctorFeatures\AgentDoctorViewReport.aspx" />
     <Content Include="AgentDoctorFeatures\PresentBarcode.aspx" />
     <Content Include="AgentDoctorFeatures\TestAgentDoctor.aspx" />
-    <Content Include="App_Data\aspnet-ENETCare.Presentation-20150329093129.mdf" />
-    <Content Include="App_Data\aspnet-ENETCare.Presentation-20150329093129_log.ldf">
-      <DependentUpon>aspnet-ENETCare.Presentation-20150329093129.mdf</DependentUpon>
-    </Content>
     <Content Include="DoctorFeatures\DoctorDistribute.aspx" />
     <Content Include="ManagerFeatures\ManagerDistributionCentreLosses.aspx" />
     <Content Include="ManagerFeatures\ManagerDistributionCentreStock.aspx" />
@@ -537,7 +533,9 @@
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

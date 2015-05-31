@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.SqlClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ENETCare.Business;
 
@@ -21,31 +20,7 @@ namespace ENETCareTest
 		protected override void PrepareTestData()
 		{
 			DeleteExistingData();
-			ReseedTable("MedicationType");
-			InsertTestMedicationTypes();
-		}
-
-		void InsertTestMedicationTypes()
-		{
-			InsertMedicationType("TEST MT1", 365, 2000, true);
-			InsertMedicationType("TEST MT2", 730, 1000, false);
-			InsertMedicationType("TEST MT3", 1000, 300, false);
-		}
-
-		void InsertMedicationType(string name, short shelfLife, decimal value, bool isSensitive)
-		{
-			using (SqlConnection conn = new SqlConnection())
-			{
-				conn.ConnectionString = connectionString;
-				conn.Open();
-				string query = "insert into MedicationType (Name, ShelfLife, Value, IsSensitive) values (@name, @shelfLife, @value, @isSensitive)";
-				SqlCommand command = new SqlCommand(query, conn);
-				command.Parameters.Add(new SqlParameter("name", name));
-				command.Parameters.Add(new SqlParameter("shelfLife", shelfLife));
-				command.Parameters.Add(new SqlParameter("value", value));
-				command.Parameters.Add(new SqlParameter("isSensitive", isSensitive));
-				command.ExecuteNonQuery();
-			}
+			CreateTestMedicationTypes();
 		}
 
 		#endregion

@@ -30,5 +30,5 @@ namespace ENETCare.Business
 		Doctor = 2,
 		Manager = 3,
 		Undefined = 4
-	};
+	}
 }

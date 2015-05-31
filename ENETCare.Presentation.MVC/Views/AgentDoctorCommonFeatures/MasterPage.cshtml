@@ -14,11 +14,11 @@
                 <a class="list-group-item" href="@Url.Action("AgentDoctorRegisterPackages", "AgentDoctorCommonFeatures")">Register Package</a>
                 <a class="list-group-item" href="@Url.Action("AgentDoctorSendPackage", "AgentDoctorCommonFeatures")">Send Package</a>
                 <a class="list-group-item" href="@Url.Action("AgentDoctorReceivePackage", "AgentDoctorCommonFeatures")">Receive Package</a>
-                <a class="list-group-item" href="@Url.Action("DoctorDistributePackage", "AgentDoctorCommonFeatures")" id="DoctorDistributPackageItem">Distribute Package</a>
-                <a class="list-group-item" href="#">Audit Package</a>
+                <a class="list-group-item" href="@Url.Action("AgentDoctorDiscardPackage", "AgentDoctorCommonFeatures")">Discard Package</a>
                 <a class="list-group-item" href="@Url.Action("AgentDoctorViewReport", "AgentDoctorCommonFeatures")">View Report</a>
-                <a class="list-group-item" href="#">Discard Package</a>
-
+                <a class="list-group-item" href="#">Audit Package</a>
+                <!-- distribute should be moved to doctor only feature -->
+                <a class="list-group-item" href="@Url.Action("DoctorDistributePackage", "AgentDoctorCommonFeatures")" id="DoctorDistributPackageItem">Distribute Package</a>
             </div>
 
             <!-- panel ocntents end -->
