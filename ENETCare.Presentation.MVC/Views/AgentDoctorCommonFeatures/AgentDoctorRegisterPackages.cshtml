@@ -39,9 +39,12 @@
             <p>
                 &nbsp;
             </p>
-            <p>
-                <img src="@Url.Action("BarcodeImage", "AgentDoctorCommonFeatures", new { barcode = @Model.Barcode })" alt="" />
-            </p>
+            @if (!string.IsNullOrEmpty(Model.Barcode))
+            {
+                <p>
+                    <img src="@Url.Action("BarcodeImage", "AgentDoctorCommonFeatures", new { barcode = @Model.Barcode })" alt="" />
+                </p>
+            }
             <a class="btn btn-danger btn-float-right btn-margin-left" type="a" href="@Url.Action("AgentDoctorHomePackages", "AgentDoctorCommonFeatures")">Cancel</a>
             <input id="register" type="submit" name="submit" class="btn btn-success btn-float-right" value="Register" />
             <input id="refresh" type="submit" name="submit" value="Refresh" style="display:none" />
