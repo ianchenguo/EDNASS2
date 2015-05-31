@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using ENETCare.Business;
 
 namespace ENETCare.Presentation.MVC.Models
 {
@@ -23,6 +24,24 @@ namespace ENETCare.Presentation.MVC.Models
     public class FactorViewModel
     {
         public string Purpose { get; set; }
+    }
+
+    public class ChangeBasicInfoViewModel
+    {
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; }
+
+        [Display(Name = "Distribution Centre")]
+        public IEnumerable<System.Web.Mvc.SelectListItem> CentresInDropDownList { get; set; }
+
+        [Required]
+        public string SelectedCentreIDValue { get; set; }
     }
 
     public class SetPasswordViewModel

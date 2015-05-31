@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ENETCare.Presentation.MVC.Models;
+using ENETCare.Business;
 
 namespace ENETCare.Presentation.MVC.Controllers
 {
@@ -15,9 +16,13 @@ namespace ENETCare.Presentation.MVC.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private DistributionCentreBLL _distributionCentreBLL;
+        private EmployeeBLL _employeeBLL;
 
         public ManageController()
         {
+            _distributionCentreBLL = new DistributionCentreBLL();
+            _employeeBLL = new EmployeeBLL();
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -32,9 +37,9 @@ namespace ENETCare.Presentation.MVC.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -61,6 +66,7 @@ namespace ENETCare.Presentation.MVC.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.ChangeBasicInfoSuccess ? "Your basic info has been changed."
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -211,6 +217,71 @@ namespace ENETCare.Presentation.MVC.Controllers
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
+        //ChangeBasicInfo
+        [HttpGet]
+        public ActionResult ChangeBasicInfo()
+        {
+            var model = new ChangeBasicInfoViewModel();
+            model.SelectedCentreIDValue = UserManager.FindById(User.Identity.GetUserId()).DistributionCentreID.ToString();
+
+            model.CentresInDropDownList = from c in _distributionCentreBLL.GetDistributionCentreList()
+                                          select new SelectListItem
+                                          {
+                                              Text = c.Name,
+                                              Value = c.ID.ToString(),
+                                              Selected = model.SelectedCentreIDValue == c.ID.ToString()
+                                          };
+
+            model.FullName = UserManager.FindById(User.Identity.GetUserId()).FullName;
+
+            model.Email = UserManager.FindById(User.Identity.GetUserId()).Email;
+
+            return View(model);
+        }
+
+        //ChangeBasicInfo
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeBasicInfo(ChangeBasicInfoViewModel model)
+        {
+
+            model.CentresInDropDownList = from c in _distributionCentreBLL.GetDistributionCentreList()
+                                          select new SelectListItem
+                                          {
+                                              Text = c.Name,
+                                              Value = c.ID.ToString(),
+                                              Selected = model.SelectedCentreIDValue == c.ID.ToString()
+                                          };
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            //retrieves user account
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            //updates general user info
+            user.FullName = model.FullName;
+            user.Email = user.UserName = model.Email;
+            user.DistributionCentreID = int.Parse(model.SelectedCentreIDValue);
+            //user.DistributionCentreID = model.SelectedCentreID;
+
+            //user.DistributionCentre = DistributionCentre.Text;
+            IdentityResult result = UserManager.Update(user);
+
+            if (result.Succeeded)
+            {
+                user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeBasicInfoSuccess });
+            }
+            AddErrors(result);
+            return View(model);
+        }
+
+
         //
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
@@ -331,7 +402,7 @@ namespace ENETCare.Presentation.MVC.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -379,9 +450,10 @@ namespace ENETCare.Presentation.MVC.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
+            ChangeBasicInfoSuccess,
             Error
         }
 
-#endregion
+        #endregion
     }
 }

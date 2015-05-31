@@ -1,0 +1,60 @@
+﻿@model ENETCare.Presentation.MVC.Models.ChangeBasicInfoViewModel
+@using ENETCare.Business
+@{
+    ViewBag.Title = "Change Basic Info";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("ChangeBasicInfo", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    if (!User.IsInRole(Role.Manager.ToString()))
+    {
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.CentresInDropDownList, new { @class = "col-md-2 control-label" })
+
+            <div class="col-md-10">
+                @Html.DropDownListFor(
+                m => m.SelectedCentreIDValue,
+                Model.CentresInDropDownList,
+                new { @class = "form-control" }
+                )
+                @Html.ValidationMessageFor(m => m.SelectedCentreIDValue, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+    else
+    {
+        @Html.Hidden("SelectedCentreIDValue", Model.SelectedCentreIDValue);
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.FullName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", required = "required" })
+            @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger"})
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Change Basic Info" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
