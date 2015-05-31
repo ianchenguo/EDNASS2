@@ -10,7 +10,6 @@ using ENETCare.Presentation.MVC.Models;
 namespace ENETCare.Presentation.MVC.Controllers
 {
     [Authorize(Roles = "Agent, Doctor")]
-
     public class AgentDoctorCommonFeaturesController : Controller
     {
         #region Properties

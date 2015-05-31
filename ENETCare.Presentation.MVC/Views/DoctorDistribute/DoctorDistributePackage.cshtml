@@ -1,6 +1,5 @@
 ﻿@using ENETCare.Presentation.MVC.Models
 @model DistributingViewModel
-
 @{
     ViewBag.Title = "DoctorDistributePackage";
     Layout = "~/Views/AgentDoctorCommonFeatures/MasterPage.cshtml";
@@ -14,29 +13,29 @@
     </div>
     <!--panel-heading-end-->
     <!--panel-body-start-->
-    @using (Html.BeginForm())
-    {
-        <div class="panel-body">
-            <div class="form-horizontal col-sm-10 col-sm-offset-1">
-                @if (Model != null && Model.Result != null)
-                {
-                    <div id="DoctorDistributeAlertWindowDiv" class="alert @Model.Result.AlertStyle" data-dismiss="alert">
-                        <label id="DoctorDistributeAlertWindowContentLabel">@Model.Result.Message</label>
-                    </div>
-                }
-
-                <div class="form-group">
-                    <div id="DoctorDistributePackageTypebarcode" cssclass="col-xs-3">Barcode: </div>
-                    <div class="col-xs-9">
-                        @Html.TextBox("DoctorDistributePackageTypebarcode", null, new { @class = "form-control", @type = "text" })
-                    </div>
+@using (Html.BeginForm())
+{
+    <div class="panel-body">
+        <div class="form-horizontal col-sm-10 col-sm-offset-1">
+            @if (Model != null && Model.Result != null)
+            {
+                <div id="DoctorDistributeAlertWindowDiv" class="alert @Model.Result.AlertStyle" data-dismiss="alert">
+                    <label id="DoctorDistributeAlertWindowContentLabel">@Model.Result.Message</label>
                 </div>
+            }
 
-                <a class="btn btn-danger btn-float-right btn-margin-left" type="a" href="@Url.Action("AgentDoctorHomePackages", "AgentDoctorCommonFeatures")">Cancel</a>
-                <input type="submit" value="Distribute" class="btn btn-success btn-float-right" id="DoctorDistributeButton" />
+            <div class="form-group">
+                <div id="DoctorDistributePackageTypebarcode" class="col-xs-3">Barcode: </div>
+                <div class="col-xs-9">
+                    @Html.TextBox("barcode", null, new { @class = "form-control", @type = "text" })
+                </div>
             </div>
+
+            <a class="btn btn-danger btn-float-right btn-margin-left" type="a" href="@Url.Action("AgentDoctorHomePackages", "AgentDoctorCommonFeatures")">Cancel</a>
+            <input type="submit" value="Distribute" class="btn btn-success btn-float-right" id="DoctorDistributeButton" />
         </div>
-    }
+    </div>
+}
     <!--panel-body-end-->
 </div>
 <!--panel-end-->

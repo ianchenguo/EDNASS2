@@ -257,8 +257,9 @@
     <Content Include="Views\Manager\GlobalStock.cshtml" />
     <Content Include="Views\Manager\index.cshtml" />
     <Content Include="Views\Manager\ValueInTransit.cshtml" />
-    <Content Include="Views\DoctorDistribute\DoctorMasterPage.cshtml" />
     <Content Include="Views\DoctorDistribute\DoctorDistributePackage.cshtml" />
+    <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorDiscardPackage.cshtml" />
+    <Content Include="Views\Manage\ChangeBasicInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

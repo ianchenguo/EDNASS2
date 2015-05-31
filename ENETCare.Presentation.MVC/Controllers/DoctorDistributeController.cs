@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using ENETCare.Business;
 using ENETCare.Presentation.MVC.Models;
 
 namespace ENETCare.Presentation.MVC.Controllers
 {
     [Authorize(Roles = "Doctor")]
-
     public class DoctorDistributeController : Controller
     {
-        #region Properties
-
         MedicationPackageBLL medicationPackageBLL;
         MedicationPackageBLL MedicationPackageBLL
         {
@@ -27,43 +20,6 @@ namespace ENETCare.Presentation.MVC.Controllers
             }
         }
 
-        MedicationTypeBLL medicationTypeBLL;
-        MedicationTypeBLL MedicationTypeBLL
-        {
-            get
-            {
-                if (medicationTypeBLL == null)
-                {
-                    medicationTypeBLL = new MedicationTypeBLL();
-                }
-                return medicationTypeBLL;
-            }
-        }
-
-        DistributionCentreBLL distributionCentreBLL;
-        DistributionCentreBLL DistributionCentreBLL
-        {
-            get
-            {
-                if (distributionCentreBLL == null)
-                {
-                    distributionCentreBLL = new DistributionCentreBLL();
-                }
-                return distributionCentreBLL;
-            }
-        }
-
-        #endregion
-
-        #region
-        public ActionResult DoctorMasterPage()
-        {
-            return View();
-        }
-        #endregion
-
-        #region Doctor Distribute Package
-
         [HttpGet]
         public ActionResult DoctorDistributePackage()
         {
@@ -72,12 +28,12 @@ namespace ENETCare.Presentation.MVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult DoctorDistributePackage(string DoctorDistributePackageTypebarcode)
+        public ActionResult DoctorDistributePackage(string barcode)
         {
             var model = new DistributingViewModel();
             try
             {
-                MedicationPackageBLL.DistributePackage(DoctorDistributePackageTypebarcode);
+                MedicationPackageBLL.DistributePackage(barcode);
                 model.Result = new Notification { Level = NotificationLevel.Info, Message = "Distribute package succeeded" };
             }
             catch (ENETCareException ex)
@@ -87,7 +43,5 @@ namespace ENETCare.Presentation.MVC.Controllers
             ModelState.Clear();
             return View(model);
         }
-
-        #endregion
     }
 }

@@ -15,12 +15,13 @@
                 <a class="list-group-item" href="@Url.Action("AgentDoctorSendPackage", "AgentDoctorCommonFeatures")">Send Package</a>
                 <a class="list-group-item" href="@Url.Action("AgentDoctorReceivePackage", "AgentDoctorCommonFeatures")">Receive Package</a>
                 <a class="list-group-item" href="@Url.Action("AgentDoctorDiscardPackage", "AgentDoctorCommonFeatures")">Discard Package</a>
+                @if (User.IsInRole("Doctor"))
+                {
+                    <a class="list-group-item" href="@Url.Action("DoctorDistributePackage", "DoctorDistribute")">Distribute Package</a>
+                }
                 <a class="list-group-item" href="@Url.Action("AgentDoctorViewReport", "AgentDoctorCommonFeatures")">View Report</a>
                 <a class="list-group-item" href="#">Audit Package</a>
-                <!-- distribute should be moved to doctor only feature -->
-                <a class="list-group-item" href="@Url.Action("DoctorDistributePackage", "DoctorDistribute")" id="DoctorDistributPackageAD">Distribute Package</a>
             </div>
-
             <!-- panel ocntents end -->
         </div>
     </div>
