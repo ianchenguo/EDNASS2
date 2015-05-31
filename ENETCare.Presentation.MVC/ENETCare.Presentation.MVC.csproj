@@ -163,6 +163,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgentDoctorCommonFeaturesController.cs" />
+    <Compile Include="Controllers\DoctorDistributeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
@@ -170,6 +171,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DistributingViewModel.cs" />
     <Compile Include="Models\AuditViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -242,7 +244,6 @@
     <Content Include="Views\AgentDoctorCommonFeatures\MasterPage.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorRegisterPackages.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorHomePackages.cshtml" />
-    <Content Include="Views\AgentDoctorCommonFeatures\DoctorDistributePackage.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorViewReport.cshtml" />
     <Content Include="Views\Shared\_ManagerLayout.cshtml" />
     <Content Include="Views\Manager\CentreList.cshtml" />
@@ -253,8 +254,10 @@
     <Content Include="Views\Manager\GlobalStock.cshtml" />
     <Content Include="Views\Manager\index.cshtml" />
     <Content Include="Views\Manager\ValueInTransit.cshtml" />
-    <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorAuditPackageScan.cshtml" />
+    <Content Include="Views\DoctorDistribute\DoctorDistributePackage.cshtml" />
+    <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorDiscardPackage.cshtml" />
     <Content Include="Views\Manage\ChangeBasicInfo.cshtml" />
+    <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorAuditPackageScan.cshtml" />
     <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorAuditPackageTask.cshtml" />
   </ItemGroup>
   <ItemGroup>

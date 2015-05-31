@@ -14,6 +14,10 @@
                 <a class="list-group-item" href="@Url.Action("AgentDoctorSendPackage", "AgentDoctorCommonFeatures")">Send Package</a>
                 <a class="list-group-item" href="@Url.Action("AgentDoctorReceivePackage", "AgentDoctorCommonFeatures")">Receive Package</a>
                 <a class="list-group-item" href="@Url.Action("AgentDoctorDiscardPackage", "AgentDoctorCommonFeatures")">Discard Package</a>
+                @if (User.IsInRole("Doctor"))
+                {
+                    <a class="list-group-item" href="@Url.Action("DoctorDistributePackage", "DoctorDistribute")">Distribute Package</a>
+                }
                 <a class="list-group-item" href="@Url.Action("AgentDoctorViewReport", "AgentDoctorCommonFeatures")">View Report</a>
 
                 @if (Session["auditMedicationTypeId"] == null)
@@ -24,14 +28,12 @@
                 {
                     <a class="list-group-item" href="@Url.Action("AgentDoctorAuditPackageScan", "AgentDoctorCommonFeatures", new { medicationTypeId = Session["auditMedicationTypeId"] as int?, medicationTypeName = Session["auditMedicationTypeName"] as string})">Audit Package</a>
                 }
-                <!-- distribute should be moved to doctor only feature -->
-                <a class="list-group-item" href="@Url.Action("DoctorDistributePackage", "AgentDoctorCommonFeatures")" id="DoctorDistributPackageItem">Distribute Package</a>
-            </div>
 
+            </div>
             <!-- panel ocntents end -->
         </div>
     </div>
-
+    
     @*Context Div Right*@
     <div id="agent-doctor-right-context">
         @RenderBody()
