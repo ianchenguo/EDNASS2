@@ -7,6 +7,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    margin-top: 30px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -24,30 +25,30 @@ textarea {
 }
 
 p#bottom-copyright-p-text-center {
-    text-align:center;
+    text-align: center;
 }
 
 div#agent-doctor-container {
-    margin:30px auto;
-    width:100%;
-    height:auto;
+    margin: 30px auto;
+    width: 100%;
+    height: auto;
 }
 
-div#agent-doctor-left-button{
-    width:20%;
-    height:auto;
+div#agent-doctor-left-button {
+    width: 20%;
+    height: auto;
     /*border:1px solid orange;*/
-    float:left;
+    float: left;
 }
 
-div#agent-doctor-right-context{
-    width:70%;
-    height:auto;
-    margin:0px 30px;
+div#agent-doctor-right-context {
+    width: 70%;
+    height: auto;
+    margin: 0px 30px;
     /*border:2px dashed navy;*/
-    float:left;
+    float: left;
 }
 
 input.hide-input {
-    display:none;
+    display: none;
 }

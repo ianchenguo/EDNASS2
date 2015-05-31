@@ -1,0 +1,123 @@
+﻿@model ENETCare.Presentation.MVC.Models.AuditViewModels
+@using ENETCare.Business
+@{
+    Layout = "~/Views/AgentDoctorCommonFeatures/MasterPage.cshtml";
+    ViewBag.hasCurrentScanTask = Session["auditMedicationTypeId"] != null;
+
+    if (Session["medicationPackageList"] != null)
+    {
+        var list = Session["medicationPackageList"] as List<string>;
+        ViewBag.packageListCount = list.Count;
+    }
+
+    HtmlHelper.ClientValidationEnabled = false;
+}
+
+<!--panel-start-->
+<div class="panel panel-default">
+    <!--panel-heading-start-->
+    <div class="panel-heading">
+        <h3 class="panel-title">Medication Type: @Model.MedicationTypeName</h3>
+    </div>
+    <!--panel-heading-end-->
+    <!--panel-body-start-->
+    <div class="panel-body">
+        <div class="form-horizontal col-sm-10 col-sm-offset-1">
+
+            @if (ViewBag.hasCurrentScanTask)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Package Barcode</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        @using (Html.BeginForm("AgentDoctorAuditPackageScan", "AgentDoctorCommonFeatures", FormMethod.Post, new { @class = "form-horizontal", role = "form", novalidate = "novalidate" }))
+                        {
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Barcode, new { @class = "col-md-4 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(m => m.Barcode, new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+
+                            @Html.Hidden("MedicationTypeName", Model.MedicationTypeName);
+                            @Html.Hidden("MedicationTypeId", Model.MedicationTypeId);
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-md-10">
+                                    <input type="submit" value="Scan" name="submitAction" class="btn btn-default"/>
+                                    <input type="submit" value="Cancel" name="submitAction" class="btn btn-warning cancel" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            
+
+            @if (ViewBag.packageListCount != null && ViewBag.packageListCount > 0)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Scanned Barcode</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <table class="table table-bordered table-striped">
+                            <thead><tr><td>Barcode</td></tr></thead>
+                            <tbody>
+                                @foreach (string package in Session["medicationPackageList"] as List<string>)
+                                {
+                                    <tr><td>@package</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                        @using (Html.BeginForm("AgentDoctorAuditPackageScan", "AgentDoctorCommonFeatures", FormMethod.Post, new { @class = "form-horizontal", role = "form", novalidate = "novalidate" }))
+                        {
+                            <input type="submit" value="Submit" name="submitAction" class="btn btn-default"/>
+                        }
+                    </div>
+                </div>
+            }
+            
+
+            @if (Model.LostPackages != null)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Lost Packages</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        @if (Model.LostPackages.Count > 0)
+                        {
+                            <table class="table table-bordered table-striped">
+                                <thead><tr><td>Barcode</td></tr></thead>
+                                <tbody>
+                                    @foreach (var package in Model.LostPackages)
+                                    {
+                                        <tr><td>@package.Barcode</td></tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <b>There are no lost packages</b>
+                        }
+
+                        <a class="btn btn-default btn-float-right" href='@Url.Action("AgentDoctorHomePackages", "AgentDoctorCommonFeatures")'>
+                            Back to Home
+                        </a>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div><!--panel-body-end-->
+</div><!--panel-end-->

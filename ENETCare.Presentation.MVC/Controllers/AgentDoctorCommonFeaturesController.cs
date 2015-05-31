@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web.Mvc;
 using ENETCare.Business;
 using ENETCare.Presentation.MVC.Models;
+using System.Data.Entity.Validation;
+using System.Globalization;
 
 namespace ENETCare.Presentation.MVC.Controllers
 {
@@ -244,6 +246,130 @@ namespace ENETCare.Presentation.MVC.Controllers
             return View(list);
         }
 
+        #endregion
+
+        public ActionResult AgentDoctorAuditPackageTask()
+        {
+            return View(MedicationTypeBLL.GetMedicationTypeList());
+        }
+
+        [HttpGet]
+        public ActionResult AgentDoctorAuditPackageScan(int medicationTypeId, string medicationTypeName)
+        {
+            var model = new AuditViewModels();
+            Session["auditMedicationTypeId"] = model.MedicationTypeId = medicationTypeId;
+            Session["auditMedicationTypeName"] = model.MedicationTypeName = medicationTypeName;
+
+            return View(model);
+        }
+
+        #region Auditing
+        [HttpPost]
+        public ActionResult AgentDoctorAuditPackageScan(string submitAction, AuditViewModels model)
+        {
+            model.MedicationTypeId = (int)Session["auditMedicationTypeId"];
+            model.MedicationTypeName = Session["auditMedicationTypeName"] as string;
+
+            if (submitAction == "Cancel")
+            {
+                _emptySessionStore();
+                return View("AgentDoctorHomePackages");
+            }
+            else
+            {
+                if (submitAction == "Scan")
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        return View(model);
+                    }
+                    _scanBarcode(model);
+                    _clearInputField(model);
+                }
+                else if (submitAction == "Submit")
+                {
+                    _submitAudit(model);
+                    _emptySessionStore();
+                }
+                return View(model);
+            }
+        }
+
+        private void _clearInputField(AuditViewModels model)
+        {
+            ModelState.Remove("Barcode");
+            model.Barcode = null;
+        }
+
+        private void _emptySessionStore()
+        {
+            Session["medicationPackageList"] = Session["auditMedicationTypeId"] = Session["auditMedicationTypeName"] = null;
+        }
+
+        private void _submitAudit(AuditViewModels model)
+        {
+            try
+            {
+                var scannedList = Session["medicationPackageList"] as List<string>;
+                var lostPackages = MedicationPackageBLL.AuditPackages(model.MedicationTypeId, scannedList);
+                if (lostPackages != null)
+                {
+                    model.LostPackages = lostPackages;
+                }
+                else
+                {
+                    model.LostPackages = new List<MedicationPackage>();
+                }
+            }
+            catch (ENETCareException ex)
+            {
+                ModelState.AddModelError("", ex.Message.ToString());
+            }
+        }
+
+        private void _scanBarcode(AuditViewModels model)
+        {
+            try
+            {
+                if (model.Barcode != null)
+                {
+                    MedicationPackageBLL.CheckAndUpdatePackage(model.MedicationTypeId, model.Barcode);
+                    _storeScannedPackageInSession(model);
+                }
+
+            }
+            catch (ENETCareException ex)
+            {
+                ModelState.AddModelError("", ex.Message.ToString());
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var error in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in error.ValidationErrors)
+                    {
+                        ModelState.AddModelError("", validationError.ErrorMessage.ToString());
+                    }
+                }
+            }
+        }
+
+        private void _storeScannedPackageInSession(AuditViewModels model)
+        {
+            List<string> medicationPackageList;
+            if (Session["medicationPackageList"] == null)
+            {
+                medicationPackageList = new List<string>();
+            }
+            else
+            {
+                medicationPackageList = Session["medicationPackageList"] as List<string>;
+
+            }
+
+            medicationPackageList.Add(model.Barcode);
+            Session["medicationPackageList"] = medicationPackageList;
+        }
         #endregion
     }
 }

@@ -42,7 +42,8 @@
                                 @centre.LossValue
                             </td>
                             <td>
-                                @centre.LossRatio
+                                @(String.Format("{0:P2}.", centre.LossRatio))
+                                
                             </td>
                             <td>
                                 @centre.RiskLevel
