@@ -67,15 +67,25 @@ namespace ENETCare.Presentation.MVC.Controllers
         [HttpGet]
         public ActionResult DoctorDistributePackage()
         {
-
-            return View();
+            var model = new DistributingViewModel();
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult DoctorDistributePackage(string DoctorDistributePackageTypebarcode)
         {
-            new MedicationPackageBLL(User.Identity.Name).DistributePackage(DoctorDistributePackageTypebarcode, true);
-            return View();
+            var model = new DistributingViewModel();
+            try
+            {
+                MedicationPackageBLL.DistributePackage(DoctorDistributePackageTypebarcode);
+                model.Result = new Notification { Level = NotificationLevel.Info, Message = "Distribute package succeeded" };
+            }
+            catch (ENETCareException ex)
+            {
+                model.Result = new Notification { Level = NotificationLevel.Error, Message = ex.Message };
+            }
+            ModelState.Clear();
+            return View(model);
         }
 
         #endregion
