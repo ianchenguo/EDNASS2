@@ -247,12 +247,14 @@ namespace ENETCare.Presentation.MVC.Controllers
 
         #endregion
 
+        #region Auditing
         public ActionResult AgentDoctorAuditPackageTask()
         {
             return View(MedicationTypeBLL.GetMedicationTypeList());
         }
 
         [HttpGet]
+       // [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] 
         public ActionResult AgentDoctorAuditPackageScan(int medicationTypeId, string medicationTypeName)
         {
             var model = new AuditViewModels();
@@ -262,12 +264,12 @@ namespace ENETCare.Presentation.MVC.Controllers
             return View(model);
         }
 
-        #region Auditing
         [HttpPost]
+        //[OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] 
         public ActionResult AgentDoctorAuditPackageScan(string submitAction, AuditViewModels model)
         {
-            model.MedicationTypeId = (int)Session["auditMedicationTypeId"];
-            model.MedicationTypeName = Session["auditMedicationTypeName"] as string;
+            //model.MedicationTypeId = (int)Session["auditMedicationTypeId"];
+            //model.MedicationTypeName = Session["auditMedicationTypeName"] as string;
 
             if (submitAction == "Cancel")
             {
