@@ -255,6 +255,8 @@
     <Content Include="Views\Manager\GlobalStock.cshtml" />
     <Content Include="Views\Manager\index.cshtml" />
     <Content Include="Views\Manager\ValueInTransit.cshtml" />
+    <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorAuditePackage.cshtml" />
+    <Content Include="Views\AgentDoctorCommonFeatures\AgentDoctorDiscardPackage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

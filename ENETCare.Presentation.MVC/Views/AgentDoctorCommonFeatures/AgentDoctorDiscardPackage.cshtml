@@ -1,0 +1,41 @@
+﻿@using ENETCare.Business
+@model ICollection<MedicationType>
+@{
+    ViewBag.Title = "AgentDoctorDiscardPackage";
+    Layout = "~/Views/AgentDoctorCommonFeatures/MasterPage.cshtml";
+}
+
+<!--panel-start-->
+<div class="panel panel-default">
+    <!--panel-heading-start-->
+    <div class="panel-heading">
+        <h3 class="panel-title">Discard Medication Package</h3>
+    </div>
+    <!--panel-heading-end-->
+    <!--panel-body-start-->
+    @using (Html.BeginForm())
+    {
+        <div class="panel-body">
+
+            <div class="form-horizontal col-sm-10 col-sm-offset-1">
+
+                <!-- <div id="AgentDoctorDiscardPackageAlertWindowDiv" visible="false" class="alert alert-success" data-dismiss="alert">
+                    <asp:Label ID="AgentDoctorDiscardPackageAlertWindowContentLabel" />
+                </div> -->
+
+                <div class="form-group">
+                    <div id="AgentDoctorDiscardPackagesBarcode" class="col-xs-3">Barcode: </div>
+
+                    <div class="col-xs-9">
+                        @Html.TextBox("AgentDoctorDiscardPackagesBarcode", null, new { @class = "form-control", @type = "text" })
+                    </div>
+                </div>
+                <a class="btn btn-danger btn-float-right btn-margin-left" type="a" href="@Url.Action("AgentDoctorHomePackages", "AgentDoctorCommonFeatures")">Cancel</a>
+                <input type="submit" value="Discard" class="btn btn-success btn-float-right" id="AgentDoctorDiscardPackageButton" />
+
+            </div>
+        </div>
+    }
+    <!--panel-body-end-->
+</div>
+<!--panel-end-->

@@ -22,36 +22,11 @@ namespace ENETCare.Presentation.MVC.Controllers
         {
             return View();
         }
-        // GET: AgentDoctorRegisterPackage
-        //int? MediTypeId
-        //[HttpGet]
-        //public ActionResult AgentDoctorRegisterPackages(MedicationType MediTypeId)
-        //{
-        //    List<MedicationType> list = new MedicationTypeBLL().GetMedicationTypeList();
-        //    ViewData["day"] = "wocao viewdata";
-        //    ViewBag.inputValue = "wocao inputValue.";
-        //    ViewBag.dayD = ViewData["day"];
-        //    ViewData["dayDay"] = "nimabit3";
-        //    Debug.WriteLine("---ViewData---: " + ViewData["day"]);
 
-        //    MedicationType oneMedi = MediTypeId;
-        //    if(oneMedi.ID != 0)
-        //    {
-        //        MedicationType godMedi = new MedicationTypeBLL().GetMedicationTypeById(oneMedi.ID);
-        //        Debug.WriteLine("godMedi --- : " + godMedi.DefaultExpireDate.ToString());
-        //    }
-        //    else{
-        //        Debug.WriteLine("wocao nothing here.");
-        //    }
-
-
-        //    return View(list);
-        //}
         [HttpGet]
         public ActionResult AgentDoctorRegisterPackages()
         {
             List<MedicationType> list = new MedicationTypeBLL().GetMedicationTypeList();
-            //ViewData["strDay"] = DateTime.Now.ToString();
 
             return View(list);
         }
@@ -79,6 +54,8 @@ namespace ENETCare.Presentation.MVC.Controllers
             {
                 Debug.WriteLine("Even no string.");
             }
+
+            ModelState.Clear();
 
             return View(list);
         }
@@ -130,11 +107,27 @@ namespace ENETCare.Presentation.MVC.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult AgentDoctorAuditePackage()
+        {
+            List<MedicationType> list = new MedicationTypeBLL().GetMedicationTypeList();
+            return View(list);
+        }
+
         public ActionResult AgentDoctorViewReport()
         {
             List<MedicationTypeViewData> list = new ReportBLL().GlobalStock();
             return View(list);
         }
+
+        [HttpGet]
+        public ActionResult AgentDoctorDiscardPackage()
+        {
+            List<MedicationType> list = new MedicationTypeBLL().GetMedicationTypeList();
+            return View(list);
+        }
+
+
 
         public ActionResult SampleReport()
         {
