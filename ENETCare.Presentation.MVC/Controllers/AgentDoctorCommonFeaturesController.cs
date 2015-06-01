@@ -268,8 +268,7 @@ namespace ENETCare.Presentation.MVC.Controllers
         //[OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] 
         public ActionResult AgentDoctorAuditPackageScan(string submitAction, AuditViewModels model)
         {
-            //model.MedicationTypeId = (int)Session["auditMedicationTypeId"];
-            //model.MedicationTypeName = Session["auditMedicationTypeName"] as string;
+            _fetchMedicationTypeIdAndNameFromSession(model);
 
             if (submitAction == "Cancel")
             {
@@ -293,6 +292,15 @@ namespace ENETCare.Presentation.MVC.Controllers
                     _emptySessionStore();
                 }
                 return View(model);
+            }
+        }
+
+        private void _fetchMedicationTypeIdAndNameFromSession(AuditViewModels model)
+        {
+            if (Session["auditMedicationTypeId"] != null && Session["auditMedicationTypeName"] != null)
+            {
+                model.MedicationTypeId = (int)Session["auditMedicationTypeId"];
+                model.MedicationTypeName = Session["auditMedicationTypeName"] as string;
             }
         }
 
