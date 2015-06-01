@@ -24,14 +24,14 @@
             <div class="form-group">
                 <label id="AgentDoctorPackageRegisterPackageTypeDropDwonListLabel" class="col-xs-3">Medication Type: </label>
                 <div class="col-xs-9">
-                    @Html.DropDownListFor(x => x.SelectedMedicationType.ID, Model.MedicationTypeSelectList, new { Name = "medicationTypeId", @onchange = "document.getElementById('refresh').click();" })
+                    @Html.DropDownListFor(x => x.SelectedMedicationType.ID, Model.MedicationTypeSelectList, new { Name = "medicationTypeId", @onchange = "document.getElementById('refresh').click();", @class = "form-control" })
                 </div>
             </div>
 
             <br />
 
             <div class="form-group">
-                <div id="AgentDoctorRegisterFormExpireDateLabel" class="col-xs-3">Expiration Date: </div>
+                <label id="AgentDoctorRegisterFormExpireDateLabel" class="col-xs-3">Expiration Date: </label>
                 <div class="col-xs-9">
                     @Html.TextBox("expireDate", @Model.SelectedMedicationType.DefaultExpireDate.ToString("yyyy-MM-dd"), new { @class = "form-control", @type = "date" })
                 </div>
