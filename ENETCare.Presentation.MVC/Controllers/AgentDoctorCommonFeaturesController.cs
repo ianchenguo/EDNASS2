@@ -219,23 +219,6 @@ namespace ENETCare.Presentation.MVC.Controllers
 
         #endregion
 
-        #region To-Do: Distribute Package should be moved to doctor only feature
-        [HttpGet]
-        public ActionResult DoctorDistributePackage()
-        {
-
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult DoctorDistributePackage(string DoctorDistributePackageTypebarcode)
-        {
-            new MedicationPackageBLL(User.Identity.Name).DistributePackage(DoctorDistributePackageTypebarcode, true);
-            return View();
-        }
-
-        #endregion
-
         #region Stocktaking
 
         [HttpGet]
