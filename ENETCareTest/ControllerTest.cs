@@ -22,7 +22,23 @@ namespace ENETCareTest
 
 
             //Asert
-            Assert.AreEqual(url, vr.ViewBag.ReturnUrl, "Does not match");
+            Assert.AreEqual(url, vr.ViewBag.ReturnUrl, "String does not match");
+        }
+
+        [TestMethod]
+        public void ManagerController_DoctorList_returnAllDoctors()
+        {
+            //Arrange
+            var mc = new ManagerController();
+            var employeeBLL = new EmployeeBLL();
+
+            //Act
+            var result = mc.DoctorList() as ViewResult;
+            var doctors = (List<Employee>)result.ViewData.Model;
+
+            //Assert 4 doctors in the AspUser table
+            Assert.AreEqual(4, doctors.Count);
+
         }
 
         [TestMethod]
@@ -34,10 +50,10 @@ namespace ENETCareTest
 
             //Act
             var result = mc.CentreList() as ViewResult;
-            var products = (List<DistributionCentre>)result.ViewData.Model;
+            var distributions = (List<DistributionCentre>)result.ViewData.Model;
 
-            //Asert
-            Assert.IsNotNull(products);
+            //Asert 5 distributions in the DistributionCentre
+            Assert.AreEqual(5, distributions.Count);
             
         }
 
@@ -46,14 +62,21 @@ namespace ENETCareTest
         {
             //Arrange
             var mc = new ManagerController();
+            var reportBLL = new ReportBLL();
+            
             
 
             //Act
             var result = mc.DistributionCentreStock(1, "Head Office") as ViewResult;
-            
+            var distributionstocks = (List<MedicationTypeViewData>)result.ViewData.Model;
+            var distributionCentreStocks = reportBLL.DistributionCentreStock(1);
 
             //Asert
             Assert.AreEqual("Head Office",result.ViewBag.Name);
+            CollectionAssert.AllItemsAreNotNull(distributionstocks);
+            Assert.AreEqual(distributionstocks.Count, distributionCentreStocks.Count);
+            //// if medicationpackage is blank
+            //Assert.AreEqual(0, result.ViewBag.Sum);
 
         }
 
@@ -62,15 +85,15 @@ namespace ENETCareTest
         {
             //Arrange
             var mc = new ManagerController();
-
+            var reportBLL = new ReportBLL();
 
             //Act
             var result = mc.DoctorActivity("doctor4@enetcare.com") as ViewResult;
-            var distributions = (List<MedicationTypeViewData>)result.ViewData.Model;
-
+            var doctorconducted_pc = (List<MedicationTypeViewData>)result.ViewData.Model;
+            var doctorconducted_pcs = reportBLL.DoctorActivity("doctor4@enetcare.com");
             //Asert
             Assert.AreEqual("doctor4@enetcare.com", result.ViewBag.Name);
-            Assert.IsNotNull(distributions);
+            Assert.AreEqual(doctorconducted_pcs.Count, doctorconducted_pc.Count);
         }
 
         [TestMethod]
@@ -78,15 +101,15 @@ namespace ENETCareTest
         {
             //Arrange
             var mc = new ManagerController();
-
+            var reportBLL = new ReportBLL();
 
             //Act
             var result = mc.GlobalStock() as ViewResult;
             var packages = (List<MedicationTypeViewData>)result.ViewData.Model;
-
+            var allpackages = reportBLL.GlobalStock();
             //Asert
-            Assert.AreEqual(0, result.ViewBag.Sum);
             Assert.IsNotNull(packages);
+            Assert.AreEqual(packages.Count, allpackages.Count);
         }
 
         [TestMethod]
@@ -94,15 +117,16 @@ namespace ENETCareTest
         {
             //Arrange
             var mc = new ManagerController();
-
+            var reportBLL = new ReportBLL();
 
             //Act
             var result = mc.ValueInTransit() as ViewResult;
             var packages = (List<ValueInTransitViewData>)result.ViewData.Model;
+            var transit_packages = reportBLL.ValueInTransit();
 
             //Asert
-            Assert.AreEqual(0, result.ViewBag.Sum);
             Assert.IsNotNull(packages);
+            Assert.AreEqual(packages.Count, transit_packages.Count);
         }
 
         [TestMethod]
